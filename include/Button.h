@@ -10,6 +10,6 @@ class Button
         Button(int pin);
         void detect_push();
     private:
-    int output_pin;
+    int input_pin;
 };
 #endif
