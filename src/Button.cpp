@@ -3,13 +3,12 @@
 
 Button::Button(int pin)
 {
-  pinMode(pin, INPUT);
+  pinMode(pin, INPUT); //Specify input pin
   input_pin = pin;
 }
 
-void Button:: detect_push()
+int Button:: read_state()
 {
-  int buttonstate = digitalRead(input_pin);
-  Serial.println(buttonstate);
-  delay(1);
+  int buttonstate = digitalRead(input_pin); // Read the current state of the button 
+  return buttonstate;
 }
