@@ -1,9 +1,18 @@
 #include <Arduino.h>
+#include "Led.h"
 
-void setup() {
-  // put your setup code here, to run once:
+// Define output pin and period of blink
+#define Pinout 1
+#define led_delay 50 // This value x2 is the period in ms
+
+// Create Led instance
+Led led(Pinout);
+
+void setup() 
+{
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+ 
+  led.Blink(led_delay);
 }
