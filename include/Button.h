@@ -9,6 +9,7 @@ class Button
         Button(int pin);
         int read_state();
     private:
-    int input_pin;
+        int input_pin;
 };
+
 #endif

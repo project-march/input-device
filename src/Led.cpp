@@ -7,7 +7,6 @@ Led::Led(int pin)
     output_pin = pin;
 }
 
-
 void Led::Blink(int led_delay)
 {
     digitalWrite(output_pin, HIGH); // Set 3.3V at output_pin 
