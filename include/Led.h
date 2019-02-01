@@ -4,12 +4,12 @@
 #include <Arduino.h>
 
 class Led {
+ public:
+  Led(int pin);
+  void Blink(int led_delay);
 
-    public:
-        Led(int pin);
-        void Blink(int led_delay);
-    private:
-        int output_pin; // Each Led instance has a output pin
+ private:
+  int output_pin;  // Each Led instance has a output pin
 };
 
 #endif

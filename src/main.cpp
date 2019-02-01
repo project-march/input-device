@@ -1,18 +1,30 @@
 #include <Arduino.h>
+#include "Button.h"
 #include "Led.h"
 
-// Define output pin and period of blink
-#define Pinout 1
-#define led_delay 50 // This value x2 is the period in ms
+// Define Pins for Peripherals
+#define Pin_led 33
+#define Pin_button 19
 
-// Create Led instance
-Led led(Pinout);
+#define led_cycle 50  // This value x2 is the period in ms
+#define Baudrate 9600
 
-void setup() 
-{
+// Create instances
+Led led(Pin_led);
+Button button(Pin_button);
+
+int button_state;
+
+void setup() { 
+  Serial.begin(Baudrate); 
 }
 
 void loop() {
- 
-  led.Blink(led_delay);
-}
+  button_state = button.read_state();
+
+  led.Blink(led_cycle);
+
+  if (button_state == HIGH) {
+    Serial.println("Push detected!");  // Print via Serial USB connection
+  }
+} 
