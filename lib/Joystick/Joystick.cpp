@@ -25,6 +25,8 @@ String Joystick::get_position() {
       position = "UP";
   }else if(digitalRead(down_pin)){
       position = "DOWN";
+  }else{
+      position = "NEUTRAL";
   }
   return position;
 }

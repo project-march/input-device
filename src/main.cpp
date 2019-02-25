@@ -15,6 +15,7 @@ Joystick joystick(Pin_left, Pin_right, Pin_up, Pin_down, Pin_press);
 
 void setup() {
   Serial.begin(Baudrate);
+  Serial.println("Hello world");
 }
 
 void loop() {
@@ -26,7 +27,8 @@ void loop() {
   Serial.print(" Press: ");
   Serial.print(press);
   Serial.print("\n");
-  // Serial.println("Test");
+
+  Serial.println("Test");
 
   sleep(1);
 }
