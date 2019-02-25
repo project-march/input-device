@@ -21,12 +21,12 @@ void loop() {
   String pos = joystick.get_position();
   bool press = joystick.get_press();
 
-  // Serial.print("Position: ");
-  // Serial.print(pos);
-  // Serial.print(" Press: ");
-  // Serial.print(press);
-  // Serial.print("\n");
-  Serial.println("Test");
+  Serial.print("Position: ");
+  Serial.print(pos);
+  Serial.print(" Press: ");
+  Serial.print(press);
+  Serial.print("\n");
+  // Serial.println("Test");
 
   sleep(1);
 }
