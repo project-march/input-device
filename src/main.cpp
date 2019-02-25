@@ -1,5 +1,7 @@
 #include <Arduino.h>
+#include <ros.h>
 #include "Adafruit_DRV2605.h"
+#include <std_msgs/String.h>
 #include "Button.h"
 #include "Led.h"
 
@@ -18,6 +20,11 @@ Adafruit_DRV2605 driver;
 int button_state;
 uint8_t effect = 47; // Select the desired effect, for now test effect "Buzz 100%"
 
+// Create ros nodehandle with publishers
+ros::NodeHandle nh;
+std_msgs::String str_msg;
+ros::Publisher scroller_publisher = ros::Publisher("input-device/scroller", &str_msg);
+
 void setup() {
   Serial.begin(Baudrate);
 
@@ -30,6 +37,15 @@ void setup() {
   // I2C trigger by sending 'go' command
   // default, internal trigger when sending GO command
   driver.setMode(DRV2605_MODE_INTTRIG);
+
+  // Initialize the ros nodehandle and publishers
+  nh.initNode();
+  nh.advertise(scroller_publisher);
+}
+
+void sendScrollerMessage(String direction){
+  str_msg.data = direction.c_str();
+  scroller_publisher.publish( &str_msg );
 }
 
 void loop() {
@@ -42,12 +58,13 @@ void loop() {
   // When button is pressed, vibrae
   if (button.read_state()) {
     // play the effect!
+    Serial.println("Push detected!"); 
+    sendScrollerMessage("Left");
     driver.go();
   }
-
-  if (button_state == HIGH) {
-    Serial.println("Push detected!");  // Print via Serial USB connection
-  }
-
+  Serial.println("TEST");
   led.Blink(led_cycle);
+
+  // Spin the nodehandle to send and receive messages
+  nh.spinOnce();
 }
