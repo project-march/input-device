@@ -23,7 +23,7 @@ uint8_t effect = 47; // Select the desired effect, for now test effect "Buzz 100
 // Create ros nodehandle with publishers
 ros::NodeHandle nh;
 std_msgs::String str_msg;
-ros::Publisher scroller_publisher = ros::Publisher("input-device/scroller", &str_msg);
+ros::Publisher scroller_publisher = ros::Publisher("/scroller", &str_msg);
 
 void setup() {
   Serial.begin(Baudrate);
@@ -59,12 +59,14 @@ void loop() {
   if (button.read_state()) {
     // play the effect!
     Serial.println("Push detected!"); 
-    sendScrollerMessage("Left");
+    sendScrollerMessage("left");
     driver.go();
   }
   Serial.println("TEST");
+  sendScrollerMessage("right");
   led.Blink(led_cycle);
 
   // Spin the nodehandle to send and receive messages
   nh.spinOnce();
+  delay(100);
 }
