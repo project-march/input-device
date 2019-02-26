@@ -27,6 +27,7 @@ Adafruit_DRV2605 driver;
 
 int button_state;
 uint8_t effect = 47; // Select the desired effect, for now test effect "Buzz 100%"
+bool pressed = false;
 
 // Create ros nodehandle with publishers
 ros::NodeHandle nh;
@@ -36,6 +37,19 @@ ros::Publisher scroller_publisher = ros::Publisher("/scroller", &str_msg);
 void sendScrollerMessage(String direction){
   str_msg.data = direction.c_str();
   scroller_publisher.publish( &str_msg );
+}
+
+void sendScrollerMessagePress(){
+  str_msg.data = "press";
+  scroller_publisher.publish( &str_msg );
+}
+
+void checkPress(){
+  if(joystick.get_press() && !pressed){
+    sendScrollerMessagePress();
+    pressed = true;
+  }
+  pressed = joystick.get_press();
 }
 
 void setup() {
@@ -62,18 +76,13 @@ void setup() {
 
 void loop() {
   String pos = joystick.get_new_position();
-  bool press = joystick.get_press();
+  checkPress();
 
-  if(pos != ""){
+  if(pos != "" && pos != "down"){
     Serial.print("New Position: ");
     Serial.print(pos);
     sendScrollerMessage(pos);
   }
-
-  Serial.print(" Press: ");
-  Serial.print(press);
-  Serial.print("\n");
-
 
   // When button is pressed, vibrate
   if (button.read_state()) {
