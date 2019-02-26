@@ -13,6 +13,9 @@ Joystick::Joystick(int pin_left, int pin_right, int pin_up, int pin_down, int pi
   up_pin = pin_up;
   down_pin = pin_down;
   press_pin = pin_press;
+
+  last_position = "neutral";
+  last_press = false;
 }
 
 String Joystick::get_new_position() {
@@ -28,13 +31,18 @@ String Joystick::get_new_position() {
   }else{
       position = "neutral";
   }
-  if(last_position == position){
-      return "";
+  if(position == last_position){
+      return "unchanged";
   }
   last_position = position;
   return position;
 }
 
-bool Joystick::get_press(){
-    return digitalRead(press_pin);
+bool Joystick::get_new_press(){
+    bool press = digitalRead(press_pin);
+    if(press == last_press){
+        return false;
+    }
+    last_press = press;
+    return press;
 }
