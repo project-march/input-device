@@ -1,33 +1,30 @@
 #include "Scroller.h"
 #include <Arduino.h>
 
-Scroller::Scroller(int pin_left, int pin_right, int pin_up, int pin_down, int pin_press) {
-  pinMode(pin_left, INPUT_PULLDOWN);
-  pinMode(pin_right, INPUT_PULLDOWN);
+Scroller::Scroller(int pin_A, int pin_B) {
+  pinMode(pin_A, INPUT);
+  pinMode(pin_B, INPUT);
 
-  left_pin = pin_left;
-  right_pin = pin_right;
+  A_pin = pin_A;
+  B_pin = pin_B;
 
-  last_position = "neutral";
-  last_press = false;
+  position = 0;
+  last_A = false;
 }
 
-String Joystick::get_new_position() {
-  String position;
-  if(digitalRead(left_pin)){
-      position = "left";
-  }else if(digitalRead(right_pin)){
-      position = "right";
-  }else if(digitalRead(up_pin)){
-      position = "up";
-  }else if(digitalRead(down_pin)){
-      position = "down";
-  }else{
-      position = "neutral";
+int Scroller::get_position() {
+  bool new_A = digitalRead(A_pin);
+  if ((last_A == LOW) && (new_A == HIGH)) {
+    if (digitalRead(B_pin) == LOW) {
+      position--;
+    } else {
+      position++;
+    }
   }
-  if(position == last_position){
-      return "unchanged";
-  }
-  last_position = position;
+  last_A = new_A;
   return position;
+}
+
+void Scroller::reset_position(){
+  position = 0;
 }

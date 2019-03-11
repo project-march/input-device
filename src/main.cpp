@@ -1,49 +1,41 @@
 #include <Arduino.h>
 #include <ros.h>
-// #include "Adafruit_DRV2605.h"
 #include <std_msgs/String.h>
 #include <std_msgs/Int16.h>
-// #include "Button.h"
-// #include "Led.h"
+#include "Scroller.h"
 #include "Joystick.h"
 
-// Define Pins forJoystick 
+// Define pins for joystick 
 #define Pin_left 15
 #define Pin_right 2
 #define Pin_up 0
 #define Pin_down 4
 #define Pin_press 5
 
-// #define Pin_led 33
-// #define Pin_button 34
+// Define pins for scroller left
+#define Pin_L_left 33
+#define Pin_L_right 32
 
-// #define led_cycle 50  
+// Define pins for scroller right
+#define Pin_R_left 26
+#define Pin_R_right 25
+
 #define Baudrate 9600
 
 // Create instances
 Joystick joystick(Pin_left, Pin_right, Pin_up, Pin_down, Pin_press);
-// Led led(Pin_led);
-// Button button(Pin_button);
-// Adafruit_DRV2605 driver;
+Scroller scrollerLeft(Pin_L_left, Pin_L_right);
+Scroller scrollerRight(Pin_R_left, Pin_R_right);
 
-int button_state;
-// uint8_t effect = 47; // Select the desired effect, for now test effect "Buzz 100%"
-bool pressed = false;
-
-// Scroller
-int encoder0PinA = 33;
-int encoder0PinB = 32;
-int encoder0Pos = 0;
-int encoder0PinALast = LOW;
-int n = LOW;
-int threshold = 2;
+int scrollerThreshold;
 
 // Create ros nodehandle with publishers
 ros::NodeHandle nh;
 std_msgs::String str_msg;
 ros::Publisher scroller_publisher = ros::Publisher("/scroller", &str_msg);
+
 void messageCb( const std_msgs::Int16& toggle_msg){
-  threshold = toggle_msg.data;
+  scrollerThreshold = toggle_msg.data;
 }
 ros::Subscriber<std_msgs::Int16> sub_sensitivity("/sensitivity", &messageCb );
 
@@ -61,53 +53,17 @@ void sendScrollerMessagePress(){
 void setup() {
   Serial.begin(Baudrate);
 
-  // Setup I2C protocol`
-  // driver.begin();
-  
-  // I2C trigger by sending 'go' command
-  // default, internal trigger when sending GO command
-  // driver.setMode(DRV2605_MODE_INTTRIG);
-
-  // Set the effect to be played
-  // Waveforms can be combined, to create new wavefroms, see datasheet Adafruit
-  // DRV2605
-  // driver.setWaveform(0, effect);  // Setup the waveform(s)
-  // driver.setWaveform(1, 0);       // end of waveform waveform
+  scrollerThreshold = 2;
 
   // Initialize the ros nodehandle and publishers
-
-  pinMode(encoder0PinA, INPUT);
-  pinMode(encoder0PinB, INPUT);
-
   nh.initNode();
   nh.advertise(scroller_publisher);
   nh.subscribe(sub_sensitivity);
 }
 
-void scroller(){
-  n = digitalRead(encoder0PinA);
-  if ((encoder0PinALast == LOW) && (n == HIGH)) {
-    if (digitalRead(encoder0PinB) == LOW) {
-      encoder0Pos--;
-    } else {
-      encoder0Pos++;
-    }
-  }
-  if(encoder0Pos >= threshold){
-      sendScrollerMessage("right");
-      encoder0Pos = 0;
-  }
-  if(encoder0Pos <= -threshold){
-      sendScrollerMessage("left");
-      encoder0Pos = 0;
-  }
-  
-  Serial.println(encoder0Pos);
-  encoder0PinALast = n;
-}
-
 void loop() {
 
+  // Joystick
   String pos = joystick.get_new_position();
   if(pos != "unchanged" && pos != "down"){
     Serial.print("New Joystick position: ");
@@ -115,24 +71,36 @@ void loop() {
     Serial.print("\n");
     sendScrollerMessage(pos);
   }
-
   if(joystick.get_new_press()){
     Serial.println("Joystick press detected");
     sendScrollerMessagePress();
   }
 
+  // Left scroller
+  int positionLeft = scrollerLeft.get_position();
+  if(positionLeft >= scrollerThreshold){
+      sendScrollerMessage("right");
+      Serial.println("Left scroller to the right");
+      scrollerLeft.reset_position();
+  }
+  if(positionLeft <= -scrollerThreshold){
+      sendScrollerMessage("left");
+      Serial.println("Left scroller to the left");
+      scrollerLeft.reset_position();
+  }
 
-  // When button is pressed, vibrate
-  // if (button.read_state()) {
-  //   // play the effect!
-  //   Serial.println("Push detected!"); 
-  //   driver.go();
-  // }
-
-  // Serial.println("TEST");
-  // led.Blink(led_cycle);
-
-  scroller();
+  // Right scroller
+  int positionRight = scrollerRight.get_position();
+  if(positionRight >= scrollerThreshold){
+      sendScrollerMessage("right");
+      Serial.println("Right scroller to the right");
+      scrollerRight.reset_position();
+  }
+  if(positionRight <= -scrollerThreshold){
+      sendScrollerMessage("left");
+      Serial.println("Right scroller to the left");
+      scrollerRight.reset_position();
+  }
 
   // Spin the nodehandle to send and receive messages
   nh.spinOnce();
