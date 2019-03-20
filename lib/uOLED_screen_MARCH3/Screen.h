@@ -60,6 +60,9 @@ public:
     int display_image_sector(uint32_t sector,  int16_t X = 0, int16_t Y = 0);
     int display_image_byte(uint32_t byte, int16_t X = 0, int16_t Y = 0);
 
+    //Initializes the screen and makes sure all settings are correct.
+    void initialize();
+
     //Nice to haves
         /*
         void reinitialize(DEBUG_DEC) //resets device, initializes again
@@ -73,8 +76,6 @@ public:
 private:
 //Private member functions
     
-    //Initializes the screen and makes sure all settings are correct.
-    void initialize();
     //Displays an image in either mode. 
     //  int     sectorMode      Indicates whether to use a sector address or byte address.
     //                              value 1 indicates sector address, value 0 indicates 

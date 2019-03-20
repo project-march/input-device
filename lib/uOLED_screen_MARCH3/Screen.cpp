@@ -24,21 +24,27 @@
 \* * * * * * * * * * * * * * * * * * * * * *  * * * * * * * * * * * * * * * * * * * * * */
 
 // #include "DBS_pindefs.h"
+#include <HardwareSerial.h>
 #include "SoftwareSerial.h"
 #include "Screen.h"
 
 //Constructors
 Screen::Screen(int res, int tx, int rx, int baud)
 {
-    pinMode(res, OUTPUT);
-    pinMode(tx, OUTPUT);
-    pinMode(rx, INPUT);
-    m_res = res;
-    SoftwareSerial * tmp = new SoftwareSerial(tx, rx);
-    tmp->begin(baud);
-    m_screen = new Goldelox_Serial_4DLib(tmp);
-    m_baud = baud;
-    this->initialize();
+    // Serial.println("Setting pins to in/out...");
+    this->m_res = res;
+    this->m_baud = baud;
+
+    Serial.println("Creating softwareserial obj...");
+    SoftwareSerial * screenSerial = new SoftwareSerial(rx, tx);
+    // HardwareSerial * screenSerial = new HardwareSerial(0);
+    Serial.println("Starting softwareserial...");
+    screenSerial->begin(m_baud);
+
+    // Serial.println("Creating Goldelox_serial obj...");
+    this->m_screen = new Goldelox_Serial_4DLib(screenSerial);
+    // this->initialize();
+    Serial.println("Done constructing");
 } //Screen(int res, int tx, int rx, int baud)
 
 
@@ -47,7 +53,9 @@ void Screen::reset(){
     digitalWrite(this->m_res, 0);
     usleep(10000);
     digitalWrite(this->m_res, 1);
+    // Serial.println("Sleeping for 3 seconds");
     sleep(3);
+    // Serial.println("Done sleeping");
     return;
 }; //reset()
 
@@ -74,9 +82,13 @@ int Screen::display_image_byte(uint32_t byte, int16_t X, int16_t Y){
 //Private member functions
 void Screen::initialize(){
     this->m_mediaInitialized = false;
+    Serial.println("Start resetting the screen");
     this->reset();
+    Serial.println("Start setting screenmode to landscape mode");
     this->m_screen->gfx_ScreenMode(LANDSCAPE);
+    Serial.println("Changed screenMode to landscape");
     this->m_screen->gfx_Cls();
+    Serial.println("Cleared Screen");
     return;
 } //initialize()
 
