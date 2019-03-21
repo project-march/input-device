@@ -20,23 +20,11 @@ Screen::Screen(Goldelox_Serial_4DLib * screen, SoftwareSerial * screenSerial, in
 
 void Screen::initialize(){
 
-    // Serial.println("Initialize");
-
-    // pinMode(m_rst, OUTPUT);
     digitalWrite(m_rst, 1);
-    // pinMode(m_tx, OUTPUT);
-    // pinMode(m_rx, INPUT);
-    // usleep(m_waitTimeUs);
 
-    // Serial.println("Starting screenserial");
     m_serial->begin(m_baud);
-    // usleep(m_waitTimeUs);
-
-    // Serial.println("Resetting screen");
 
     this->reset();
-
-    // Serial.println("Initing media");
 
     m_mediaInitialized = m_screen->media_Init();
     usleep(m_waitTimeUs);
@@ -47,8 +35,6 @@ void Screen::initialize(){
     usleep(m_waitTimeUs);
 
     this->clear();
-
-    // Serial.println("Initialization done");
 };
 
 void Screen::clear(){
@@ -66,8 +52,6 @@ void Screen::reset(){
 
 void Screen::draw_image(int addr_hi, int addr_lo){
     m_screen->media_SetSector(addr_hi, addr_lo);
-    // usleep(m_waitTimeUs);
-
     m_screen->media_Image(0,0);
     usleep(m_waitTimeUs);
 }

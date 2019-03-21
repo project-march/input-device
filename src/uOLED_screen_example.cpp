@@ -23,48 +23,25 @@ Goldelox_Serial_4DLib screenGoldelox(&screenSerial);
 Screen screen(&screenGoldelox, &screenSerial, RST, BAUD_SCREEN, SLEEPTIME_SCREEN);
 
 void setup() {
-  Serial.begin(115200);
-  Serial.println("Setup");
+  // Serial.begin(115200);
+  // Serial.println("Setup");
 
   pinMode(RST, OUTPUT);
-  // digitalWrite(RST, 1);
   pinMode(UART_TX, OUTPUT);
   pinMode(UART_RX, INPUT);
-
-  // screenSerial.begin(BAUD_SCREEN);
-
-  // digitalWrite(RST, 0);
-  // usleep(SLEEPTIME_SCREEN);
-  // digitalWrite(RST, 1);
-  // sleep(3);
-
-  // int status = screenGoldelox.media_Init();
-  // usleep(SLEEPTIME_SCREEN);
-  // char str[100];
-  // sprintf(str, "SD Init status = 0x%02X\n", status);
-  // screenGoldelox.print(str);
-  // usleep(SLEEPTIME_SCREEN);
-
-  // screenGoldelox.gfx_Cls();
-  // usleep(SLEEPTIME_SCREEN);
-
 
   screen.initialize();
 }
 
 void loop(void) {
-  Serial.println("Loop");
-
-  // screenGoldelox.media_SetSector(0,0);
-  // screenGoldelox.media_Image(0,0);
-  // usleep(SLEEPTIME_SCREEN);
-
-  // screenGoldelox.media_SetSector(0x0000, 0x0051);
-  // screenGoldelox.media_Image(0,0);
-  // usleep(SLEEPTIME_SCREEN);
+  // Serial.println("Loop");
 
   screen.draw_image(CUP_ADDRESS_HI, CUP_ADDRESS_LO);
   sleep(1);
   screen.draw_image(STAIRS_ADDRESS_HI, STAIRS_ADDRESS_LO);
+  sleep(1);
+  screen.draw_image(SIT_ADDRESS_HI, SIT_ADDRESS_LO);
+  sleep(1);
+  screen.draw_image(SOFA_ADDRESS_HI, SOFA_ADDRESS_LO);
   sleep(1);
 }
