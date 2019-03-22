@@ -31,8 +31,8 @@ int button_state;
 bool pressed = false;
 
 // Scroller
-int encoder0PinA = 33;
-int encoder0PinB = 32;
+int encoder0PinA = 26;//33;
+int encoder0PinB = 25;//32;
 int encoder0Pos = 0;
 int encoder0PinALast = LOW;
 int n = LOW;
