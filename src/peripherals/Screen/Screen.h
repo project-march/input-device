@@ -33,7 +33,7 @@ class Screen
 {
 public:
 //Constructors
-    Screen(Goldelox_Serial_4DLib * screen, SoftwareSerial * screenSerial, int rst, int baud, int waitTimeUs);
+    Screen(Goldelox_Serial_4DLib * screen, SoftwareSerial * screenSerial, int rst, int baud);
 
 //Public member functions
     void initialize();
@@ -49,7 +49,7 @@ private:
     int                         m_rst;
     int                         m_tx;
     int                         m_rx;
-    int                         m_waitTimeUs;
+    const int                   m_waitTimeUs = 100000; // Needed for functioning, can still be optimized
 
 };
 

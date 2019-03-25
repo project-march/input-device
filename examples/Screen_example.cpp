@@ -17,14 +17,13 @@
 #define UART_RX           34 //software serial
 #define RST               13
 #define BAUD_SCREEN       9600
-#define SLEEPTIME_SCREEN  100000
 
 // Serial communication between Lolin and Screen
 SoftwareSerial screenSerial(UART_RX, UART_TX);
 // Instance of the screen as in Goldelox_Serial library
 Goldelox_Serial_4DLib screenGoldelox(&screenSerial);
 // Wrapper instance of the screen
-Screen screen(&screenGoldelox, &screenSerial, RST, BAUD_SCREEN, SLEEPTIME_SCREEN);
+Screen screen(&screenGoldelox, &screenSerial, RST, BAUD_SCREEN);
 
 void setup() {
   // Set pins as either input or output

@@ -1,20 +1,12 @@
 #include "Screen.h"
 
-Screen::Screen(Goldelox_Serial_4DLib * screen, SoftwareSerial * screenSerial, int rst, int baud, int waitTimeUs)
+Screen::Screen(Goldelox_Serial_4DLib * screen, SoftwareSerial * screenSerial, int rst, int baud)
 {
-    // Serial.println("Constructor");
-    
-    // this->m_serial = new SoftwareSerial(rx, tx);
-    // this->m_screen = new Goldelox_Serial_4DLib(m_serial);
-
     this->m_serial = screenSerial;
     this->m_screen = screen;
     this->m_mediaInitialized = 0;
     this->m_baud = baud;
     this->m_rst = rst;
-    this->m_waitTimeUs = waitTimeUs;
-
-    // Serial.println("Constructor done");
 }
 
 void Screen::initialize(){
