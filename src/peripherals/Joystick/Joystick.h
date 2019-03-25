@@ -9,7 +9,7 @@ public:
     String get_position();
     bool get_press();
 
-private:s
+private:
     int left_pin;
     int right_pin;
     int up_pin;
