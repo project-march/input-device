@@ -14,7 +14,7 @@ void setup(){
 
 void loop(){
   String rockerStatus = rocker.get_position();
-  if(rockerStatus != "NEUTRAL"){
+  if(rockerStatus != "NEUTRAL" && rockerStatus != "HOLDING UP" && rockerStatus != "HOLDING DOWN"){
     Serial.print("Rocker status: ");
     Serial.print(rockerStatus);
     Serial.print("\n");
