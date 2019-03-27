@@ -6,7 +6,7 @@
 #include "SD_sector_addresses.h"
 
 // Pin definitions
-#define ROCKER_UP         0
+#define ROCKER_UP         2
 #define ROCKER_DOWN       5
 #define UART_TX           32 //software serial
 #define UART_RX           34 //software serial
@@ -22,15 +22,18 @@ Goldelox_Serial_4DLib screenGoldelox(&screenSerial);
 // Wrapper instance of the screen
 Screen screen(&screenGoldelox, &screenSerial, RST, BAUD_SCREEN);
 
-int pictureList[] = { CUP_ADDRESS_HI, CUP_ADDRESS_LO, 
-                      SIT_ADDRESS_HI, SIT_ADDRESS_LO, 
+int pictureList[] = { SOFA_ADDRESS_HI, SOFA_ADDRESS_LO,
+                      CUP_ADDRESS_HI, CUP_ADDRESS_LO, 
                       SLOPE_ADDRESS_HI, SLOPE_ADDRESS_LO,
-                      SOFA_ADDRESS_HI, SOFA_ADDRESS_LO,
-                      STAIRS_ADDRESS_HI, STAIRS_ADDRESS_LO};
+                      STAIRS_ADDRESS_HI, STAIRS_ADDRESS_LO,
+                      SIT_ADDRESS_HI, SIT_ADDRESS_LO};
 
 int currentPicture = 4;
 
 void setup(){
+  Serial.begin(9600);
+  Serial.println("Rockerswitch + screen test");
+
   // Set pins as either input or output
   pinMode(RST, OUTPUT);
   pinMode(UART_TX, OUTPUT);
@@ -38,6 +41,8 @@ void setup(){
 
   // initialize screen by resetting, initing uSD card, clearing screen
   screen.initialize();
+  screen.draw_image(SLOPE_ADDRESS_HI, SLOPE_ADDRESS_LO);
+  sleep(1);
 }
 
 void loop(){
@@ -47,15 +52,28 @@ void loop(){
     Serial.print(rockerStatus);
     Serial.print("\n");
 
-    if(rockerStatus == "UP" && currentPicture != 0){
+    if(rockerStatus == "UP"){
       // Show picture above current picture
-      currentPicture += 2;
-      screen.draw_image(currentPicture, currentPicture+1);
+      if(currentPicture >= 8){
+        currentPicture = 0;
+      }
+      else{
+        currentPicture += 2;
+      }
+      screen.draw_image(pictureList[currentPicture], pictureList[currentPicture+1]);
     }
-    if(rockerStatus == "DOWN" && currentPicture != 8){
+    if(rockerStatus == "DOWN"){
       // Show picture below current picture
-      currentPicture -= 2;
-      screen.draw_image(currentPicture, currentPicture+1);
+      if(currentPicture <= 0){
+        currentPicture = 8;
+      }
+      else{
+        currentPicture -= 2;
+      }
+      screen.draw_image(pictureList[currentPicture], pictureList[currentPicture+1]);
     }
+  }
+  else{
+    screen.draw_image(pictureList[currentPicture], pictureList[currentPicture+1]);
   }
 }
