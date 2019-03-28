@@ -7,14 +7,15 @@ Joystick::Joystick(int pin_left, int pin_right, int pin_up, int pin_down, int pi
     pinMode(pin_down, INPUT_PULLDOWN);
     pinMode(pin_press, INPUT_PULLDOWN);
 
-    left_pin = pin_left;
-    right_pin = pin_right;
-    up_pin = pin_up;
-    down_pin = pin_down;
-    press_pin = pin_press;
+    this->left_pin = pin_left;
+    this->right_pin = pin_right;
+    this->up_pin = pin_up;
+    this->down_pin = pin_down;
+    this->press_pin = pin_press;
 }
 
 String Joystick::get_position() {
+    // TODO: make this work with timestamps (same as rocker) to allow holding and still return instantly
     String position;
     if(digitalRead(left_pin)){
         position = "LEFT";

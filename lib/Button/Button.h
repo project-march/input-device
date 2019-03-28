@@ -6,7 +6,7 @@
 class Button {
  public:
   Button(int pin);
-  int read_state();
+  bool read_state();
 
  private:
   int input_pin;

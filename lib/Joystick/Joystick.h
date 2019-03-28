@@ -15,6 +15,11 @@ private:
     int up_pin;
     int down_pin;
     int press_pin;
+
+    String lastPosition;
+    unsigned long lastPrintTime;
+    const int bounceTime = 100000; //us. May introduce unwanted behaviour if changed
+    const unsigned long holdTime = 1000; //ms. Determines how often up or down are returned if the joystick is held.
 };
 
 #endif
