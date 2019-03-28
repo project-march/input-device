@@ -9,5 +9,7 @@ Button::Button(int pin) {
 
 // Read the current state of the button
 bool Button::read_state() {
-  return digitalRead(input_pin);
+  bool buttonState = digitalRead(input_pin);
+  usleep(this->bouncetime);
+  return buttonState;
 }
