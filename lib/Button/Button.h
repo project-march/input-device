@@ -6,11 +6,14 @@
 class Button {
  public:
   Button(int pin);
-  bool read_state();
+  String read_state();
 
  private:
   int input_pin;
-  const int bouncetime = 200000;
+  String lastPosition;
+  unsigned long lastPrintTime;
+  const unsigned int bounceTime = 50000; //us. May introduce unwanted behaviour if changed
+  const unsigned int holdTime = 1000; //ms. Determines how often 'push' is returned if the button is held
 };
 
 #endif

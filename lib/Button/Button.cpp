@@ -3,11 +3,31 @@
 
 Button::Button(int pin) {
   pinMode(pin, INPUT_PULLDOWN);
-  input_pin = pin;
+
+  this->input_pin = pin;
+  this->lastPrintTime = millis();
+  this->lastPosition = "NEUTRAL";
 }
 
-bool Button::read_state() {
-  bool buttonState = digitalRead(input_pin);
-  usleep(this->bouncetime);
-  return buttonState;
+// Returns either "NEUTRAL", "PUSH" or "HOLDING"
+// It is advised to treat "HOLDING" the same as "NEUTRAL" outside this function
+String Button::read_state() {
+  String returnString;
+  if(digitalRead(this->input_pin)){
+    if(this->lastPosition != "PUSH" || (millis() - this->lastPrintTime) > this->holdTime){
+      this->lastPrintTime = millis();
+      this->lastPosition = "PUSH";
+      returnString = "PUSH";
+    }
+    else{
+      returnString = "HOLDING";
+    }
+  }
+  else{
+    this->lastPosition = "NEUTRAL";
+    returnString = "NEUTRAL";
+  }
+  // To prevent multiple 'up's and 'down's per press due to bouncing
+  usleep(this->bounceTime);
+  return returnString;
 }

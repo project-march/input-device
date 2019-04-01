@@ -15,7 +15,7 @@ void setup() {
 
 void loop() {
     // When button is pressed, print
-    if (button.read_state()) {
+    if (button.read_state() == "PUSH") {
         Serial.println("Push detected!");
     }
 }
