@@ -10,6 +10,7 @@ class Button {
 
  private:
   int input_pin;
+  const int bouncetime = 200000;
 };
 
 #endif

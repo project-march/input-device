@@ -7,7 +7,7 @@ Button::Button(int pin) {
 }
 
 bool Button::read_state() {
-  bool buttonstate = digitalRead(input_pin);
-  usleep(200000);
-  return buttonstate;
+  bool buttonState = digitalRead(input_pin);
+  usleep(this->bouncetime);
+  return buttonState;
 }
