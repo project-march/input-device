@@ -14,26 +14,79 @@ Joystick::Joystick(int pin_left, int pin_right, int pin_up, int pin_down, int pi
     this->press_pin = pin_press;
 
     this->lastPrintTime = millis();
+    this->lastPushPrintTime = millis();
     this->lastPosition = "NEUTRAL";
+    this->lastPushPosition = "NEUTRAL";
 }
 
+// Returns either "NEUTRAL", "[DIRECTION]" or "HOLDING"
+// It is advised to treat "HOLDING" the same as "NEUTRAL" outside this function
 String Joystick::get_position() {
-    // TODO: make this work with timestamps (same as rocker) to allow holding and still return instantly
-    String position;
+    String returnString;
     if(!digitalRead(this->left_pin)){
-        position = "LEFT";
+        if(this->lastPosition != "LEFT" || (millis()-this->lastPrintTime) > this->holdTime){
+            returnString = "LEFT";
+            this->lastPrintTime = millis();
+            this->lastPosition = "LEFT";
+        }
+        else{
+            returnString = "HOLDING";
+        }
     }else if(!digitalRead(this->right_pin)){
-        position = "RIGHT";
+        if(this->lastPosition != "RIGHT" || (millis()-this->lastPrintTime) > this->holdTime){
+            returnString = "RIGHT";
+            this->lastPrintTime = millis();
+            this->lastPosition = "RIGHT";
+        }
+        else{
+            returnString = "HOLDING";
+        }
     }else if(!digitalRead(this->up_pin)){
-        position = "UP";
+        if(this->lastPosition != "UP" || (millis()-this->lastPrintTime) > this->holdTime){
+            returnString = "UP";
+            this->lastPrintTime = millis();
+            this->lastPosition = "UP";
+        }
+        else{
+            returnString = "HOLDING";
+        }
     }else if(!digitalRead(this->down_pin)){
-        position = "DOWN";
+        if(this->lastPosition != "DOWN" || (millis()-this->lastPrintTime) > this->holdTime){
+            returnString = "DOWN";
+            this->lastPrintTime = millis();
+            this->lastPosition = "DOWN";
+        }
+        else{
+            returnString = "HOLDING";
+        }
     }else{
-        position = "NEUTRAL";
+        returnString = "NEUTRAL";
+        this->lastPosition = "NEUTRAL";
     }
-    return position;
+    // To prevent multiple prints per action due to bouncing
+    usleep(this->bounceTime);
+    return returnString;
 }
 
-bool Joystick::get_press(){
-    return (!digitalRead(this->press_pin));
+// Returns either "NEUTRAL", "PUSH" or "HOLDING"
+// It is advised to treat "HOLDING" the same as "NEUTRAL" outside this function
+String Joystick::get_press(){  
+  String returnString;
+  if(!digitalRead(this->press_pin)){
+    if(this->lastPushPosition != "PUSH" || (millis() - this->lastPushPrintTime) > this->holdTime){
+      this->lastPushPrintTime = millis();
+      this->lastPushPosition = "PUSH";
+      returnString = "PUSH";
+    }
+    else{
+      returnString = "HOLDING";
+    }
+  }
+  else{
+    this->lastPushPosition = "NEUTRAL";
+    returnString = "NEUTRAL";
+  }
+  // To prevent multiple prints per action due to bouncing
+  usleep(this->bounceTime);
+  return returnString;
 }
