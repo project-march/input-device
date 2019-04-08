@@ -4,9 +4,11 @@
 #include "SoftwareSerial.h"
 #include "Goldelox_Serial_4DLib.h"
 #include "Screen.h"
-#include "SD_sector_addresses.h"
+#include "StateMachine.h"
 
 // Pin definitions
+// Trigger
+#define TRIGGER           26
 // Rocker Switch
 #define ROCKER_UP         2
 #define ROCKER_DOWN       5
@@ -22,6 +24,8 @@
 #define RST               13
 #define BAUD_SCREEN       9600
 
+// Trigger
+Button trigger(TRIGGER);
 // Rocker switch
 RockerSwitch rocker(ROCKER_UP, ROCKER_DOWN);
 // Joystick
@@ -32,20 +36,24 @@ SoftwareSerial screenSerial(UART_RX, UART_TX);
 Goldelox_Serial_4DLib screenGoldelox(&screenSerial);
 // Wrapper instance of the screen
 Screen screen(&screenGoldelox, &screenSerial, RST, BAUD_SCREEN);
+// State Machine
+StateMachine stateMachine();
 
-int pictureList[] = { SOFA_ADDRESS_HI, SOFA_ADDRESS_LO,
-                      CUP_ADDRESS_HI, CUP_ADDRESS_LO, 
-                      SLOPE_ADDRESS_HI, SLOPE_ADDRESS_LO,
-                      STAIRS_ADDRESS_HI, STAIRS_ADDRESS_LO,
-                      SIT_ADDRESS_HI, SIT_ADDRESS_LO};
+
+int scrollAddresses[] = { Sofa_Hi, Sofa_Lo,
+                          Cups_Hi, Cups_Lo, 
+                          SlopeUp_Hi, SlopeUp_Lo,
+                          StairUp_Hi, StairUp_Lo};
 
 int currentPicture = 4;
+void scrollLeft();
+void scrollRight();
 
 void setup(){
   Serial.begin(9600);
-  Serial.println("Rockerswitch + screen test");
+  Serial.println("Prototype");
 
-  // Set pins as either input or output
+  // Set screen pins as either input or output
   pinMode(RST, OUTPUT);
   pinMode(UART_TX, OUTPUT);
   pinMode(UART_RX, INPUT);
@@ -57,34 +65,16 @@ void setup(){
 }
 
 void loop(){
-  String rockerStatus = rocker.get_position();
-  if(rockerStatus != "NEUTRAL" && rockerStatus != "HOLDING UP" && rockerStatus != "HOLDING DOWN"){
-    Serial.print("Rocker status: ");
-    Serial.print(rockerStatus);
-    Serial.print("\n");
+  // Get button states
+  String rockerState = rocker.get_position();
+  String joystickState = joystick.get_position();
+  String joystickPress = joystick.get_press();
+  String triggerPress = trigger.read_state();
 
-    if(rockerStatus == "UP"){
-      // Show picture above current picture
-      if(currentPicture >= 8){
-        currentPicture = 0;
-      }
-      else{
-        currentPicture += 2;
-      }
-      screen.draw_image(pictureList[currentPicture], pictureList[currentPicture+1]);
-    }
-    if(rockerStatus == "DOWN"){
-      // Show picture below current picture
-      if(currentPicture <= 0){
-        currentPicture = 8;
-      }
-      else{
-        currentPicture -= 2;
-      }
-      screen.draw_image(pictureList[currentPicture], pictureList[currentPicture+1]);
-    }
-  }
-  else{
-    screen.draw_image(pictureList[currentPicture], pictureList[currentPicture+1]);
-  }
+  // Determine new state
+  stateMachine.updateState(joystickState, joystickPress, rockerState, triggerPress);
+
+  // Draw appropriate image
+  int drawSdAddresses[2] = stateMachine.getScreenImage();
+  screen.draw_image(drawSdAddresses[0], drawSdAddresses[1]);
 }
