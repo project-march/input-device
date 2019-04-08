@@ -1,7 +1,7 @@
 #ifndef STATEMACHINE_H
 #define STATEMACHINE_H
 
-#include <mbed.h>
+#include <Arduino.h>
 #include <vector>
 
 enum class State {  ScrollSofa,
@@ -18,7 +18,7 @@ class StateMachine
 {
 private:
     State currentState;
-    State updateScrollState();
+    void updateScrollState(String joystickState);
     std::vector<State> scrollStates;
     std::vector<State>::iterator currentScrollState;
     

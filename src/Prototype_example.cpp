@@ -1,10 +1,11 @@
 #include <Arduino.h>
+#include "StateMachine.h"
 #include "RockerSwitch.h"
 #include "Joystick.h"
+#include "Button.h"
 #include "SoftwareSerial.h"
 #include "Goldelox_Serial_4DLib.h"
 #include "Screen.h"
-#include "StateMachine.h"
 
 // Pin definitions
 // Trigger
@@ -37,17 +38,7 @@ Goldelox_Serial_4DLib screenGoldelox(&screenSerial);
 // Wrapper instance of the screen
 Screen screen(&screenGoldelox, &screenSerial, RST, BAUD_SCREEN);
 // State Machine
-StateMachine stateMachine();
-
-
-int scrollAddresses[] = { Sofa_Hi, Sofa_Lo,
-                          Cups_Hi, Cups_Lo, 
-                          SlopeUp_Hi, SlopeUp_Lo,
-                          StairUp_Hi, StairUp_Lo};
-
-int currentPicture = 4;
-void scrollLeft();
-void scrollRight();
+StateMachine stateMachine;
 
 void setup(){
   Serial.begin(9600);
@@ -60,7 +51,6 @@ void setup(){
 
   // initialize screen by resetting, initing uSD card, clearing screen
   screen.initialize();
-  screen.draw_image(SLOPE_ADDRESS_HI, SLOPE_ADDRESS_LO);
   sleep(1);
 }
 
@@ -75,6 +65,6 @@ void loop(){
   stateMachine.updateState(joystickState, joystickPress, rockerState, triggerPress);
 
   // Draw appropriate image
-  int drawSdAddresses[2] = stateMachine.getScreenImage();
-  screen.draw_image(drawSdAddresses[0], drawSdAddresses[1]);
+  int *drawSdAddresses = stateMachine.getScreenImage();
+  screen.draw_image(*(drawSdAddresses), *(drawSdAddresses+1));
 }

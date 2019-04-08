@@ -22,23 +22,23 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
     {
         case State::ScrollSofa:
             // first check if go outside scroll mode, else update scroll state
-            this->updateScrollState();
+            this->updateScrollState(joystickState);
             break;
         case State::ScrollCups:
             // first check if go outside scroll mode, else update scroll state
-            this->updateScrollState();
+            this->updateScrollState(joystickState);
             break;
         case State::ScrollSlopeUp:
             // first check if go outside scroll mode, else update scroll state
-            this->updateScrollState();
+            this->updateScrollState(joystickState);
             break;
         case State::ScrollStairsUp:
             // first check if go outside scroll mode, else update scroll state
-            this->updateScrollState();
+            this->updateScrollState(joystickState);
             break;
         case State::ScrollSit:
             // first check if go outside scroll mode, else update scroll state
-            this->updateScrollState();
+            this->updateScrollState(joystickState);
             break;
         case State::Walk:
             if(joystickPress == "PUSH"){
@@ -51,7 +51,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             break;
         case State::WalkActivated:
             if(triggerPress == "PUSH"){
-                this->currentState = this->currentScrollState;
+                this->currentState = *this->currentScrollState;
             }
             break;
         default:
@@ -64,45 +64,64 @@ void StateMachine::updateScrollState(String joystickState){
         this->currentState = State::Walk;
     }
     else if(joystickState == "LEFT"){
-        this->currentScrollState--;
-        this->currentState = this->currentScrollState;
+        if(this->currentScrollState == this->scrollStates.begin()){
+            this->currentScrollState = this->scrollStates.end();
+        }
+        else{
+            this->currentScrollState--;
+        }
+        this->currentState = *this->currentScrollState;
     }
     else if(joystickState == "RIGHT"){
-        this->currentScrollState++;
-        this->currentState = this->currentScrollState;
+        if(this->currentScrollState == this->scrollStates.end()){
+            this->currentScrollState = this->scrollStates.begin();
+        }
+        else{
+            this->currentScrollState++;
+        }
+        this->currentState = *this->currentScrollState;
     }
 }
 
 // Return the SD addresses of the image that should be drawn in the current state
 int * StateMachine::getScreenImage(){
-    static int currentSdAddresses[2];
+    static int currentSdAddresses[2] = {0, 0};
     switch (this->currentState)
     {
         case State::ScrollSofa:
-            currentSdAddresses = {Sofa_Hi, Sofa_Lo};
+            currentSdAddresses[0] = Sofa_Hi;
+            currentSdAddresses[1] = Sofa_Lo;
             break;
         case State::ScrollCups:
-            currentSdAddresses = {Cups_Hi, Cups_Lo};
+            currentSdAddresses[0] = Cups_Hi;
+            currentSdAddresses[1] = Cups_Lo;
             break;
         case State::ScrollSlopeUp:
-            currentSdAddresses = {SlopeUp_Hi, SlopeUp_Lo};
+            currentSdAddresses[0] = SlopeUp_Hi;
+            currentSdAddresses[1] = SlopeUp_Lo;
             break;
         case State::ScrollStairsUp:
-            currentSdAddresses = {StairUp_Hi, StairUp_Lo};
+            currentSdAddresses[0] = StairUp_Hi;
+            currentSdAddresses[1] = StairUp_Lo;
             break;
         case State::ScrollSit:
-            currentSdAddresses = {Sit_Hi, Sit_Lo};
+            currentSdAddresses[0] = Sit_Hi;
+            currentSdAddresses[1] = Sit_Lo;
             break;
         case State::Walk:
-            currentSdAddresses = {Walk_Hi, Walk_Lo};
+            currentSdAddresses[0] = Walk_Hi;
+            currentSdAddresses[1] = Walk_Lo;
             break;
         case State::WalkSelected:
-            currentSdAddresses = {WalkS_Hi, WalkS_Lo};
+            currentSdAddresses[0] = WalkS_Hi;
+            currentSdAddresses[1] = WalkS_Lo;
             break;
         case State::WalkActivated:
-            currentSdAddresses = {WalkA_Hi, WalkA_Lo};
+            currentSdAddresses[0] = WalkA_Hi;
+            currentSdAddresses[1] = WalkA_Lo;
         default:
-            currentSdAddresses = {BStepS_Hi, BStepS_Lo};
+            currentSdAddresses[0] = BStepS_Hi;
+            currentSdAddresses[1] = BStepS_Lo;
             break;
     }
     return currentSdAddresses;
