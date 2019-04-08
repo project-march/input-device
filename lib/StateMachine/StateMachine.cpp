@@ -119,6 +119,7 @@ int * StateMachine::getScreenImage(){
         case State::WalkActivated:
             currentSdAddresses[0] = WalkA_Hi;
             currentSdAddresses[1] = WalkA_Lo;
+            break;
         default:
             currentSdAddresses[0] = BStepS_Hi;
             currentSdAddresses[1] = BStepS_Lo;
