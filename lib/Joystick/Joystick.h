@@ -20,7 +20,7 @@ private:
     unsigned long lastPrintTime;
     String lastPushPosition;
     unsigned long lastPushPrintTime;
-    const int bounceTime = 50000; //us. May introduce unwanted behaviour if changed
+    const int bounceTime = 20000; //us. May introduce unwanted behaviour if changed
     const unsigned long holdTime = 1000; //ms. Determines how often up or down are returned if the joystick is held.
 };
 

@@ -13,7 +13,7 @@ private:
     int pinDown;
     String lastPosition;
     unsigned long lastPrintTime;
-    const unsigned int bounceTime = 100000; //us. May introduce unwanted behaviour if changed
+    const unsigned int bounceTime = 20000; //us. May introduce unwanted behaviour if changed
     const unsigned long holdTime = 1000; //ms. Determines how often up or down are returned if the rocker switch is held up or down.
 };
 
