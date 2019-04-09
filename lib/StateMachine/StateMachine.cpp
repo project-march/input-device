@@ -4,8 +4,6 @@
 // Constructor
 StateMachine::StateMachine()
 {
-    this->currentState = State::ScrollSlopeUp;
-
     // Fill scroll states
     this->scrollStates.push_back(State::ScrollSofa);
     this->scrollStates.push_back(State::ScrollCups);
@@ -14,6 +12,7 @@ StateMachine::StateMachine()
     this->scrollStates.push_back(State::ScrollSit);
 
     this->currentScrollState = this->scrollStates.begin();
+    this->currentState = *this->currentScrollState;
 }
 
 // Updates the current state based on the button inputs
@@ -44,14 +43,45 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             if(joystickPress == "PUSH"){
                 this->currentState = State::WalkSelected;
             }
+            else if(joystickState == "DOWN"){
+                this->currentState = *this->currentScrollState;
+            }
         case State::WalkSelected:
             if(triggerPress == "PUSH"){
                 this->currentState = State::WalkActivated;
+            }
+            else if(rockerState == "UP"){
+                this->currentState = State::BigStep;
+            }
+            else if(rockerState == "DOWN"){
+                this->currentState = State::SmallStep;
             }
             break;
         case State::WalkActivated:
             if(triggerPress == "PUSH"){
                 this->currentState = *this->currentScrollState;
+            }
+            break;
+        case State::BigStep:
+            if(rockerState == "DOWN"){
+                this->currentState = State::SmallStep;
+            }
+            else if(triggerPress == "PUSH"){
+                this->currentState = State::WalkActivated;
+            }
+            else if(joystickPress == "PUSH"){
+                this->currentState = State::Walk;
+            }
+            break;
+        case State::SmallStep:
+            if(rockerState == "UP"){
+                this->currentState = State::BigStep;
+            }
+            else if(triggerPress == "PUSH"){
+                this->currentState = State::WalkActivated;
+            }
+            else if(joystickPress == "PUSH"){
+                this->currentState = State::Walk;
             }
             break;
         default:
@@ -65,7 +95,7 @@ void StateMachine::updateScrollState(String joystickState){
     }
     else if(joystickState == "LEFT"){
         if(this->currentScrollState == this->scrollStates.begin()){
-            this->currentScrollState = this->scrollStates.end();
+            this->currentScrollState = this->scrollStates.end() - 1; // .end() returns one beyond last element
         }
         else{
             this->currentScrollState--;
@@ -73,7 +103,7 @@ void StateMachine::updateScrollState(String joystickState){
         this->currentState = *this->currentScrollState;
     }
     else if(joystickState == "RIGHT"){
-        if(this->currentScrollState == this->scrollStates.end()){
+        if(this->currentScrollState + 1 == this->scrollStates.end()){  // .end() returns one beyond last element
             this->currentScrollState = this->scrollStates.begin();
         }
         else{
@@ -120,9 +150,18 @@ int * StateMachine::getScreenImage(){
             currentSdAddresses[0] = WalkA_Hi;
             currentSdAddresses[1] = WalkA_Lo;
             break;
-        default:
+        case State::BigStep:
             currentSdAddresses[0] = BStepS_Hi;
             currentSdAddresses[1] = BStepS_Lo;
+            break;
+        case State::SmallStep:
+            currentSdAddresses[0] = SStepS_Hi;
+            currentSdAddresses[1] = SStepS_Lo;
+            break;
+        default:
+            Serial.println("Can't draw this state");
+            currentSdAddresses[0] = 0;
+            currentSdAddresses[1] = 0;
             break;
     }
     return currentSdAddresses;

@@ -11,7 +11,9 @@ enum class State {  ScrollSofa,
                     ScrollSit,
                     Walk,
                     WalkSelected,
-                    WalkActivated};
+                    WalkActivated,
+                    BigStep,
+                    SmallStep};
 
 
 class StateMachine
