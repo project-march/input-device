@@ -160,219 +160,219 @@
 #define WalkNormalActivated_Lo 0x097E
 
 // HomeSitSelected unknown
-#define HomeSitSelected_Hi
-#define HomeSitSelected_Lo
+#define HomeSitSelected_Hi      0x0000
+#define HomeSitSelected_Lo      0x14E2
 
 // HomeSitActivated unknown
-#define HomeSitActivated_Hi
-#define HomeSitActivated_Lo
+#define HomeSitActivated_Hi     0x0000
+#define HomeSitActivated_Lo     0x14E2
 
 // TurnOffStartSelected unknown
-#define TurnOffStartSelected_Hi
-#define TurnOffStartSelected_Lo
+#define TurnOffStartSelected_Hi     0x0000    
+#define TurnOffStartSelected_Lo     0x14E2
 
 // TurnOffStartActivated unknown
-#define TurnOffStartActivated_Hi
-#define TurnOffStartActivated_Lo
+#define TurnOffStartActivated_Hi        0x0000
+#define TurnOffStartActivated_Lo        0x14E2
 
 // HomeStandStartSelected unknown
-#define HomeStandStartSelected_Hi
-#define HomeStandStartSelected_Lo
+#define HomeStandStartSelected_Hi       0x0000
+#define HomeStandStartSelected_Lo       0x14E2
 
 // HomeStandStartActivated unknown
-#define HomeStandStartActivated_Hi
-#define HomeStandStartActivated_lO
+#define HomeStandStartActivated_Hi      0x0000
+#define HomeStandStartActivated_lo      0x14E2
 
 // HomeStandSelected unknown
-#define HomeStandSelected_Hi
-#define HomeStandSelected_Lo
+#define HomeStandSelected_Hi        0x0000
+#define HomeStandSelected_Lo        0x14E2
                     
 // HomeStandActivated unknown
-#define HomeStandActivated_Hi
-#define HomeStandActivated_Lo
+#define HomeStandActivated_Hi       0x0000
+#define HomeStandActivated_Lo       0x14E2
 
 // TurnOffSelected unknown
-#define TurnOffSelected_Hi
-#define TurnOffSelected_Lo
+#define TurnOffSelected_Hi      0x0000
+#define TurnOffSelected_Lo      0x14E2
 
 // TurnOffActivated unknown
-#define TurnOffActivated_Hi
-#define TurnOffActivated_Lo
+#define TurnOffActivated_Hi     0x0000
+#define TurnOffActivated_Lo     0x14E2
 
 // WalkSmallSelected unknown
-#define WalkSmallSelected_Hi
-#define WalkSmallSelected_Lo
+#define WalkSmallSelected_Hi    0x0000
+#define WalkSmallSelected_Lo    0x14E2
 
 // WalkLargeSelected unknown
-#define WalkLargeSelected_Hi
-#define WalkLargeSelected_Lo
+#define WalkLargeSelected_Hi        0x0000
+#define WalkLargeSelected_Lo        0x14E2
 
 // WalkSmallActivated unknown
-#define WalkSmallActivated_Hi
-#define WalkSmallActivated_Lo
+#define WalkSmallActivated_Hi       0x0000
+#define WalkSmallActivated_Lo       0x14E2
 
 // WalkLargeActivated unknown
-#define WalkLargeActivated_Hi
-#define WalkLargeActivated_Lo
+#define WalkLargeActivated_Hi       0x0000    
+#define WalkLargeActivated_Lo       0x14E2
 
 // SingleStep 
 #define SingleStep_Hi               0x0000
 #define SingleStep_Lo               0x0144
 
 // SingleStepSmall unknown
-#define SingleStepSmall_Hi
-#define SingleStepSmall_Lo
+#define SingleStepSmall_Hi      0x0000
+#define SingleStepSmall_Lo      0x14E2
 
 // SingleStepNormal unknown
-#define SingleStepNormal_Hi
-#define SingleStepNormal_Lo
+#define SingleStepNormal_Hi     0x0000
+#define SingleStepNormal_Lo     0x14E2
 
 // SingleStepLarge unknown
-#define SingleStepLarge_Hi
-#define SingleStepLarge_Lo
+#define SingleStepLarge_Hi      0x0000
+#define SingleStepLarge_Lo      0x14E2
 
 // SingleStepSmallSelected unknown
-#define SingleStepSmallSelected_Hi
-#define SingleStepSmallSelected_Lo
+#define SingleStepSmallSelected_Hi      0x0000
+#define SingleStepSmallSelected_Lo      0x14E2
 
 // SingleStepNormalSelected unknown
-#define SingleStepNormalSelected_Hi
-#define SingleStepNormalSelected_Lo
+#define SingleStepNormalSelected_Hi     0x0000
+#define SingleStepNormalSelected_Lo     0x14E2
 
 // SingleStepLargeSelected unknown
-#define SingleStepLargeSelected_Hi
-#define SingleStepLargeSelected_Lo
+#define SingleStepLargeSelected_Hi      0x0000
+#define SingleStepLargeSelected_Lo      0x14E2
 
 // SingleStepSmallActivated unknown
-#define SingleStepSmallActivated_Hi
-#define SingleStepSmallActivated_Lo
+#define SingleStepSmallActivated_Hi     0x0000
+#define SingleStepSmallActivated_Lo     0x14E2
 
 // SingleStepNormalActivated unknown
-#define SingleStepNormalActivated_Hi
-#define SingleStepNormalActivated_L0
+#define SingleStepNormalActivated_Hi        0x0000
+#define SingleStepNormalActivated_Lo        0x14E2
 
 // SingleStepLargeActivated unknown
-#define SingleStepLargeActivated_Hi
-#define SingleStepLargeActivated_Lo
+#define SingleStepLargeActivated_Hi     0x0000
+#define SingleStepLargeActivated_Lo     0x14E2
 
 // SideStep 
 #define SideStep_Hi         0x0000
-#define SideStep_Lo         0x0747
+#define SideStep_Lo         0x0747      
 
 // SideStepLeft unknown
-#define SideStepLeft_Hi
-#define SideStepLeft_Lo
+#define SideStepLeft_Hi     0x0000
+#define SideStepLeft_Lo     0x14E2
 
 // SideStepRight unknown
-#define SideStepRight_Hi
-#define SideStepRight_Lo
+#define SideStepRight_Hi        0x0000
+#define SideStepRight_Lo        0x14E2
 
 // SideStepLeftSelected unknown
-#define SideStepLeftSelected_Hi
-#define SideStepLeftSelected_Lo
+#define SideStepLeftSelected_Hi     0x0000
+#define SideStepLeftSelected_Lo     0x14E2
 
 // SideStepRightSelected unknown
-#define SideStepRightSelected_Hi
-#define SideStepRightSelected_Lo
+#define SideStepRightSelected_Hi        0x0000
+#define SideStepRightSelected_Lo        0x14E2
 
 // SideStepLeftActivated unknown
-#define SideStepLeftActivated_Hi
-#define SideStepLeftActivated_Lo
+#define SideStepLeftActivated_Hi        0x0000
+#define SideStepLeftActivated_Lo        0x14E2
 
 // SideStepRightActivated unknown
-#define SideStepRightActivated_Hi
-#define SideStepRightActivated_Lo
+#define SideStepRightActivated_Hi       0x0000
+#define SideStepRightActivated_Lo       0x14E2
 
 // Sofa
 #define Sofa_Hi        0x0000
 #define Sofa_Lo        0x02D9
 
 // SofaSit unknown
-#define SofaSit_Hi
-#define SofaSit_Lo
+#define SofaSit_Hi      0x0000
+#define SofaSit_Lo      0x14E2
 
 // SofaSitSelected unknown
-#define SofaSitSelected_Hi
-#define SofaSitSelected_Lo
+#define SofaSitSelected_Hi      0x0000
+#define SofaSitSelected_Lo      0x14E2
 
 // SofaSitActivated unknown
-#define SofaSitActivated_Hi
-#define SofaSitActivated_Lo
+#define SofaSitActivated_Hi     0x0000
+#define SofaSitActivated_Lo     0x14E2
 
 // SofaStandUp uknonwn
-#define SofaStandUp_Hi
-#define SofaStandUp_Lo
+#define SofaStandUp_Hi      0x0000
+#define SofaStandUp_Lo      0x14E2
 
 // SofaStandUpSelected uknonwn
-#define SofaStandUpSelected_Hi
-#define SofaStandUpSelected_Lo
+#define SofaStandUpSelected_Hi      0x0000
+#define SofaStandUpSelected_Lo      0x14E2
 
 // SofaStandUpActivated unknown
-#define SofaStandUpActivated_Hi
-#define SofaStandUpActivated_Lo
+#define SofaStandUpActivated_Hi     0x0000
+#define SofaStandUpActivated_Lo     0x14E2
 
 // Slope
 #define Slope_Hi    0x0000   
 #define Slope_Lo    0x0288
 
 // SlopeUp unknown
-#define SlopeUp_Hi
-#define SlopeUp_Lo
+#define SlopeUp_Hi      0x0000
+#define SlopeUp_Lo      0x14E2
 
 // SlopeUpSelected unknown
-#define SlopeUpSelected_Hi
-#define SlopeUpSelected_Lo
+#define SlopeUpSelected_Hi      0x0000
+#define SlopeUpSelected_Lo      0x14E2
 
 // SlopeUpActivated unknown
-#define SlopeUpActivated_Hi
-#define SlopeUpActivated_Lo
+#define SlopeUpActivated_Hi     0x0000
+#define SlopeUpActivated_Lo     0x14E2
 
 // SlopeDown unknown
-#define SlopeDown_Hi
-#define SlopeDown_Lo
+#define SlopeDown_Hi        0x0000
+#define SlopeDown_Lo        0x14E2
 
 // SlopeDownSelected unknown
-#define SlopeDownSelected_Hi
-#define SlopeDownSelected_Lo
+#define SlopeDownSelected_Hi        0x0000
+#define SlopeDownSelected_Lo        0x14E2
 
 // SlopeDownActivated unknown
-#define SlopeDownActivated_Hi
-#define SlopeDownActivated_Lo
+#define SlopeDownActivated_Hi       0x0000
+#define SlopeDownActivated_Lo       0x14E2
 
 // RoughTerrain 
 #define RoughTerrain_Hi         0x0000
 #define RoughTerrain_Lo         0x00F3
 
 // RoughTerrainSelected unknown
-#define RoughTerrainSelected_Hi
-#define RoughTerrainSelected_Lo
+#define RoughTerrainSelected_Hi     0x0000
+#define RoughTerrainSelected_Lo     0x14E2
 
 // RoughTerrainActivated unknown
-#define RoughTerrainActivated_Hi
-#define RoughTerrainActivated_LO
+#define RoughTerrainActivated_Hi        0x0000
+#define RoughTerrainActivated_LO        0x14E2
 
 // TiltedPath 
 #define TiltedPath_Hi           0x0000
 #define TiltedPath_Lo           0x0798
 
 // TiltedPathSelected unknown
-#define TiltedPathSelected_Hi
-#define TiltedPathSelected_Lo
+#define TiltedPathSelected_Hi       0x0000
+#define TiltedPathSelected_Lo       0x14E2
 
 // TiltedPathActivated unknown
-#define TiltedPathActivated_Hi
-#define TiltedPathActivated_Lo
+#define TiltedPathActivated_Hi      0x0000
+#define TiltedPathActivated_Lo      0x14E2
 
 // WalkObstacle unknown
-#define WalkObstacle_Hi
-#define WalkObstacle_Lo
+#define WalkObstacle_Hi     0x0000
+#define WalkObstacle_Lo     0x14E2
 
 // WalkObstacleSelected unknown
-#define WalkObstacleSelected_Hi
-#define WalkObstacleSelected_Lo
+#define WalkObstacleSelected_Hi     0x0000
+#define WalkObstacleSelected_Lo     0x14E2
 
 // WalkObstacleActivated unknown
-#define WalkObstacleActivated_Hi
-#define WalkObstacleActivated_Lo
+#define WalkObstacleActivated_Hi       0x0000
+#define WalkObstacleActivated_Lo       0x14E2 
 
 #endif //SD_ADDRESSES_H
