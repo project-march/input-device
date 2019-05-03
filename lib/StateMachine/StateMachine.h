@@ -88,7 +88,11 @@ enum class State {  HomeSit,
                     StairsWalkActivated,
                     StairsDown,
                     StairsDownSelected,
-                    StairsDownActivated                   
+                    StairsDownActivated
+
+                    WalkObstacle,
+                    WalkObstacleSelected,
+                    WalkObstacleActivated,                  
 
 };
                     
@@ -100,6 +104,7 @@ private:
     State rememberStateWIB;
     State rememberStateSit;
     State rememberStateObstacle;
+    State rememberStateObstacleWIB;
 public:
     StateMachine();
     void updateState(String joystickState = "NEUTRAL", String joystickPress = "NEUTRAL", String rockerState = "NEUTRAL", String triggerPress = "NEUTRAL");
