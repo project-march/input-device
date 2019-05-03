@@ -88,13 +88,11 @@ enum class State {  HomeSit,
                     StairsWalkActivated,
                     StairsDown,
                     StairsDownSelected,
-                    StairsDownActivated
+                    StairsDownActivated,
 
                     WalkObstacle,
                     WalkObstacleSelected,
-                    WalkObstacleActivated,                  
-
-};
+                    WalkObstacleActivated};
                     
 
 class StateMachine
