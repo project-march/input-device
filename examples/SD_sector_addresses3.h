@@ -1,7 +1,7 @@
 #ifndef SD_ADDRESSES_H
-#define SD_ADDRESSES_H
+#define SD_ADDRESSES3_H
 
-//Version 1!!
+//Version 3!!
 
 // This file defines the sector addresses of the images to be loaded on the screen
 // The sector addresses can be found via the 4D Systems Workshop 4D IDE
@@ -9,113 +9,138 @@
 //  - To load the desired images on the uSD card
 //  - To find the sector addresses of said images (via generated .Gc file)
 
-// HomeSit
-#define HomeSit_Hi             0x0000
-#define HomeSit_Lo             0x0000
 
-// StandUp
+// 3HomeSit
+#define HomeSit_Hi              0x0000
+#define HomeSit_Lo             0x0A71
+
+// 3StandUp
 #define StandUp_Hi              0x0000
-#define StandUp_Lo              0x0654
+#define StandUp_Lo              0x10C5
 
-// StandUpSelected
+// 3StandUpSelected
 #define StandUpSelected_Hi     0x0000
-#define StandUpSelected_Lo     0x06F6
+#define StandUpSelected_Lo     0x1167
 
-// StandUpActivated
+// 3StandUpActivated
 #define StandUpActivated_Hi    0x0000
-#define StandUpActivated_Lo    0x06A5   
+#define StandUpActivated_Lo    0x1116
 
-// TurnOffStart
+// 3TurnOffStart
 #define TurnOffStart_Hi        0x0000
-#define TurnOffStart_Lo        0x083A
+#define TurnOffStart_Lo        0x12AB
 
-// HomeStandStart
+// 3HomeStandStart
 #define HomeStandStart_Hi      0x0000
-#define HomeStandStart_Lo      0x00A2
+#define HomeStandStart_Lo      0x0B13
 
-//  Sit
+//  3Sit
 #define Sit_Hi                 0x0000
-#define Sit_Lo                 0x0195
+#define Sit_Lo                 0x0C06
 
-//  SitSelected
+//  3SitSelected
 #define SitSelected_Hi         0x0000
-#define SitSelected_Lo         0x0237
+#define SitSelected_Lo         0x0CA8
 
-//  SitActivated
+//  3SitActivated
 #define SitActivated_Hi        0x0000
-#define SitActivated_Lo        0x01E6
+#define SitActivated_Lo        0x0C57
 
-//  HomeStand
+//  3HomeStand
 #define HomeStand_Hi           0x0000
-#define HomeStand_Lo           0x0051
+#define HomeStand_Lo           0x0AC2
 
-//  TurnOff
+//  3TurnOff
 #define TurnOff_Hi             0x0000
-#define TurnOff_Lo             0x07E9
+#define TurnOff_Lo             0x125A
 
-//  Stairs
+//  3Stairs
 #define Stairs_Hi              0x0000
-#define Stairs_Lo              0x032A
+#define Stairs_Lo              0x0D9B
 
-//  StairsUp
+//  3StairsUp
 #define StairsUp_Hi            0x0000
-#define StairsUp_Lo            0x046E
+#define StairsUp_Lo            0x0EDF
 
-//  StairsUpSelected
+//  3StairsUpSelected
 #define StairsUpSelected_Hi    0x0000
-#define StairsUpSelected_Lo    0x0510
+#define StairsUpSelected_Lo    0x0F81
 
-//  StairsUpActivated
+//  3StairsUpActivated
 #define StairsUpActivated_Hi   0x0000
-#define StairsUpActivated_Lo   0x04BF
+#define StairsUpActivated_Lo   0x0F30
 
-//  WalkObstacle
+//  3StairWalk
 #define WalkObstacle_Hi          0x0000
-#define WalkObstacle_Lo          0x0561
+#define WalkObstacle_Lo          0x0FD2
 
-//  WalkObstacleSelected
+//  3StairWalkSelected,
 #define WalkObstacleSelected_Hi  0x0000
-#define WalkObstacleSelected_Lo  0x0603
+#define WalkObstacleSelected_Lo  0x1074
 
-//  WalkObstacleActivated
+//  3StairWalkActivated,
 #define WalkObstacleActivated_Hi 0x0000
-#define WalkObstacleActivated_Lo 0x05B2
+#define WalkObstacleActivated_Lo 0x1023
 
-//  StairsDown
+//  3StairsDown,
 #define StairsDown_Hi          0x0000
-#define StairsDown_Lo          0x037B
+#define StairsDown_Lo          0x0DEC
 
-//  StairsDownSelected,
+//  3StairsDownSelected,
 #define StairsDownSelected_Hi  0x0000
-#define StairsDownSelected_Lo  0x041D
+#define StairsDownSelected_Lo  0x0E8E
 
-//  StairsDownActivated  
+//  3StairsDownActivated
 #define StairsDownACtivated_Hi 0x0000
-#define StairsDownActivated_Lo 0x03CC
+#define StairsDownActivated_Lo 0x0E3D
 
-//  Walk
+//  3Walk
 #define Walk_Hi                0x0000
-#define Walk_Lo                0x088B
+#define Walk_Lo                0x12FC
 
-//  WalkSmall
+//  3WalkSmall
 #define WalkSmall_Hi           0x0000
-#define WalkSmall_Lo           0x0A20
+#define WalkSmall_Lo           0x1491
 
-//  WalkNormal
+//  3WalkNormal
 #define WalkNormal_Hi          0x0000
-#define WalkNormal_Lo          0x092D
+#define WalkNormal_Lo          0x129E
 
-//  WalkLarge
+//  3WalkLarge
 #define WalkLarge_Hi           0x0000
-#define WalkLarge_Lo           0x08DC
+#define WalkLarge_Lo           0x124D
 
-//  WalkNormalSelected
+//  3WalkNormalSelected
 #define WalkNormalSelected_Hi  0x0000
-#define WalkNormalSelected_Lo  0x09CF
+#define WalkNormalSelected_Lo  0x1440
 
-//  WalkNormalActivated
+//  3WalkNormalActivated
 #define WalkNormalActivated_Hi 0x0000
-#define WalkNormalActivated_Lo 0x097E
+#define WalkNormalActivated_Lo 0x13EF
+
+// SideStep 
+#define SideStep_Hi         0x0000
+#define SideStep_Lo         0x11B8          
+
+// Slope
+#define Slope_Hi    0x0000   
+#define Slope_Lo    0x0CF9
+
+// TiltedPath 
+#define TiltedPath_Hi           0x0000
+#define TiltedPath_Lo           0x1209
+
+// RoughTerrain 
+#define RoughTerrain_Hi         0x0000
+#define RoughTerrain_Lo         0x0B64
+
+// Sofa
+#define Sofa_Hi        0x0000
+#define Sofa_Lo        0x0D4A
+
+// SingleStep 
+#define SingleStep_Hi               0x0000
+#define SingleStep_Lo               0x0BB5
 
 // HomeSitSelected unknown
 #define HomeSitSelected_Hi      0x0000
@@ -173,10 +198,6 @@
 #define WalkLargeActivated_Hi       0x0000    
 #define WalkLargeActivated_Lo       0x14E2
 
-// SingleStep 
-#define SingleStep_Hi               0x0000
-#define SingleStep_Lo               0x0144
-
 // SingleStepSmall unknown
 #define SingleStepSmall_Hi      0x0000
 #define SingleStepSmall_Lo      0x14E2
@@ -213,10 +234,6 @@
 #define SingleStepLargeActivated_Hi     0x0000
 #define SingleStepLargeActivated_Lo     0x14E2
 
-// SideStep 
-#define SideStep_Hi         0x0000
-#define SideStep_Lo         0x0747      
-
 // SideStepLeft unknown
 #define SideStepLeft_Hi     0x0000
 #define SideStepLeft_Lo     0x14E2
@@ -240,10 +257,6 @@
 // SideStepRightActivated unknown
 #define SideStepRightActivated_Hi       0x0000
 #define SideStepRightActivated_Lo       0x14E2
-
-// Sofa
-#define Sofa_Hi        0x0000
-#define Sofa_Lo        0x02D9
 
 // SofaSit unknown
 #define SofaSit_Hi      0x0000
@@ -269,10 +282,6 @@
 #define SofaStandUpActivated_Hi     0x0000
 #define SofaStandUpActivated_Lo     0x14E2
 
-// Slope
-#define Slope_Hi    0x0000   
-#define Slope_Lo    0x0288
-
 // SlopeUp unknown
 #define SlopeUp_Hi      0x0000
 #define SlopeUp_Lo      0x14E2
@@ -297,9 +306,7 @@
 #define SlopeDownActivated_Hi       0x0000
 #define SlopeDownActivated_Lo       0x14E2
 
-// RoughTerrain 
-#define RoughTerrain_Hi         0x0000
-#define RoughTerrain_Lo         0x00F3
+
 
 // RoughTerrainSelected unknown
 #define RoughTerrainSelected_Hi     0x0000
@@ -308,10 +315,6 @@
 // RoughTerrainActivated unknown
 #define RoughTerrainActivated_Hi        0x0000
 #define RoughTerrainActivated_Lo        0x14E2
-
-// TiltedPath 
-#define TiltedPath_Hi           0x0000
-#define TiltedPath_Lo           0x0798
 
 // TiltedPathSelected unknown
 #define TiltedPathSelected_Hi       0x0000

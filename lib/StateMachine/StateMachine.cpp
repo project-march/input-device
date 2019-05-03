@@ -35,7 +35,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             else if(joystickState == "LEFT"){
                 this->currentState = State::HomeSit;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::StandUpSelected;
             }
             break;
@@ -46,7 +46,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             else if(joystickState == "LEFT"){
                 this->currentState = State::StandUp;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::HomeStandStartSelected;
             }
             break;
@@ -57,7 +57,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             else if(joystickState == "LEFT"){
                 this->currentState = State::HomeStandStart;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::TurnOffStartSelected;
             }
             break;
@@ -127,7 +127,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             else if(joystickState == "LEFT"){
                 this->currentState = State::TurnOff;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::SitSelected;
             }
             else if(joystickState == "UP"){
@@ -143,7 +143,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             else if(joystickState == "LEFT"){
                 this->currentState = State::Sit;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::HomeStandSelected;
             }
             else if(joystickState == "UP"){
@@ -158,7 +158,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             else if(joystickState =="LEFT"){
                 this->currentState = State::HomeStand;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::TurnOffSelected;
             }
             else if(joystickState == "UP"){
@@ -219,7 +219,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             else if(joystickState == "LEFT"){
                 this->currentState = State::SideStep;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::WalkNormal;
             }
             else if(joystickState =="UP"){
@@ -239,7 +239,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             else if(joystickState == "LEFT"){
                 this->currentState = State::Walk;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::SingleStepNormal;
             }
             else if(joystickState =="UP"){
@@ -258,7 +258,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             else if(joystickState == "LEFT"){
                 this->currentState = State::SingleStep;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::SideStepLeft;
             }
             else if(joystickState =="UP"){
@@ -279,7 +279,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             else if(rockerState =="UP"){
                 this->currentState = State::WalkLarge;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::WalkNormalSelected;
             }
             else if(rockerState == "UP"){ //Double press
@@ -298,7 +298,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             if(rockerState =="UP"){
                 this->currentState = State::WalkNormal;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::WalkSmallSelected;
             }
             else if(rockerState == "UP"){ //Double press
@@ -317,7 +317,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             if(rockerState =="DOWN"){
                 this->currentState = State::WalkNormal;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::WalkLargeSelected;
             }
             else if(rockerState == "UP"){ //Double press
@@ -339,7 +339,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             else if(rockerState =="UP"){
                 this->currentState = State::SingleStepLarge;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::SingleStepNormalSelected;
             }
             else if(rockerState == "UP"){ //Double press
@@ -358,7 +358,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             if(rockerState =="UP"){
                 this->currentState = State::SingleStepNormal;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::SingleStepSmallSelected;
             }
             else if(rockerState == "UP"){ //Double press
@@ -377,7 +377,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             if(rockerState =="DOWN"){
                 this->currentState = State::SingleStepNormal;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::SingleStepLargeSelected;
             }
             else if(rockerState == "UP"){ //Double press
@@ -399,7 +399,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             else if (joystickState == "RIGHT"){
                 this->currentState = State::SideStepRight;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::SideStepLeftSelected;
             }
             else if(rockerState == "UP"){ //Double press
@@ -421,7 +421,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             else if (joystickState == "RIGHT"){
                 this->currentState = State::SideStepLeft;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::SideStepRightSelected;
             }
             else if(rockerState == "UP"){ //Double press
@@ -558,7 +558,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             else if(joystickState == "LEFT"){
                 this->currentState = State::Stairs;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::SofaSit;
             }
             else if(joystickState =="DOWN"){
@@ -573,7 +573,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             else if(joystickState == "LEFT"){
                 this->currentState = State::Sofa;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::SlopeUp;
             }
             else if(joystickState =="DOWN"){
@@ -588,7 +588,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             else if(joystickState == "LEFT"){
                 this->currentState = State::Slope;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::RoughTerrainSelected;
             }
             else if(joystickState =="DOWN"){
@@ -603,7 +603,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             else if(joystickState == "LEFT"){
                 this->currentState = State::RoughTerrain;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::TiltedPathSelected;
             }
             else if(joystickState =="DOWN"){
@@ -618,7 +618,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             else if(joystickState == "LEFT"){
                 this->currentState = State::TiltedPath;
             }
-            else if(joystickState == "PUSH"){
+            else if(joystickPress == "PUSH"){
                 this->currentState = State::StairsUp;
             }
             else if(joystickState =="DOWN"){
@@ -629,7 +629,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
 
         //Submenu obstacles
         case State::SofaSit:
-            if(joystickState == "PUSH"){
+            if(joystickPress == "PUSH"){
                 this->currentState = State::SofaSitSelected;
             }
             else if(rockerState == "UP"){ //Double press
@@ -647,7 +647,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             }
             break;
         case State::SofaStandUp:
-            if(joystickState == "PUSH"){
+            if(joystickPress == "PUSH"){
                 this->currentState = State::SofaStandUpSelected;
             }
             else if(rockerState == "UP"){ //Double press
@@ -665,7 +665,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             }
             break;
         case State::SlopeUp:
-            if(joystickState == "PUSH"){
+            if(joystickPress == "PUSH"){
                 this->currentState = State::SlopeUpSelected;
             }
             else if(rockerState == "UP"){ //Double press
@@ -683,7 +683,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             }
             break;
         case State::SlopeDown:
-            if(joystickState == "PUSH"){
+            if(joystickPress == "PUSH"){
                 this->currentState = State::SlopeDownSelected;
             }
             else if(rockerState == "UP"){ //Double press
@@ -701,7 +701,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             }
             break;     
         case State::StairsUp:
-            if(joystickState == "PUSH"){
+            if(joystickPress == "PUSH"){
                 this->currentState = State::StairsUpSelected;
             }
             else if(rockerState == "UP"){ //Double press
@@ -719,7 +719,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             }
             break;
         case State::StairsDown:
-            if(joystickState == "PUSH"){
+            if(joystickPress == "PUSH"){
                 this->currentState = State::StairsDownSelected;
             }
             else if(rockerState == "UP"){ //Double press
@@ -865,7 +865,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
      
         //Walk in between obstacles
         case State::WalkObstacle:
-            if(joystickState == "PUSH"){
+            if(joystickPress == "PUSH"){
                 this->currentState = State::WalkObstacleSelected;
             }
             else if(joystickState == "RIGHT"){
