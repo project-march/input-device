@@ -137,7 +137,7 @@
 
 // HomeStandStartActivated unknown
 #define HomeStandStartActivated_Hi      0x0000
-#define HomeStandStartActivated_lo      0x14E2
+#define HomeStandStartActivated_Lo      0x14E2
 
 // HomeStandSelected unknown
 #define HomeStandSelected_Hi        0x0000
@@ -305,7 +305,7 @@
 
 // RoughTerrainActivated unknown
 #define RoughTerrainActivated_Hi        0x0000
-#define RoughTerrainActivated_LO        0x14E2
+#define RoughTerrainActivated_Lo        0x14E2
 
 // TiltedPath 
 #define TiltedPath_Hi           0x0000
