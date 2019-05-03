@@ -255,9 +255,9 @@
 #define SingleStepLargeActivated_Hi
 #define SingleStepLargeActivated_Lo
 
-// SideStep unknown
-#define SideStep_Hi
-#define SideStep_Lo
+// SideStep 
+#define SideStep_Hi         0x0000
+#define SideStep_Lo         0x0747
 
 // SideStepLeft unknown
 #define SideStepLeft_Hi
