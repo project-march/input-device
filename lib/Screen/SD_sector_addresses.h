@@ -363,6 +363,16 @@
 #define TiltedPathActivated_Hi
 #define TiltedPathActivated_Lo
 
+// WalkObstacle unknown
+#define WalkObstacle_Hi
+#define WalkObstacle_Lo
 
+// WalkObstacleSelected unknown
+#define WalkObstacleSelected_Hi
+#define WalkObstacleSelected_Lo
+
+// WalkObstacleActivated unknown
+#define WalkObstacleActivated_Hi
+#define WalkObstacleActivated_Lo
 
 #endif //SD_ADDRESSES_H
