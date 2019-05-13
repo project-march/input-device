@@ -18,10 +18,16 @@ private:
 
     String lastPosition;
     unsigned long lastPrintTime;
-    String lastPushPosition;
-    unsigned long lastPushPrintTime;
-    const int bounceTime = 20000; //us. May introduce unwanted behaviour if changed
+    bool recentInitialClick;
+    bool recentDoubleClick;
+    bool lastPush;
+    unsigned long lastPushReleaseTime;
+    unsigned long lastDoubleClickTime;
+    
+    const int bounceTime = 5000; //us. May introduce unwanted behaviour if changed
     const unsigned long holdTime = 1000; //ms. Determines how often up or down are returned if the joystick is held.
+    const unsigned long doubleClickTime = 300; //ms.
+    const unsigned long doubleClickTimeoutTime = 500; //ms
 };
 
 #endif

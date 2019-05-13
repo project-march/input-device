@@ -68,25 +68,49 @@ String Joystick::get_position() {
     return returnString;
 }
 
-// Returns either "NEUTRAL", "PUSH" or "HOLDING"
-// It is advised to treat "HOLDING" the same as "NEUTRAL" outside this function
+// Returns either "NEUTRAL", "PUSH" or "DOUBLE"
 String Joystick::get_press(){  
-  String returnString;
-  if(!digitalRead(this->press_pin)){
-    if(this->lastPushPosition != "PUSH" || (millis() - this->lastPushPrintTime) > this->holdTime){
-      this->lastPushPrintTime = millis();
-      this->lastPushPosition = "PUSH";
-      returnString = "PUSH";
+    String returnString;
+    if(this->recentDoubleClick){
+        if(millis() - this->lastDoubleClickTime > this->doubleClickTimeoutTime){
+            this->recentDoubleClick = false; // Go back to an mode where we can publish stuff
+        }
     }
-    else{
-      returnString = "HOLDING";
+    if(this->recentInitialClick && !this->recentDoubleClick){
+        if(millis() - this->lastPushReleaseTime > this->doubleClickTime && digitalRead(this->press_pin)){ // Enough time has elapsed since last push release time and not pressed
+            this->lastPush = false;
+            returnString = "PUSH"; // No second click, so publish the single click
+            this->recentInitialClick = false;
+        }
+        else if(!digitalRead(this->press_pin)){ // Joystick is pressed
+            this->lastPush = true;
+            returnString = "DOUBLE"; // A second click, so publish the double click
+            this->recentInitialClick = false;
+            this->recentDoubleClick = true;
+            this->lastDoubleClickTime = millis();
+        }
+        else{ // Joystick not pressed, not just released and recent enough initial click
+            this->lastPush = false;
+            returnString = "NEUTRAL";
+        }
     }
-  }
-  else{
-    this->lastPushPosition = "NEUTRAL";
-    returnString = "NEUTRAL";
-  }
-  // To prevent multiple prints per action due to bouncing
-  usleep(this->bounceTime);
-  return returnString;
+    else{ // No recent initial click or a recent double click
+        if(!digitalRead(this->press_pin)){ // Pressed
+            this->lastPush = true;
+        }
+        else{ // Not pressed
+            if(this->lastPush){ // Just released
+                this->recentInitialClick = true;
+                this->lastPushReleaseTime = millis();
+            }
+            else{
+                this->recentInitialClick = false;
+            }
+            this->lastPush = false;
+        }
+        returnString = "NEUTRAL";
+    }
+    // To prevent multiple prints per action due to bouncing
+    usleep(this->bounceTime);
+    return returnString;
 }
