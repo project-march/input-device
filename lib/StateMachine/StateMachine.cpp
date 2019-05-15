@@ -99,22 +99,22 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
         //Activated
         case State::HomeSitActivated:
             if(triggerPress == "PUSH"){
-                this->currentState = State::StandUp;
+                this->currentState = State::StandUp; //Automatically
             }
             break;
         case State::StandUpActivated:
             if(triggerPress == "PUSH"){
-                this->currentState = State::Walk;
+                this->currentState = State::Walk; //Automatically
             }
             break;
         case State::HomeStandStartActivated:
             if(triggerPress == "PUSH"){
-                this->currentState = State::Walk;
+                this->currentState = State::Walk; //Automatically
             }
             break;
         case State::TurnOffStartActivated:
             if(triggerPress == "PUSH"){
-                this->currentState = State::HomeSit;
+                this->currentState = State::HomeSit; //Automatically
             }
             break;
         
@@ -196,17 +196,17 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
         //Activated
         case State::SitActivated:
             if(triggerPress == "PUSH"){
-                this->currentState = State::StandUp;
+                this->currentState = State::StandUp; //Automatically
             }
             break;
         case State::HomeStandActivated:
             if(triggerPress = "PUSH"){
-                this->currentState = State::Walk;
+                this->currentState = State::Walk; //Automatically
             }
             break;
         case State::TurnOffActivated:
             if(triggerPress = "PUSH"){
-                this->currentState = State::HomeSit;
+                this->currentState = State::HomeSit; //Automatically
             }
             break;
 
@@ -493,7 +493,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             else if(rockerState == "UP"){ //Double press
                 this->currentState = State::SideStepLeft;
             }
-        break;
+            break;
         case State::SideStepRightSelected:
             if(triggerPress == "PUSH"){
                 this->currentState = State::SideStepRightActivated;
@@ -506,46 +506,46 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
         //Activated
         case State::WalkSmallActivated:
             if(triggerPress == "PUSH"){
-                this->currentState = State::Walk;
+                this->currentState = State::Walk; //Automatically
             }
             break;
         case State::WalkNormalActivated:
             if(triggerPress == "PUSH"){
-                this->currentState = State::Walk;
+                this->currentState = State::Walk; //Automatically
 
             }
             break;
         case State::WalkLargeActivated:
             if(triggerPress == "PUSH"){
-                this->currentState = State::Walk;
+                this->currentState = State::Walk; //Automatically
 
             }
             break;
         case State::SingleStepSmallActivated:
             if(triggerPress == "PUSH"){
-                this->currentState = State::SingleStep;
+                this->currentState = State::SingleStep; //Automatically
 
             }
             break;
         case State::SingleStepNormalActivated:
             if(triggerPress == "PUSH"){
-                this->currentState = State::SingleStep;
+                this->currentState = State::SingleStep; //Automatically
 
             }
             break;
         case State::SingleStepLargeActivated:
             if(triggerPress == "PUSH"){
-                this->currentState = State::SingleStep;
+                this->currentState = State::SingleStep; //Automatically
             }
             break;
         case State::SideStepLeftActivated:
             if(triggerPress == "PUSH"){
-                this->currentState = State::SideStep;
+                this->currentState = State::SideStep; //Automatically
             }
             break;
         case State::SideStepRightActivated:
             if(triggerPress == "PUSH"){
-                this->currentState = State::SideStep;
+                this->currentState = State::SideStep; //Automatically
             }
             break;
 
@@ -738,6 +738,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             break;
 
             //Selected and activated submenus
+
             //Sofa
         case State::SofaSitSelected:
             if(triggerPress == "PUSH"){
@@ -749,7 +750,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             break;
         case State::SofaSitActivated:
             if(triggerPress == "PUSH"){
-                this->currentState = State::SofaStandUp;
+                this->currentState = State::SofaStandUp; //Automatically
             }
             break;
         case State::SofaStandUpSelected:
@@ -762,7 +763,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             break;
         case State::SofaStandUpActivated:
             if(triggerPress == "PUSH"){
-                this->currentState = State::WalkObstacle;
+                this->currentState = State::WalkObstacle; //Automatically
                 this->rememberStateObstacleWIB = State::Slope;
             }
             break;
@@ -779,7 +780,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             break;
         case State::SlopeUpActivated:
             if(triggerPress == "PUSH"){
-                this->rememberStateObstacleWIB = State::SlopeDown;
+                this->rememberStateObstacleWIB = State::SlopeDown; //Automatically
                 this->currentState = State::WalkObstacle;
             }
             break;
@@ -793,7 +794,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             break;
         case State::SlopeDownActivated:
             if(triggerPress == "PUSH"){
-                this->rememberStateObstacleWIB = State::RoughTerrain;    
+                this->rememberStateObstacleWIB = State::RoughTerrain; //Automatically
                 this->currentState = State::WalkObstacle;
             }
             break;
@@ -804,12 +805,12 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
                 this->currentState = State::RoughTerrainActivated;
             }
             else if(rockerState == "UP"){
-                this->currentState = State::RoughTerrain;
+                this->currentState = State::RoughTerrain; //Double press
             }
             break;
         case State::RoughTerrainActivated:
             if(triggerPress == "PUSH"){
-                this->rememberStateObstacleWIB = State::TiltedPath;    
+                this->rememberStateObstacleWIB = State::TiltedPath;//Automatically
                 this->currentState = State::WalkObstacle;
             }
             break;
@@ -820,13 +821,13 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
                 this->currentState = State::TiltedPathActivated;
             }
             else if(rockerState == "UP"){
-                this->currentState = State::TiltedPath;
+                this->currentState = State::TiltedPath; //Double press
             }
             break;
         case State::TiltedPathActivated:
             if(triggerPress == "PUSH"){
                 this->rememberStateObstacleWIB = State::Stairs;    
-                this->currentState = State::WalkObstacle;
+                this->currentState = State::WalkObstacle; //Automatically
             }
             break;
 
@@ -843,7 +844,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
         case State::StairsUpActivated:
             if(triggerPress == "PUSH"){
                 this->rememberStateObstacleWIB = State::StairsDown;
-                this->currentState = State::WalkObstacle;
+                this->currentState = State::WalkObstacle; //Automatically
             }
             break;
         case State::StairsDownSelected:
@@ -858,7 +859,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
         case State::StairsDownActivated:
             if(triggerPress == "PUSH"){
                 this->rememberStateObstacleWIB = State::Sofa;
-                this->currentState = State::WalkObstacle;
+                this->currentState = State::WalkObstacle; //Automatically
             }
             break;
 
@@ -866,25 +867,182 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
         //Walk in between obstacles
         case State::WalkObstacle:
             if(joystickPress == "PUSH"){
-                this->currentState = State::WalkObstacleSelected;
+                this->currentState = State::WalkObstacleNormal;
+            }
+            else if(joystickState == "RIGHT"){
+                this->currentState = State::SingleStepObstacle;
+            }
+            break;
+        case State::SingleStepObstacle:
+            if(joystickPress == "PUSH"){
+                this->currentState = State::SingleStepObstacleNormal;
             }
             else if(joystickState == "RIGHT"){
                 this->currentState = rememberStateObstacleWIB;
             }
             break;
-        case State::WalkObstacleSelected:
-            if(triggerPress == "PUSH"){
-                this->currentState = State::WalkObstacleActivated;
+
+        //Choose step size
+        case State::WalkObstacleNormal:
+            if(rockerState == "DOWN"){
+                this->currentState = State::WalkObstacleSmall;
             }
-            else if(rockerState == "UP"){ //Double press
+            else if(rockerState =="UP"){
+                this->currentState = State::WalkObstacleLarge;
+            }
+            else if(joystickPress == "PUSH"){
+                this->currentState = State::WalkObstacleNormalSelected;
+            }
+            else if(joystickState == "RIGHT"){ //Double press!!! Not possible here, because there is already another state for this action.
                 this->currentState = State::WalkObstacle;
             }
             break;
-        case State::WalkObstacleActivated:
-            if(triggerPress == "PUSH"){
-                this->currentState = rememberStateObstacleWIB;
+        case State::WalkObstacleSmall:
+            if(rockerState =="UP"){
+                this->currentState = State::WalkObstacleNormal;
+            }
+            else if(joystickPress == "PUSH"){
+                this->currentState = State::WalkObstacleSmallSelected;
+            }
+            else if(joystickState == "RIGHT"){ //Double press!!! Not possible here, because there is already another state for this action.
+                this->currentState = State::WalkObstacle;
             }
             break;
+        case State::WalkObstacleLarge:
+            if(rockerState =="DOWN"){
+                this->currentState = State::WalkObstacleNormal;
+            }
+            else if(joystickPress == "PUSH"){
+                this->currentState = State::WalkObstacleLargeSelected;
+            }
+            else if(joystickState == "RIGHT"){ //Double press!!! Not possible here, because there is already another state for this action.
+                this->currentState = State::WalkObstacle;
+            }
+            break;
+        case State::SingleStepObstacleNormal:
+            if(rockerState == "DOWN"){
+                this->currentState = State::SingleStepObstacleSmall;
+            }
+            else if(rockerState =="UP"){
+                this->currentState = State::SingleStepObstacleLarge;
+            }
+            else if(joystickPress == "PUSH"){
+                this->currentState = State::SingleStepObstacleNormalSelected;
+            }
+            else if(joystickState == "RIGHT"){ //Double press!!! Not possible here, because there is already another state for this action.
+                this->currentState = State::SingleStepObstacle;
+            }
+            break;
+        case State::SingleStepObstacleSmall:
+            if(rockerState =="UP"){
+                this->currentState = State::SingleStepObstacleNormal;
+            }
+            else if(joystickPress == "PUSH"){
+                this->currentState = State::SingleStepObstacleSmallSelected;
+            }
+            else if(joystickState == "RIGHT"){ //Double press!!! Not possible here, because there is already another state for this action.
+                this->currentState = State::SingleStepObstacle;
+            }
+            break;
+        case State::SingleStepObstacleLarge:
+            if(rockerState =="DOWN"){
+                this->currentState = State::SingleStepObstacleNormal;
+            }
+            else if(joystickPress == "PUSH"){
+                this->currentState = State::SingleStepObstacleLargeSelected;
+            }
+            else if(joystickState == "RIGHT"){ //Double press!!! Not possible here, because there is already another state for this action.
+                this->currentState = State::SingleStepObstacle;
+            }
+            break;
+        
+        
+        //Selected
+        case State::WalkObstacleSmallSelected:
+            if(triggerPress == "PUSH"){
+                this->currentState = State::WalkObstacleSmallActivated;
+            }
+            else if(rockerState == "UP"){ //Double press
+                this->currentState = State::WalkObstacleSmall;
+            }
+            break;
+        case State::WalkObstacleNormalSelected:
+            if(triggerPress == "PUSH"){
+                this->currentState = State::WalkObstacleNormalActivated;
+            }
+            else if(rockerState == "UP"){ //Double press
+                this->currentState = State::WalkObstacleNormal;
+            }
+            break;
+        case State::WalkObstacleLargeSelected:
+            if(triggerPress == "PUSH"){
+                this->currentState = State::WalkObstacleLargeActivated;
+            }
+            else if(rockerState == "UP"){ //Double press
+                this->currentState = State::WalkObstacleLarge;
+            }
+            break;
+        case State::SingleStepObstacleSmallSelected:
+            if(triggerPress == "PUSH"){
+                this->currentState = State::SingleStepObstacleSmallActivated;
+            }
+            else if(rockerState == "UP"){ //Double press
+                this->currentState = State::SingleStepObstacleSmall;
+            }
+            break;
+        case State::SingleStepObstacleNormalSelected:
+            if(triggerPress == "PUSH"){
+                this->currentState = State::SingleStepObstacleNormalActivated;
+            }
+            else if(rockerState == "UP"){ //Double press
+                this->currentState = State::SingleStepObstacleNormal;
+            }
+            break;
+        case State::SingleStepObstacleLargeSelected:
+            if(triggerPress == "PUSH"){
+                this->currentState = State::SingleStepObstacleLargeActivated;
+            }
+            else if(rockerState == "UP"){ //Double press
+                this->currentState = State::SingleStepObstacleLarge;
+            }
+            break;
+
+        //Activated
+        case State::WalkObstacleSmallActivated:
+            if(triggerPress == "PUSH"){
+                this->currentState = State::SingleStepObstacle; //Automatically
+            }
+            break;
+        case State::WalkObstacleNormalActivated:
+            if(triggerPress == "PUSH"){
+                this->currentState = State::SingleStepObstacle; //Automatically
+
+            }
+            break;
+        case State::WalkObstacleLargeActivated:
+            if(triggerPress == "PUSH"){
+                this->currentState = State::SingleStepObstacle; //Automatically
+
+            }
+            break;
+        case State::SingleStepObstacleSmallActivated:
+            if(triggerPress == "PUSH"){
+                this->currentState = rememberStateObstacleWIB; //Automatically
+
+            }
+            break;
+        case State::SingleStepObstacleNormalActivated:
+            if(triggerPress == "PUSH"){
+                this->currentState = rememberStateObstacleWIB; //Automatically
+
+            }
+            break;
+        case State::SingleStepObstacleLargeActivated:
+            if(triggerPress == "PUSH"){
+                this->currentState = rememberStateObstacleWIB; //Automatically
+            }
+            break;
+
         default:
             break;
     }
@@ -1101,14 +1259,84 @@ int * StateMachine::getScreenImage(){
             currentSdAddresses[0] = WalkObstacle_Hi; 
             currentSdAddresses[1] = WalkObstacle_Lo;  
             break;
-        case State::WalkObstacleSelected:
-            currentSdAddresses[0] = WalkObstacleSelected_Hi;
-            currentSdAddresses[1] = WalkObstacleSelected_Lo; 
+        case State::WalkObstacleSmall:
+            currentSdAddresses[0] = WalkObstacleSmall_Hi; 
+            currentSdAddresses[1] = WalkObstacleSmall_Lo;  
             break;
-        case State::WalkObstacleActivated:
-            currentSdAddresses[0] = WalkObstacleActivated_Hi;
-            currentSdAddresses[1] = WalkObstacleActivated_Lo; 
+        case State::WalkObstacleNormal:
+            currentSdAddresses[0] = WalkObstacleNormal_Hi; 
+            currentSdAddresses[1] = WalkObstacleNormal_Lo;  
             break;
+        case State::WalkObstacleLarge:
+            currentSdAddresses[0] = WalkObstacleLarge_Hi; 
+            currentSdAddresses[1] = WalkObstacleLarge_Lo;  
+            break;
+        case State::WalkObstacleNormalSelected:
+            currentSdAddresses[0] = WalkObstacleNormalSelected_Hi;
+            currentSdAddresses[1] = WalkObstacleNormalSelected_Lo; 
+            break;
+        case State::WalkObstacleSmallSelected:
+            currentSdAddresses[0] = WalkObstacleSmallSelected_Hi;
+            currentSdAddresses[1] = WalkObstacleSmallSelected_Lo; 
+            break;
+        case State::WalkObstacleLargeSelected:
+            currentSdAddresses[0] = WalkObstacleLargeSelected_Hi;
+            currentSdAddresses[1] = WalkObstacleLargeSelected_Lo; 
+            break;
+        case State::WalkObstacleNormalActivated:
+            currentSdAddresses[0] = WalkObstacleNormalActivated_Hi;
+            currentSdAddresses[1] = WalkObstacleNormalActivated_Lo; 
+            break;
+        case State::WalkObstacleSmallActivated:
+            currentSdAddresses[0] = WalkObstacleSmallActivated_Hi;
+            currentSdAddresses[1] = WalkObstacleSmallActivated_Lo; 
+            break;
+        case State::WalkObstacleLargeActivated:
+            currentSdAddresses[0] = WalkObstacleLargeActivated_Hi;
+            currentSdAddresses[1] = WalkObstacleLargeActivated_Lo; 
+            break;
+
+        case State::SingleStepObstacle:
+            currentSdAddresses[0] = SingleStepObstacle_Hi; 
+            currentSdAddresses[1] = SingleStepObstacle_Lo;  
+            break;
+        case State::SingleStepObstacleNormal:
+            currentSdAddresses[0] = SingleStepObstacleNormal_Hi; 
+            currentSdAddresses[1] = SingleStepObstacleNormal_Lo;  
+            break;
+        case State::SingleStepObstacleSmall:
+            currentSdAddresses[0] = SingleStepObstacleSmall_Hi; 
+            currentSdAddresses[1] = SingleStepObstacleSmall_Lo;  
+            break;
+        case State::SingleStepObstacleLarge:
+            currentSdAddresses[0] = SingleStepObstacleLarge_Hi; 
+            currentSdAddresses[1] = SingleStepObstacleLarge_Lo;  
+            break;
+        case State::SingleStepObstacleNormalSelected:
+            currentSdAddresses[0] = SingleStepObstacleNormalSelected_Hi;
+            currentSdAddresses[1] = SingleStepObstacleNormalSelected_Lo; 
+            break;
+        case State::SingleStepObstacleSmallSelected:
+            currentSdAddresses[0] = SingleStepObstacleSmallSelected_Hi;
+            currentSdAddresses[1] = SingleStepObstacleSmallSelected_Lo; 
+            break;
+        case State::SingleStepObstacleLargeSelected:
+            currentSdAddresses[0] = SingleStepObstacleLargeSelected_Hi;
+            currentSdAddresses[1] = SingleStepObstacleLargeSelected_Lo; 
+            break;
+        case State::SingleStepObstacleNormalActivated:
+            currentSdAddresses[0] = SingleStepObstacleNormalActivated_Hi;
+            currentSdAddresses[1] = SingleStepObstacleNormalActivated_Lo; 
+            break;
+        case State::SingleStepObstacleSmallActivated:
+            currentSdAddresses[0] = SingleStepObstacleSmallActivated_Hi;
+            currentSdAddresses[1] = SingleStepObstacleSmallActivated_Lo; 
+            break;
+        case State::SingleStepObstacleLargeActivated:
+            currentSdAddresses[0] = SingleStepObstacleLargeActivated_Hi;
+            currentSdAddresses[1] = SingleStepObstacleLargeActivated_Lo; 
+            break;
+    
 
         //WIB
         case State::Walk:

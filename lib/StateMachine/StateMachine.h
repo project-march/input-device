@@ -91,8 +91,25 @@ enum class State {  HomeSit,
                     StairsDownActivated,
 
                     WalkObstacle,
-                    WalkObstacleSelected,
-                    WalkObstacleActivated};
+                    WalkObstacleSmall,
+                    WalkObstacleNormal,
+                    WalkObstacleLarge,
+                    WalkObstacleSmallSelected,
+                    WalkObstacleNormalSelected,
+                    WalkObstacleLargeSelected,
+                    WalkObstacleSmallActivated,
+                    WalkObstacleNormalActivated,
+                    WalkObstacleLargeActivated,
+                    SingleStepObstacle,
+                    SingleStepObstacleSmall,
+                    SingleStepObstacleNormal,
+                    SingleStepObstacleLarge,
+                    SingleStepObstacleSmallSelected,
+                    SingleStepObstacleNormalSelected,
+                    SingleStepObstacleLargeSelected,
+                    SingleStepObstacleSmallActivated,
+                    SingleStepObstacleNormalActivated,
+                    SingleStepObstacleLargeActivated};
                     
 
 class StateMachine

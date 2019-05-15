@@ -73,13 +73,81 @@
 #define WalkObstacle_Hi          0x0000
 #define WalkObstacle_Lo          0x0561
 
+//  WalkObstacleSmall
+#define WalkObstacleSmall_Hi          0x0000
+#define WalkObstacleSmall_Lo          0x0561
+
+//  WalkObstacleNormal
+#define WalkObstacleNormal_Hi          0x0000
+#define WalkObstacleNormal_Lo          0x0561
+
+//  WalkObstacleLarge
+#define WalkObstacleLarge_Hi          0x0000
+#define WalkObstacleLarge_Lo          0x0561
+
 //  WalkObstacleSelected
-#define WalkObstacleSelected_Hi  0x0000
-#define WalkObstacleSelected_Lo  0x0603
+#define WalkObstacleSmallSelected_Hi  0x0000
+#define WalkObstacleSmallSelected_Lo  0x0603
+
+//  WalkObstacleSelected
+#define WalkObstacleNormalSelected_Hi  0x0000
+#define WalkObstacleNormalSelected_Lo  0x0603
+
+//  WalkObstacleSelected
+#define WalkObstacleLargeSelected_Hi  0x0000
+#define WalkObstacleLargeSelected_Lo  0x0603
 
 //  WalkObstacleActivated
-#define WalkObstacleActivated_Hi 0x0000
-#define WalkObstacleActivated_Lo 0x05B2
+#define WalkObstacleSmallActivated_Hi 0x0000
+#define WalkObstacleSmallActivated_Lo 0x05B2
+
+//  WalkObstacleActivated
+#define WalkObstacleNormalActivated_Hi 0x0000
+#define WalkObstacleNormalActivated_Lo 0x05B2
+
+//  WalkObstacleActivated
+#define WalkObstacleLargeActivated_Hi 0x0000
+#define WalkObstacleLargeActivated_Lo 0x05B2
+
+//  SingleStepObstacle
+#define SingleStepObstacle_Hi          0x0000
+#define SingleStepObstacle_Lo          0x0561
+
+//  SingleStepObstacle
+#define SingleStepObstacleSmall_Hi     0x0000
+#define SingleStepObstacleSmall_Lo     0x0561
+
+//  SingleStepObstacle
+#define SingleStepObstacleNormal_Hi    0x0000
+#define SingleStepObstacleNormal_Lo    0x0561
+
+//  SingleStepObstacle
+#define SingleStepObstacleLarge_Hi     0x0000
+#define SingleStepObstacleLarge_Lo     0x0561
+
+//  SingleStepSelected
+#define SingleStepObstacleLargeSelected_Hi  0x0000
+#define SingleStepObstacleLargeSelected_Lo  0x0603
+
+//  SingleStepSelected
+#define SingleStepObstacleSmallSelected_Hi  0x0000
+#define SingleStepObstacleSmallSelected_Lo  0x0603
+
+//  SingleStepSelected
+#define SingleStepObstacleNormalSelected_Hi  0x0000
+#define SingleStepObstacleNormalSelected_Lo  0x0603
+
+//  SingleStepActivated
+#define SingleStepObstacleSmallActivated_Hi 0x0000
+#define SingleStepObstacleSmallActivated_Lo 0x05B2
+
+//  SingleStepActivated
+#define SingleStepObstacleNormalActivated_Hi 0x0000
+#define SingleStepObstacleNormalActivated_Lo 0x05B2
+
+//  SingleStepActivated
+#define SingleStepObstacleLargeActivated_Hi 0x0000
+#define SingleStepObstacleLargeActivated_Lo 0x05B2
 
 //  StairsDown
 #define StairsDown_Hi          0x0000
