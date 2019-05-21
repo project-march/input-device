@@ -553,10 +553,10 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
         //Scroll
         case State::Sofa:
             if(joystickState == "RIGHT"){
-                this->currentState = State::Slope;
+                this->currentState = State::RoughTerrain;
             }
             else if(joystickState == "LEFT"){
-                this->currentState = State::Stairs;
+                this->currentState = State::Slope;
             }
             else if(joystickPress == "PUSH"){
                 this->currentState = State::SofaSit;
@@ -568,10 +568,10 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             break;
         case State::Slope:
               if(joystickState == "RIGHT"){
-                this->currentState = State::RoughTerrain;
+                this->currentState = State::Sofa;
             }
             else if(joystickState == "LEFT"){
-                this->currentState = State::Sofa;
+                this->currentState = State::TiltedPath;
             }
             else if(joystickPress == "PUSH"){
                 this->currentState = State::SlopeUp;
@@ -583,10 +583,10 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             break; 
         case State::RoughTerrain:
               if(joystickState == "RIGHT"){
-                this->currentState = State::TiltedPath;
+                this->currentState = State::Stairs;
             }
             else if(joystickState == "LEFT"){
-                this->currentState = State::Slope;
+                this->currentState = State::Sofa;
             }
             else if(joystickPress == "PUSH"){
                 this->currentState = State::RoughTerrainSelected;
@@ -598,10 +598,10 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             break; 
         case State::TiltedPath:
               if(joystickState == "RIGHT"){
-                this->currentState = State::Stairs;
+                this->currentState = State::Slope;
             }
             else if(joystickState == "LEFT"){
-                this->currentState = State::RoughTerrain;
+                this->currentState = State::Stairs;
             }
             else if(joystickPress == "PUSH"){
                 this->currentState = State::TiltedPathSelected;
@@ -613,10 +613,10 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             break; 
         case State::Stairs:
               if(joystickState == "RIGHT"){
-                this->currentState = State::Sofa;
+                this->currentState = State::TiltedPath;
             }
             else if(joystickState == "LEFT"){
-                this->currentState = State::TiltedPath;
+                this->currentState = State::RoughTerrain;
             }
             else if(joystickPress == "PUSH"){
                 this->currentState = State::StairsUp;

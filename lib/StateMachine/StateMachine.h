@@ -83,9 +83,6 @@ enum class State {  HomeSit,
                     StairsUp,
                     StairsUpSelected,
                     StairsUpActivated,
-                    StairsWalk,
-                    StairsWalkSelected,
-                    StairsWalkActivated,
                     StairsDown,
                     StairsDownSelected,
                     StairsDownActivated,
@@ -94,22 +91,22 @@ enum class State {  HomeSit,
                     WalkObstacleSmall,
                     WalkObstacleNormal,
                     WalkObstacleLarge,
-                    WalkObstacleSmallSelected,
-                    WalkObstacleNormalSelected,
-                    WalkObstacleLargeSelected,
-                    WalkObstacleSmallActivated,
-                    WalkObstacleNormalActivated,
-                    WalkObstacleLargeActivated,
+                    WalkObstacleSmallSelected, // same image as WalkSmallSelected
+                    WalkObstacleNormalSelected, // same image as WalkNormalSelected
+                    WalkObstacleLargeSelected, // same image as WalkLargeSelected
+                    WalkObstacleSmallActivated, // same image as WalkSmallActivated
+                    WalkObstacleNormalActivated, // same image as WalkNormalActivated
+                    WalkObstacleLargeActivated, // same image as WalkLargeActivated
                     SingleStepObstacle,
                     SingleStepObstacleSmall,
                     SingleStepObstacleNormal,
                     SingleStepObstacleLarge,
-                    SingleStepObstacleSmallSelected,
-                    SingleStepObstacleNormalSelected,
-                    SingleStepObstacleLargeSelected,
-                    SingleStepObstacleSmallActivated,
-                    SingleStepObstacleNormalActivated,
-                    SingleStepObstacleLargeActivated};
+                    SingleStepObstacleSmallSelected, // same image as SingleStepSmallSelected
+                    SingleStepObstacleNormalSelected, // same image as SingleStepNormalSelected
+                    SingleStepObstacleLargeSelected, // same image as SignleStepLargeSelected
+                    SingleStepObstacleSmallActivated, // same image as SingleStepSmallActivated
+                    SingleStepObstacleNormalActivated, // same image as SingleStepNormalActivated
+                    SingleStepObstacleLargeActivated}; // same image as SingleStepLargeActivated
                     
 
 class StateMachine
