@@ -6,6 +6,10 @@
 #include <SoftwareSerial.h>
 #include <Goldelox_Serial_4DLib.h>
 #include <Screen.h>
+#include <ros.h>
+#include <std_msgs/String.h>
+#include <std_msgs/Int16.h>
+
 
 // Pin definitions
 // Trigger
@@ -20,9 +24,9 @@
 #define JOYSTICK_DOWN     19
 #define JOYSTICK_PUSH     18
 // Screen
-#define UART_TX           32 //software serial
-#define UART_RX           34 //software serial
-#define RST               13
+#define UART_TX           32 // Software serial
+#define UART_RX           34 // Software serial
+#define RST               13 // Reset
 #define BAUD_SCREEN       9600
 
 // Trigger
@@ -40,6 +44,16 @@ Screen screen(&screenGoldelox, &screenSerial, RST, BAUD_SCREEN);
 // State Machine
 StateMachine stateMachine;
 
+// Create ros nodehandle with publishers
+ros::NodeHandle nh;
+std_msgs::String str_msg;
+ros::Publisher scroller_publisher = ros::Publisher("/scroller", &str_msg);
+
+void sendScrollerMessagePress(){
+  str_msg.data = "press";
+  scroller_publisher.publish( &str_msg );
+}
+
 void setup(){
   Serial.begin(9600);
   Serial.println("Prototype");
@@ -52,6 +66,10 @@ void setup(){
   // initialize screen by resetting, initing uSD card, clearing screen
   screen.initialize();
   sleep(1);
+
+  // Initialize ros node for communication.
+  nh.initNode();
+  nh.advertise(scroller_publisher);
 }
 
 void loop(){
@@ -61,10 +79,16 @@ void loop(){
   String joystickPress = joystick.get_press();
   String triggerPress = trigger.read_state();
 
+  if (joystickPress == "PUSH"){
+    sendScrollerMessagePress();
+  }
   // Determine new state
   stateMachine.updateState(joystickState, joystickPress, rockerState, triggerPress);
 
   // Draw appropriate image
   int *drawSdAddresses = stateMachine.getScreenImage();
   screen.draw_image(*(drawSdAddresses), *(drawSdAddresses+1));
+
+  // Spin ros node
+  nh.spinOnce();
 }
