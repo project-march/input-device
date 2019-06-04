@@ -1,4 +1,4 @@
-#include "RockerSwitch.h"
+#include <RockerSwitch.h>
 
 RockerSwitch::RockerSwitch(int upPin, int downPin){
     pinMode(upPin, INPUT_PULLDOWN);

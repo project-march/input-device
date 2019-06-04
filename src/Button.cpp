@@ -1,5 +1,4 @@
-#include "Button.h"
-#include <Arduino.h>
+#include <Button.h>
 
 Button::Button(int pin) {
   pinMode(pin, INPUT_PULLDOWN);

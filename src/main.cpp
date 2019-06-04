@@ -1,11 +1,11 @@
 #include <Arduino.h>
-#include "StateMachine.h"
-#include "RockerSwitch.h"
-#include "Joystick.h"
-#include "Button.h"
-#include "SoftwareSerial.h"
-#include "Goldelox_Serial_4DLib.h"
-#include "Screen.h"
+#include <StateMachine.h>
+#include <RockerSwitch.h>
+#include <Joystick.h>
+#include <Button.h>
+#include <SoftwareSerial.h>
+#include <Goldelox_Serial_4DLib.h>
+#include <Screen.h>
 
 // Pin definitions
 // Trigger
