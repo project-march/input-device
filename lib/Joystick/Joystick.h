@@ -17,7 +17,9 @@ private:
     int press_pin;
 
     String lastPosition;
+    String lastPushPosition;
     unsigned long lastPrintTime;
+    unsigned long lastPushPrintTime;
     bool recentInitialClick;
     bool recentDoubleClick;
     bool lastPush;
