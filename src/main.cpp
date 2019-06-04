@@ -20,9 +20,9 @@
 #define JOYSTICK_DOWN     19
 #define JOYSTICK_PUSH     18
 // Screen
-#define UART_TX           32 //software serial
-#define UART_RX           34 //software serial
-#define RST               13
+#define UART_TX           32 // Software serial
+#define UART_RX           34 // Software serial
+#define RST               13 // Reset
 #define BAUD_SCREEN       9600
 
 // Trigger
