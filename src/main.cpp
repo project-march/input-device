@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <WiFi.h>
 #include <StateMachine.h>
 #include <RockerSwitch.h>
 #include <Joystick.h>
@@ -9,6 +10,7 @@
 #include <ros.h>
 #include <std_msgs/String.h>
 #include <std_msgs/Int16.h>
+#include <WirelessConnection.h>
 
 
 // Pin definitions
@@ -45,7 +47,7 @@ Screen screen(&screenGoldelox, &screenSerial, RST, BAUD_SCREEN);
 StateMachine stateMachine;
 
 // Create ros nodehandle with publishers
-ros::NodeHandle nh;
+ros::NodeHandle_<WiFiHardware> nh;
 std_msgs::String str_msg;
 ros::Publisher scroller_publisher = ros::Publisher("/scroller", &str_msg);
 
@@ -62,6 +64,9 @@ void setup(){
   pinMode(RST, OUTPUT);
   pinMode(UART_TX, OUTPUT);
   pinMode(UART_RX, INPUT);
+
+  // Setup wifi connection
+  setupWiFi();
 
   // initialize screen by resetting, initing uSD card, clearing screen
   screen.initialize();

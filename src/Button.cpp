@@ -1,7 +1,7 @@
 #include <Button.h>
 
 Button::Button(int pin) {
-  pinMode(pin, INPUT_PULLDOWN);
+  pinMode(pin, INPUT_PULLUP);
 
   this->input_pin = pin;
   this->lastPrintTime = millis();
@@ -12,7 +12,7 @@ Button::Button(int pin) {
 // It is advised to treat "HOLDING" the same as "NEUTRAL" outside this function
 String Button::read_state() {
   String returnString;
-  if(digitalRead(this->input_pin)){
+  if(!digitalRead(this->input_pin)){
     if(this->lastPosition != "PUSH" || (millis() - this->lastPrintTime) > this->holdTime){
       this->lastPrintTime = millis();
       this->lastPosition = "PUSH";

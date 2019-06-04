@@ -122,6 +122,7 @@ public:
     StateMachine();
     void updateState(String joystickState = "NEUTRAL", String joystickPress = "NEUTRAL", String rockerState = "NEUTRAL", String triggerPress = "NEUTRAL");
     int * getScreenImage();
+    State getCurrentState();
 };
 
 
