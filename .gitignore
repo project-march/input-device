@@ -4,3 +4,4 @@
 .piolibdeps
 .vscode/
 platformio.ini
+.idea/
