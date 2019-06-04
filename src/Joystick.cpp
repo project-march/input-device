@@ -1,4 +1,4 @@
-#include "Joystick.h"
+#include <Joystick.h>
 
 Joystick::Joystick(int pin_left, int pin_right, int pin_up, int pin_down, int pin_press) {
     pinMode(pin_left, INPUT_PULLUP);

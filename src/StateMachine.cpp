@@ -1,5 +1,4 @@
 #include "StateMachine.h"
-#include "SD_sector_addresses.h"
 
 // Constructor
 StateMachine::StateMachine()
