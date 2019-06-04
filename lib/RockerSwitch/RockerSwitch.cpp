@@ -1,8 +1,8 @@
 #include "RockerSwitch.h"
 
 RockerSwitch::RockerSwitch(int upPin, int downPin){
-    pinMode(upPin, INPUT_PULLDOWN);
-    pinMode(downPin, INPUT_PULLDOWN);
+    pinMode(upPin, INPUT_PULLUP);
+    pinMode(downPin, INPUT_PULLUP);
 
     this->pinUp = upPin;
     this->pinDown = downPin;
@@ -14,7 +14,7 @@ RockerSwitch::RockerSwitch(int upPin, int downPin){
 // It is advised to treat "HOLDING X" the same as "NEUTRAL" outside this function
 String RockerSwitch::get_position(){
     String returnString;
-    if (digitalRead(this->pinUp)){
+    if (!digitalRead(this->pinUp)){
         if(this->lastPosition != "UP" || (millis() - this->lastPrintTime) > this->holdTime){
             // reset lastPrintTime
             this->lastPrintTime = millis();
@@ -25,7 +25,7 @@ String RockerSwitch::get_position(){
             returnString = "HOLDING UP";
         }
     }
-    else if (digitalRead(this->pinDown)){
+    else if (!digitalRead(this->pinDown)){
         if(this->lastPosition != "DOWN" || (millis() - this->lastPrintTime) > this->holdTime){
             // reset lastPrintTime
             this->lastPrintTime = millis();

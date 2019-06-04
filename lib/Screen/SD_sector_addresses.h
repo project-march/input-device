@@ -32,7 +32,7 @@
 
 // HomeStandStart
 #define HomeStandStart_Hi      0x0000
-#define HomeStandStart_Lo      0x0116
+#define HomeStandStart_Lo      0x01E6
 
 //  Sit
 #define Sit_Hi                 0x0000
@@ -144,7 +144,7 @@
 
 //  SingleStepObstacleNormalSelected
 #define SingleStepObstacleNormalSelected_Hi  0x0000
-#define SingleStepObstacleNormalSelected_Lo  0x0719
+#define SingleStepObstacleNormalSelected_Lo  0x07E9
 
 //  SingleStepObstacleSmallActivated
 #define SingleStepObstacleSmallActivated_Hi 0x0000
@@ -248,7 +248,7 @@
 
 // SingleStepSmall unknown
 #define SingleStepSmall_Hi      0x0000
-#define SingleStepSmall_Lo      0x0971
+#define SingleStepSmall_Lo      0x097E
 
 // SingleStepNormal unknown
 #define SingleStepNormal_Hi     0x0000
@@ -264,7 +264,7 @@
 
 // SingleStepNormalSelected unknown
 #define SingleStepNormalSelected_Hi     0x0000
-#define SingleStepNormalSelected_Lo     0x0719
+#define SingleStepNormalSelected_Lo     0x07E9
 
 // SingleStepLargeSelected unknown
 #define SingleStepLargeSelected_Hi      0x0000
@@ -384,7 +384,7 @@
 
 // TiltedPathSelected unknown
 #define TiltedPathSelected_Hi       0x0000
-#define TiltedPathSelected_Lo       0x1391
+#define TiltedPathSelected_Lo       0x139E
 
 // TiltedPathActivated unknown
 #define TiltedPathActivated_Hi      0x0000
