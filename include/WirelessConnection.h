@@ -7,30 +7,14 @@
 //////////////////////
 
 //todo
-const char* ssid = "OnePlus5";
-const char* password =  "timisdik";
+char ssid[] = "dikkepanda";
+char password[] =  "netzodikalstim";
 
 IPAddress server(192, 168, 43, 83); // ip of your ROS server
 IPAddress ip_address;
 //int status = WL_IDLE_STATUS;
 
 WiFiClient client;
-
-
-void setupWiFi()
-{
-    WiFi.begin(ssid, password);
-    Serial.print("\nConnecting to "); Serial.println(ssid);
-    uint8_t i = 0;
-    while (WiFi.status() != WL_CONNECTED){
-        delay(500);
-        Serial.print("Could not connect to"); Serial.println(ssid);
-    }
-
-    Serial.print("Ready! Use ");
-    Serial.print(WiFi.localIP());
-    Serial.println(" to access client");
-}
 
 class WiFiHardware {
 

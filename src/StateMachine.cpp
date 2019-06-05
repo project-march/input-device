@@ -8,11 +8,21 @@ StateMachine::StateMachine()
     this->rememberStateSit = State::Sit;
     this->rememberStateObstacle = State::Sofa;
     this->rememberStateObstacleWIB = State::Slope;
+    stateToGaitMapping[State::WalkNormalActivated] = "walk";
+    stateToGaitMapping[State::SitActivated] = "sit";
+    stateToGaitMapping[State::StandUpActivated] = "stand";
+    stateToGaitMapping[State::StandUpActivated] = "home_Stand";
+    stateToGaitMapping[State::HomeSitActivated] = "home_sit";
 }
 
 State StateMachine::getCurrentState(){
     return this->currentState;    
 }
+
+const char* StateMachine::getGaitName(State state){
+    return stateToGaitMapping[state];
+}
+
 // Updates the current state based on the button inputs
 void StateMachine::updateState(String joystickState, String joystickPress, String rockerState, String triggerPress){
     switch (this->currentState)

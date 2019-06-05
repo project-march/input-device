@@ -2,6 +2,7 @@
 #define STATEMACHINE_H
 
 #include <Arduino.h>
+#include <map>
 #include <vector>
 #include "SD_sector_addresses.h"
 
@@ -118,11 +119,14 @@ private:
     State rememberStateSit;
     State rememberStateObstacle;
     State rememberStateObstacleWIB;
+    std::map<State,char*> stateToGaitMapping;
+
 public:
     StateMachine();
     void updateState(String joystickState = "NEUTRAL", String joystickPress = "NEUTRAL", String rockerState = "NEUTRAL", String triggerPress = "NEUTRAL");
     int * getScreenImage();
     State getCurrentState();
+    const char* getGaitName(State state);
 };
 
 
