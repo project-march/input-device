@@ -66,23 +66,23 @@ void setup()
   Serial.begin(9600);
   Serial.println("Prototype");
 
-  int status = WL_IDLE_STATUS;  // the Wifi radio's status
-
-  // Connect to WPA/WPA2 network:
-  status = WiFi.begin("dikkepanda", "netzodikalstim");
-
-  // Attempt to connect to Wifi network:
-  while (status != WL_CONNECTED)
-  {
-    Serial.print("Attempting to connect to WPA SSID: ");
-    Serial.println(ssid);
-
-    // wait 10 seconds for connection:
-    delay(10000);
-  }
-
-  //   you're connected now, so print out the data:
-  Serial.print("You're connected to the network");
+//  int status = WL_IDLE_STATUS;  // the Wifi radio's status
+//
+//  // Connect to WPA/WPA2 network:
+//  status = WiFi.begin("dikkepanda", "netzodikalstim");
+//
+//  // Attempt to connect to Wifi network:
+//  while (status != WL_CONNECTED)
+//  {
+//    Serial.print("Attempting to connect to WPA SSID: ");
+//    Serial.println(ssid);
+//
+//    // wait 10 seconds for connection:
+//    delay(10000);
+//  }
+//
+//  //   you're connected now, so print out the data:
+//  Serial.print("You're connected to the network");
 
   // Set screen pins as either input or output
   pinMode(RST, OUTPUT);
