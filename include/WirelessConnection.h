@@ -7,10 +7,10 @@
 //////////////////////
 
 //todo
-char ssid[] = "dikkepanda";
-char password[] =  "netzodikalstim";
+char ssid[] = "Bear";
+char password[] =  "dikkepanda";
 
-IPAddress server(192, 168, 43, 83); // ip of your ROS server
+IPAddress server(192, 168, 137, 110); // ip of your ROS server
 IPAddress ip_address;
 //int status = WL_IDLE_STATUS;
 
