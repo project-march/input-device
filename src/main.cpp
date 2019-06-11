@@ -11,7 +11,7 @@
 #include <std_msgs/String.h>
 #include <std_msgs/Int16.h>
 #include <WirelessConnection.h>
-#include <rosserial_msgs/GaitInstruction.h>
+#include <march_shared_resources/GaitInstruction.h>
 
 // Pin definitions
 // Trigger
@@ -49,15 +49,24 @@ StateMachine stateMachine;
 // Create ros nodehandle with publishers
 // ros::NodeHandle_<WiFiHardware> nh;
 ros::NodeHandle nh;
-rosserial_msgs::GaitInstruction gaitInstructionMessage;
+march_shared_resources::GaitInstruction gaitInstructionMessage;
 ros::Publisher gait_instruction_publisher("/march/input_device/instruction", &gaitInstructionMessage);
 
 State lastState;
 
 void sendGaitMessage(State state)
 {
-  gaitInstructionMessage.type = rosserial_msgs::GaitInstruction::GAIT;
+  Serial.println("sendGaitMessage");
+  Serial.println(stateMachine.getGaitName(state));
+  gaitInstructionMessage.type = march_shared_resources::GaitInstruction::GAIT;
   gaitInstructionMessage.gait_name = stateMachine.getGaitName(state);
+  gait_instruction_publisher.publish(&gaitInstructionMessage);
+}
+void sendStopMessage()
+{
+  Serial.println("sendStopMessage");
+  gaitInstructionMessage.type = march_shared_resources::GaitInstruction::STOP;
+  gaitInstructionMessage.gait_name = "";
   gait_instruction_publisher.publish(&gaitInstructionMessage);
 }
 
@@ -101,26 +110,29 @@ void setup()
 void loop()
 {
   // Get button states
-//  String rockerState = rocker.get_position();
-//  String joystickState = joystick.get_position();
-//  String joystickPress = joystick.get_press();
-//  String triggerPress = trigger.read_state();
-//
-//  // Determine new state
-//  stateMachine.updateState(joystickState, joystickPress, rockerState, triggerPress);
-//
-//  // Draw appropriate image
-//  int* drawSdAddresses = stateMachine.getScreenImage();
-//  screen.draw_image(*(drawSdAddresses), *(drawSdAddresses + 1));
-//
-//  State newState = stateMachine.getCurrentState();
+  String rockerState = rocker.get_position();
+  String joystickState = joystick.get_position();
+  String joystickPress = joystick.get_press();
+  String triggerPress = trigger.read_state();
+  if(triggerPress == "PUSH"){
+    sendStopMessage();
+  }
+
+  // Determine new state
+  stateMachine.updateState(joystickState, joystickPress, rockerState, triggerPress);
+
+  // Draw appropriate image
+  int* drawSdAddresses = stateMachine.getScreenImage();
+  screen.draw_image(*(drawSdAddresses), *(drawSdAddresses + 1));
+
+  State newState = stateMachine.getCurrentState();
 //  if (lastState != newState)
 //  {
-//    sendGaitMessage(newState);
+    sendGaitMessage(newState);
 //  }
-//  lastState = newState;
-//
-//  // Spin ros node
+  lastState = newState;
+
+  // Spin ros node
   nh.spinOnce();
   delay(1000);
 }
