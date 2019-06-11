@@ -63,7 +63,7 @@ void sendGaitMessage(State state)
 
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(57600);
   Serial.println("Prototype");
 
 //  int status = WL_IDLE_STATUS;  // the Wifi radio's status
@@ -101,25 +101,26 @@ void setup()
 void loop()
 {
   // Get button states
-  String rockerState = rocker.get_position();
-  String joystickState = joystick.get_position();
-  String joystickPress = joystick.get_press();
-  String triggerPress = trigger.read_state();
-
-  // Determine new state
-  stateMachine.updateState(joystickState, joystickPress, rockerState, triggerPress);
-
-  // Draw appropriate image
-  int* drawSdAddresses = stateMachine.getScreenImage();
-  screen.draw_image(*(drawSdAddresses), *(drawSdAddresses + 1));
-
-  State newState = stateMachine.getCurrentState();
-  if (lastState != newState)
-  {
-    sendGaitMessage(newState);
-  }
-  lastState = newState;
-
-  // Spin ros node
+//  String rockerState = rocker.get_position();
+//  String joystickState = joystick.get_position();
+//  String joystickPress = joystick.get_press();
+//  String triggerPress = trigger.read_state();
+//
+//  // Determine new state
+//  stateMachine.updateState(joystickState, joystickPress, rockerState, triggerPress);
+//
+//  // Draw appropriate image
+//  int* drawSdAddresses = stateMachine.getScreenImage();
+//  screen.draw_image(*(drawSdAddresses), *(drawSdAddresses + 1));
+//
+//  State newState = stateMachine.getCurrentState();
+//  if (lastState != newState)
+//  {
+//    sendGaitMessage(newState);
+//  }
+//  lastState = newState;
+//
+//  // Spin ros node
   nh.spinOnce();
+  delay(1000);
 }
