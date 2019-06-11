@@ -2,6 +2,7 @@
 #include <WiFi.h>
 #include <StateMachine.h>
 #include <RockerSwitch.h>
+#include <string.h>
 #include <Joystick.h>
 #include <Button.h>
 #include <SoftwareSerial.h>
@@ -56,11 +57,13 @@ State lastState;
 
 void sendGaitMessage(State state)
 {
-  Serial.println("sendGaitMessage");
-  Serial.println(stateMachine.getGaitName(state));
-  gaitInstructionMessage.type = march_shared_resources::GaitInstruction::GAIT;
-  gaitInstructionMessage.gait_name = stateMachine.getGaitName(state);
-  gait_instruction_publisher.publish(&gaitInstructionMessage);
+  Serial.print("sendGaitMessage state ");
+  const char* name = stateMachine.getGaitName(state);
+  if(strncmp(name, "", 1) != 0){
+    gaitInstructionMessage.type = march_shared_resources::GaitInstruction::GAIT;
+    gaitInstructionMessage.gait_name = name;
+    gait_instruction_publisher.publish(&gaitInstructionMessage);
+  }
 }
 void sendStopMessage()
 {
@@ -126,13 +129,12 @@ void loop()
   screen.draw_image(*(drawSdAddresses), *(drawSdAddresses + 1));
 
   State newState = stateMachine.getCurrentState();
-//  if (lastState != newState)
-//  {
+  if (lastState != newState)
+  {
     sendGaitMessage(newState);
-//  }
+  }
   lastState = newState;
 
   // Spin ros node
   nh.spinOnce();
-  delay(1000);
 }

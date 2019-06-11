@@ -23,7 +23,7 @@ const char* StateMachine::getGaitName(State state){
   if(stateToGaitMapping.count(state) > 0){
     return stateToGaitMapping[state];
   }
-  return "State is not defined as gait";
+  return "";
 }
 
 // Updates the current state based on the button inputs
