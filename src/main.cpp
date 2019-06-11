@@ -32,6 +32,8 @@
 #define RST 13      // Reset
 #define BAUD_SCREEN 9600
 
+#define USE_WIRELESS 0 // 0 means wired connection is used, 1 is wireless.
+
 // Trigger
 Button trigger(TRIGGER);
 // Rocker switch
@@ -48,8 +50,12 @@ Screen screen(&screenGoldelox, &screenSerial, RST, BAUD_SCREEN);
 StateMachine stateMachine;
 
 // Create ros nodehandle with publishers
-// ros::NodeHandle_<WiFiHardware> nh;
+#ifdef USE_WIRELESS
+ros::NodeHandle_<WiFiHardware> nh;
+#else
 ros::NodeHandle nh;
+#endif
+
 march_shared_resources::GaitInstruction gaitInstructionMessage;
 ros::Publisher gait_instruction_publisher("/march/input_device/instruction", &gaitInstructionMessage);
 
@@ -76,25 +82,22 @@ void sendStopMessage()
 void setup()
 {
   Serial.begin(57600);
-  Serial.println("Prototype");
+  Serial.println("Start Input Device");
 
-//  int status = WL_IDLE_STATUS;  // the Wifi radio's status
-//
-//  // Connect to WPA/WPA2 network:
-//  status = WiFi.begin("dikkepanda", "netzodikalstim");
-//
-//  // Attempt to connect to Wifi network:
-//  while (status != WL_CONNECTED)
-//  {
-//    Serial.print("Attempting to connect to WPA SSID: ");
-//    Serial.println(ssid);
-//
-//    // wait 10 seconds for connection:
-//    delay(10000);
-//  }
-//
-//  //   you're connected now, so print out the data:
-//  Serial.print("You're connected to the network");
+  #ifdef USE_WIRELESS
+    int status = WL_IDLE_STATUS;
+    // Connect to WPA/WPA2 network:
+    status = WiFi.begin("dikkepanda", "netzodikalstim");
+    while (status != WL_CONNECTED)
+    {
+      Serial.print("Attempting to connect to WPA SSID: ");
+      Serial.println(ssid);
+      // wait 5 seconds for connection:
+      delay(5000);
+    }
+    //   you're connected now, so print out the data:
+    Serial.print("You're connected to the network");
+  #endif
 
   // Set screen pins as either input or output
   pinMode(RST, OUTPUT);
@@ -117,6 +120,7 @@ void loop()
   String joystickState = joystick.get_position();
   String joystickPress = joystick.get_press();
   String triggerPress = trigger.read_state();
+
   if(triggerPress == "PUSH"){
     sendStopMessage();
   }
