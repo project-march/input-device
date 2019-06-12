@@ -7,14 +7,32 @@
 //////////////////////
 
 //todo
-char ssid[] = "Bear";
-char password[] =  "dikkepanda";
 
-IPAddress server(192, 168, 137, 110); // ip of your ROS server
+const char* ssid = "panda";
+const char* password =  "dikkepanda";
+
+IPAddress server(10, 42, 0, 127); // ip of your ROS server
 IPAddress ip_address;
 //int status = WL_IDLE_STATUS;
 
 WiFiClient client;
+
+
+
+void setupWiFi()
+{
+  WiFi.begin(ssid, password);
+  Serial.print("\nConnecting to "); Serial.println(ssid);
+  uint8_t i = 0;
+  while (WiFi.status() != WL_CONNECTED){
+    delay(500);
+    Serial.print("Could not connect to "); Serial.println(ssid);
+  }
+
+  Serial.print("Ready! Use ");
+  Serial.print(WiFi.localIP());
+  Serial.println(" to access client");
+}
 
 class WiFiHardware {
 

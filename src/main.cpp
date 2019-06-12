@@ -11,6 +11,7 @@
 #include <ros.h>
 #include <std_msgs/String.h>
 #include <std_msgs/Int16.h>
+#include <std_msgs/Empty.h>
 #include <WirelessConnection.h>
 #include <march_shared_resources/GaitInstruction.h>
 
@@ -32,7 +33,7 @@
 #define RST 13      // Reset
 #define BAUD_SCREEN 9600
 
-#define USE_WIRELESS 0 // 0 means wired connection is used, 1 is wireless.
+#define USE_WIRELESS 1  // 0 means wired connection is used, 1 is wireless.
 
 // Trigger
 Button trigger(TRIGGER);
@@ -58,6 +59,8 @@ ros::NodeHandle nh;
 
 march_shared_resources::GaitInstruction gaitInstructionMessage;
 ros::Publisher gait_instruction_publisher("/march/input_device/instruction", &gaitInstructionMessage);
+std_msgs::Empty emptyMessage;
+ros::Publisher ping_publisher("/march/input_device/alive", &emptyMessage);
 
 State lastState;
 
@@ -65,7 +68,8 @@ void sendGaitMessage(State state)
 {
   Serial.print("sendGaitMessage state ");
   const char* name = stateMachine.getGaitName(state);
-  if(strncmp(name, "", 1) != 0){
+  if (strncmp(name, "", 1) != 0)
+  {
     gaitInstructionMessage.type = march_shared_resources::GaitInstruction::GAIT;
     gaitInstructionMessage.gait_name = name;
     gait_instruction_publisher.publish(&gaitInstructionMessage);
@@ -79,25 +83,21 @@ void sendStopMessage()
   gait_instruction_publisher.publish(&gaitInstructionMessage);
 }
 
+void sendAliveMessage()
+{
+  Serial.println("Staying alive");
+  // Average loop frequency is around 20hz.
+  ping_publisher.publish(&emptyMessage);
+}
+
 void setup()
 {
   Serial.begin(57600);
   Serial.println("Start Input Device");
 
-  #ifdef USE_WIRELESS
-    int status = WL_IDLE_STATUS;
-    // Connect to WPA/WPA2 network:
-    status = WiFi.begin("dikkepanda", "netzodikalstim");
-    while (status != WL_CONNECTED)
-    {
-      Serial.print("Attempting to connect to WPA SSID: ");
-      Serial.println(ssid);
-      // wait 5 seconds for connection:
-      delay(5000);
-    }
-    //   you're connected now, so print out the data:
-    Serial.print("You're connected to the network");
-  #endif
+#ifdef USE_WIRELESS
+  setupWiFi();
+#endif
 
   // Set screen pins as either input or output
   pinMode(RST, OUTPUT);
@@ -111,6 +111,7 @@ void setup()
   // Initialize ros node for communication.
   nh.initNode();
   nh.advertise(gait_instruction_publisher);
+  nh.advertise(ping_publisher);
 }
 
 void loop()
@@ -121,7 +122,8 @@ void loop()
   String joystickPress = joystick.get_press();
   String triggerPress = trigger.read_state();
 
-  if(triggerPress == "PUSH"){
+  if (triggerPress == "PUSH")
+  {
     sendStopMessage();
   }
 
@@ -138,6 +140,8 @@ void loop()
     sendGaitMessage(newState);
   }
   lastState = newState;
+
+  sendAliveMessage();
 
   // Spin ros node
   nh.spinOnce();
