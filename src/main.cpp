@@ -6,6 +6,7 @@
 #include <SoftwareSerial.h>
 #include <Goldelox_Serial_4DLib.h>
 #include <Screen.h>
+#include "Adafruit_DRV2605.h"
 
 // Pin definitions
 // Trigger
@@ -25,6 +26,10 @@
 #define RST               13 // Reset
 #define BAUD_SCREEN       9600
 
+// Haptic Driver
+// Define pin for button
+#define Pin_button 26
+
 // Trigger
 Button trigger(TRIGGER);
 // Rocker switch
@@ -40,6 +45,14 @@ Screen screen(&screenGoldelox, &screenSerial, RST, BAUD_SCREEN);
 // State Machine
 StateMachine stateMachine;
 
+// Haptic Driver
+Button button(Pin_button);
+Adafruit_DRV2605 driver;
+
+int button_state;
+uint8_t effect; // Select the desired effect, for now test effect "Buzz 100%"
+
+
 void setup(){
   Serial.begin(9600);
   Serial.println("Prototype");
@@ -48,6 +61,16 @@ void setup(){
   pinMode(RST, OUTPUT);
   pinMode(UART_TX, OUTPUT);
   pinMode(UART_RX, INPUT);
+
+
+  // Setup I2C protocol
+  driver.begin();
+  // Select the effect library
+  driver.selectLibrary(2);
+  // I2C trigger by sending 'go' command
+  // default, internal trigger when sending GO command
+  driver.setMode(DRV2605_MODE_INTTRIG);
+  effect = 47;
 
   // initialize screen by resetting, initing uSD card, clearing screen
   screen.initialize();
@@ -60,6 +83,15 @@ void loop(){
   String joystickState = joystick.get_position();
   String joystickPress = joystick.get_press();
   String triggerPress = trigger.read_state();
+
+  // Set the effect to be played
+  // Waveforms can be combined, to create new wavefroms, see driver datasheet
+  driver.setWaveform(0, effect);  // Setup the waveform(s)
+  driver.setWaveform(1, 0);       // end of waveform waveform
+  // When button is pressed, vibrate
+  if(triggerPress == "PUSH"){
+    driver.go();
+  }
 
   // Determine new state
   stateMachine.updateState(joystickState, joystickPress, rockerState, triggerPress);
