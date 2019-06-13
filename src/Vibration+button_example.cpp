@@ -1,14 +1,8 @@
 #include <Arduino.h>
 #include "Adafruit_DRV2605.h"
-#include "Button.h"
 
-// Define Pin for button
-#define Pin_button 34
-
-Button button(Pin_button);
 Adafruit_DRV2605 driver;
 
-int button_state;
 uint8_t effect; // Select the desired effect, for now test effect "Buzz 100%"
 
 void setup() {
@@ -33,11 +27,9 @@ void loop() {
   driver.setWaveform(0, effect);  // Setup the waveform(s)
   driver.setWaveform(1, 0);       // end of waveform waveform
 
-  // When button is pressed, vibrate
-  if (button.read_state()) {
-    Serial.println("Push detected!");
-    // play the effect!
-    driver.go();
-  }
+  // play the effect!
+  driver.go();
+
+  sleep(1);
 
 }
