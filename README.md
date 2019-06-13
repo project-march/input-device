@@ -29,3 +29,11 @@ http://wiki.ros.org/rosserial_arduino/Tutorials/Adding%20Custom%20Messages
    address of the computer running ROS needs to be known and added to
    the same header file.
 5. You can build the project with ```pio run``` and upload with ```pio run --target upload```
+
+## Launch process
+Once a connection is made through wifi, there are two ways that the
+input from the ipd can be seen through ROS:
+
+1. run ```roscore``` and ``` rosrun rosserial_python serial_node.py
+   tcp``` in terminal 
+2. launch ```roslaunch balance_ipd balance_ipd.launch```
