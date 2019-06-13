@@ -1,7 +1,7 @@
 #ifndef SD_ADDRESSES_H
 #define SD_ADDRESSES3_H
 
-//Version 3!!
+//Version 3!!!
 
 // This file defines the sector addresses of the images to be loaded on the screen
 // The sector addresses can be found via the 4D Systems Workshop 4D IDE
