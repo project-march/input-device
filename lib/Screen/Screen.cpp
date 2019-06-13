@@ -26,6 +26,8 @@ void Screen::initialize(){
     usleep(m_waitTimeUs);
 
     this->clear();
+
+    this->m_lastDrawTime = millis();
 };
 
 void Screen::clear(){
@@ -42,7 +44,9 @@ void Screen::reset(){
 };
 
 void Screen::draw_image(int addr_hi, int addr_lo){
-    m_screen->media_SetSector(addr_hi, addr_lo);
-    m_screen->media_Image(0,0);
-    usleep(m_waitTimeUs);
+    if((millis() - m_lastDrawTime)*1000 > m_waitTimeUs){
+        m_screen->media_SetSector(addr_hi, addr_lo);
+        m_screen->media_Image(0,0);
+        this->m_lastDrawTime = millis();
+    }
 }

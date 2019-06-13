@@ -1,15 +1,17 @@
 #include <Arduino.h>
 #include "Joystick.h"
 
-// Define Pins for Peripherals
-#define Pin_left 15
-#define Pin_right 2
-#define Pin_up 0
-#define Pin_down 4
-#define Pin_press 5
+// Pin definitions
+// Joystick
+#define JOYSTICK_LEFT     23
+#define JOYSTICK_RIGHT    22
+#define JOYSTICK_UP       21
+#define JOYSTICK_DOWN     19
+#define JOYSTICK_PUSH     18
 
 // Create instances
-Joystick joystick(Pin_left, Pin_right, Pin_up, Pin_down, Pin_press);
+// Joystick
+Joystick joystick(JOYSTICK_LEFT, JOYSTICK_RIGHT, JOYSTICK_UP, JOYSTICK_DOWN, JOYSTICK_PUSH);
 
 void setup() {
   Serial.begin(9600);
@@ -17,13 +19,14 @@ void setup() {
 
 void loop() {
   String pos = joystick.get_position();
-  bool press = joystick.get_press();
+  String press = joystick.get_press();
 
-  Serial.print("Position: ");
-  Serial.print(pos);
-  Serial.print(" Press: ");
-  Serial.print(press);
-  Serial.print("\n");
-
-  sleep(1);
+  if (pos != "HOLDING" && pos != "NEUTRAL"){
+    Serial.print("Joystick position: ");
+    Serial.print(pos);
+    Serial.print("\n");
+  }
+  if (press != "HOLDING" && press != "NEUTRAL"){
+    Serial.println("Joystick pressed!");
+  }
 }
