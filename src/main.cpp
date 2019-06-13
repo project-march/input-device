@@ -16,8 +16,8 @@
 #define ROCKER_DOWN       5
 // Joystick
 #define JOYSTICK_LEFT     23
-#define JOYSTICK_RIGHT    12
-#define JOYSTICK_UP       14
+#define JOYSTICK_RIGHT    14
+#define JOYSTICK_UP       12
 #define JOYSTICK_DOWN     19
 #define JOYSTICK_PUSH     18
 // Screen
