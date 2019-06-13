@@ -16,8 +16,8 @@
 #define ROCKER_DOWN       5
 // Joystick
 #define JOYSTICK_LEFT     23
-#define JOYSTICK_RIGHT    22
-#define JOYSTICK_UP       21
+#define JOYSTICK_RIGHT    12
+#define JOYSTICK_UP       14
 #define JOYSTICK_DOWN     19
 #define JOYSTICK_PUSH     18
 // Screen
@@ -25,10 +25,6 @@
 #define UART_RX           34 // Software serial
 #define RST               13 // Reset
 #define BAUD_SCREEN       9600
-
-// Haptic Driver
-// Define pin for button
-#define Pin_button 26
 
 // Trigger
 Button trigger(TRIGGER);
@@ -46,12 +42,8 @@ Screen screen(&screenGoldelox, &screenSerial, RST, BAUD_SCREEN);
 StateMachine stateMachine;
 
 // Haptic Driver
-Button button(Pin_button);
 Adafruit_DRV2605 driver;
-
-int button_state;
-uint8_t effect; // Select the desired effect, for now test effect "Buzz 100%"
-
+uint8_t effect = 47; // Select the desired effect, for now test effect "Buzz 100%"
 
 void setup(){
   Serial.begin(9600);
@@ -62,7 +54,6 @@ void setup(){
   pinMode(UART_TX, OUTPUT);
   pinMode(UART_RX, INPUT);
 
-
   // Setup I2C protocol
   driver.begin();
   // Select the effect library
@@ -70,7 +61,6 @@ void setup(){
   // I2C trigger by sending 'go' command
   // default, internal trigger when sending GO command
   driver.setMode(DRV2605_MODE_INTTRIG);
-  effect = 47;
 
   // initialize screen by resetting, initing uSD card, clearing screen
   screen.initialize();
