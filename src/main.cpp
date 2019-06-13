@@ -132,12 +132,14 @@ void loop()
   State newState = stateMachine.getCurrentState();
   std::string name = stateMachine.getGaitName(newState);
 
+  // If there is a transition to a new screen which belongs to a gait send message with this gait.
   if (lastState != newState && !name.empty())
   {
     sendGaitMessage(newState);
   }
   else if (triggerPress == "PUSH")
   {
+    // If the trigger press is not to select a gait, it's interpreted as a stop.
     sendStopMessage();
   }
   lastState = newState;
