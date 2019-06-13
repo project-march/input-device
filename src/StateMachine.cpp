@@ -1500,7 +1500,7 @@ int * StateMachine::getScreenImage(){
             break;
         case State::SingleStepSmall:
             currentSdAddresses[0] = SingleStepSmall_Hi;
-            currentSdAddresses[1] = SingleStep_Lo;  
+            currentSdAddresses[1] = SingleStepSmall_Lo;  
             break;
         case State::SingleStepNormal:
             currentSdAddresses[0] = SingleStepNormal_Hi;
