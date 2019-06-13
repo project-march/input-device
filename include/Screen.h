@@ -50,7 +50,7 @@ private:
     int                         m_tx;
     int                         m_rx;
     unsigned long               m_lastDrawTime;
-    const int                   m_waitTimeUs = 100000; // Needed for functioning, can still be optimized
+    const int                   m_waitTimeUs = 500000; // Needed for functioning, can still be optimized
 
 };
 
