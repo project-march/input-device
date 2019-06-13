@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include <vector>
+#include "SD_sector_addresses.h"
 
 enum class State {  HomeSit,
                     HomeSitSelected,
