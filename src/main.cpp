@@ -122,11 +122,6 @@ void loop()
   String joystickPress = joystick.get_press();
   String triggerPress = trigger.read_state();
 
-  if (triggerPress == "PUSH")
-  {
-    sendStopMessage();
-  }
-
   // Determine new state
   stateMachine.updateState(joystickState, joystickPress, rockerState, triggerPress);
 
@@ -135,9 +130,15 @@ void loop()
   screen.draw_image(*(drawSdAddresses), *(drawSdAddresses + 1));
 
   State newState = stateMachine.getCurrentState();
-  if (lastState != newState)
+  std::string name = stateMachine.getGaitName(newState);
+
+  if (lastState != newState && !name.empty())
   {
     sendGaitMessage(newState);
+  }
+  else if (triggerPress == "PUSH")
+  {
+    sendStopMessage();
   }
   lastState = newState;
 
