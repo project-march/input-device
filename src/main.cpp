@@ -74,7 +74,7 @@ void loop(){
   String joystickPress = joystick.get_press();
   String triggerPress = trigger.read_state();
 
-  // Set the effect to be played
+  // Set the effect to be played hoi
   // Waveforms can be combined, to create new wavefroms, see driver datasheet
   driver.setWaveform(0, effect);  // Setup the waveform(s)
   driver.setWaveform(1, 0);       // end of waveform waveform
