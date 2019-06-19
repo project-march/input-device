@@ -19,21 +19,21 @@
 
 // Pin definitions
 // Trigger
-#define TRIGGER 26
+#define TRIGGER           26
 // Rocker Switch
-#define ROCKER_UP 2
-#define ROCKER_DOWN 5
+#define ROCKER_UP         2
+#define ROCKER_DOWN       5
 // Joystick
-#define JOYSTICK_LEFT 23
-#define JOYSTICK_RIGHT 14
-#define JOYSTICK_UP 12
-#define JOYSTICK_DOWN 19
-#define JOYSTICK_PUSH 18
+#define JOYSTICK_LEFT     23
+#define JOYSTICK_RIGHT    14
+#define JOYSTICK_UP       12
+#define JOYSTICK_DOWN     19
+#define JOYSTICK_PUSH     18
 // Screen
-#define UART_TX 32  // Software serial
-#define UART_RX 34  // Software serial
-#define RST 13      // Reset
-#define BAUD_SCREEN 9600
+#define UART_TX           32 // Software serial
+#define UART_RX           34 // Software serial
+#define RST               13 // Reset
+#define BAUD_SCREEN       9600
 
 //#define USE_WIRELESS  // comment this to use wired connection.
 
