@@ -11,7 +11,8 @@
 #include <ros.h>
 #include <std_msgs/String.h>
 #include <std_msgs/Int16.h>
-#include <std_msgs/Empty.h>
+#include <std_msgs/Time.h>
+#include <ros/time.h>
 #include <WirelessConnection.h>
 #include <march_shared_resources/GaitInstruction.h>
 
@@ -33,7 +34,7 @@
 #define RST 13      // Reset
 #define BAUD_SCREEN 9600
 
-#define USE_WIRELESS 1  // 0 means wired connection is used, 1 is wireless.
+//#define USE_WIRELESS  // comment this to use wired connection.
 
 // Trigger
 Button trigger(TRIGGER);
@@ -59,8 +60,8 @@ ros::NodeHandle nh;
 
 march_shared_resources::GaitInstruction gaitInstructionMessage;
 ros::Publisher gait_instruction_publisher("/march/input_device/instruction", &gaitInstructionMessage);
-std_msgs::Empty emptyMessage;
-ros::Publisher ping_publisher("/march/input_device/alive", &emptyMessage);
+std_msgs::Time timeMessage;
+ros::Publisher ping_publisher("/march/input_device/alive", &timeMessage);
 
 State lastState;
 
@@ -86,8 +87,8 @@ void sendStopMessage()
 void sendAliveMessage()
 {
   Serial.println("Staying alive");
-  // Average loop frequency is around 20hz.
-  ping_publisher.publish(&emptyMessage);
+  timeMessage.data = nh.now();
+  ping_publisher.publish(&timeMessage);
 }
 
 void setup()
@@ -104,14 +105,15 @@ void setup()
   pinMode(UART_TX, OUTPUT);
   pinMode(UART_RX, INPUT);
 
-  // initialize screen by resetting, initing uSD card, clearing screen
-  screen.initialize();
-  sleep(1);
-
   // Initialize ros node for communication.
   nh.initNode();
   nh.advertise(gait_instruction_publisher);
   nh.advertise(ping_publisher);
+  Serial.println("ros node initialized");
+
+  // initialize screen by resetting, initing uSD card, clearing screen
+  screen.initialize();
+  sleep(1);
 }
 
 void loop()
@@ -144,6 +146,7 @@ void loop()
   }
   lastState = newState;
 
+  // Average loop frequency is around 20hz.
   sendAliveMessage();
 
   // Spin ros node
