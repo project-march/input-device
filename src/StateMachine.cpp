@@ -8,9 +8,9 @@ StateMachine::StateMachine()
     this->rememberStateSit = State::Sit;
     this->rememberStateObstacle = State::Sofa;
     this->rememberStateObstacleWIB = State::Slope;
-    stateToGaitMapping[State::WalkNormalActivated] = "walk";
-    stateToGaitMapping[State::SitActivated] = "sit";
-    stateToGaitMapping[State::StandUpActivated] = "stand";
+    stateToGaitMapping[State::WalkNormalActivated] = "gait_walk";
+    stateToGaitMapping[State::SitActivated] = "gait_sit";
+    stateToGaitMapping[State::StandUpActivated] = "gait_stand";
     stateToGaitMapping[State::StandUpActivated] = "home_Stand";
     stateToGaitMapping[State::HomeSitActivated] = "home_sit";
 }
