@@ -826,7 +826,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             break;
         case State::SlopeDownActivated:
             if(triggerPress == "PUSH"){
-                this->rememberStateObstacleWIB = State::Sofa; //Automatically
+                this->rememberStateObstacleWIB = State::SlopeDownFinal; //Automatically
                 this->currentState = State::WalkObstacle;
             }
             break;
@@ -904,7 +904,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
 
         case State::StairsDownActivated:
             if(triggerPress == "PUSH"){
-                this->rememberStateObstacleWIB = State::TiltedPath;
+                this->rememberStateObstacleWIB = State::StairsDownFinal;
                 this->currentState = State::WalkObstacle; //Automatically
             }
             break;
