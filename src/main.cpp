@@ -54,7 +54,7 @@ StateMachine stateMachine;
 
 // Haptic Driver
 Adafruit_DRV2605 driver;
-uint8_t effect = 47;  // Select the desired effect, for now test effect "Buzz 100%"
+uint8_t effect = 14; // Select the desired effect, for now test effect "Buzz 100%"
 
 // Create ros nodehandle with publishers
 #ifdef USE_WIRELESS
