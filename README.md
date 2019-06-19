@@ -15,8 +15,7 @@ Add your custom messages to the rosserial_msgs package in rosserial. And build a
 ## Add Messages from package
 http://wiki.ros.org/rosserial_arduino/Tutorials/Adding%20Custom%20Messages
 
-
-### Configure CLion
+## Configure CLion
 1. Install platformio and integrate it within the Clion ide, using the
    following
    [tutorial](https://docs.platformio.org/en/latest/ide/clion.html)
