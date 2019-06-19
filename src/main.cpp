@@ -8,6 +8,7 @@
 #include <SoftwareSerial.h>
 #include <Goldelox_Serial_4DLib.h>
 #include <Screen.h>
+#include "Adafruit_DRV2605.h"
 #include <ros.h>
 #include <std_msgs/String.h>
 #include <std_msgs/Int16.h>
@@ -24,8 +25,8 @@
 #define ROCKER_DOWN 5
 // Joystick
 #define JOYSTICK_LEFT 23
-#define JOYSTICK_RIGHT 22
-#define JOYSTICK_UP 21
+#define JOYSTICK_RIGHT 14
+#define JOYSTICK_UP 12
 #define JOYSTICK_DOWN 19
 #define JOYSTICK_PUSH 18
 // Screen
@@ -50,6 +51,10 @@ Goldelox_Serial_4DLib screenGoldelox(&screenSerial);
 Screen screen(&screenGoldelox, &screenSerial, RST, BAUD_SCREEN);
 // State Machine
 StateMachine stateMachine;
+
+// Haptic Driver
+Adafruit_DRV2605 driver;
+uint8_t effect = 47;  // Select the desired effect, for now test effect "Buzz 100%"
 
 // Create ros nodehandle with publishers
 #ifdef USE_WIRELESS
@@ -105,6 +110,14 @@ void setup()
   pinMode(UART_TX, OUTPUT);
   pinMode(UART_RX, INPUT);
 
+  // Setup I2C protocol
+  driver.begin();
+  // Select the effect library
+  driver.selectLibrary(2);
+  // I2C trigger by sending 'go' command
+  // default, internal trigger when sending GO command
+  driver.setMode(DRV2605_MODE_INTTRIG);
+
   // Initialize ros node for communication.
   nh.initNode();
   nh.advertise(gait_instruction_publisher);
@@ -123,6 +136,16 @@ void loop()
   String joystickState = joystick.get_position();
   String joystickPress = joystick.get_press();
   String triggerPress = trigger.read_state();
+
+  // Set the effect to be played hoi
+  // Waveforms can be combined, to create new wavefroms, see driver datasheet
+  driver.setWaveform(0, effect);  // Setup the waveform(s)
+  driver.setWaveform(1, 0);       // end of waveform waveform
+  // When button is pressed, vibrate
+  if (triggerPress == "PUSH")
+  {
+    driver.go();
+  }
 
   // Determine new state
   stateMachine.updateState(joystickState, joystickPress, rockerState, triggerPress);
