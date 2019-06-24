@@ -22,15 +22,15 @@
 
 // StandUp
 #define StandUp_Hi              0x0000
-#define StandUp_Lo              0x1209
+#define StandUp_Lo              0x1B36
 
 // StandUpSelected
 #define StandUpSelected_Hi     0x0000
-#define StandUpSelected_Lo     0x12AB
+#define StandUpSelected_Lo     0x1BD8
 
 // StandUpActivated
 #define StandUpActivated_Hi    0x0000
-#define StandUpActivated_Lo    0x125A   
+#define StandUpActivated_Lo    0x1B87   
 
 
 // TurnOffStart
@@ -118,15 +118,15 @@
 
 // SofaStandUp
 #define SofaStandUp_Hi      0x0000
-#define SofaStandUp_Lo      0x0EDF
+#define SofaStandUp_Lo      0x1A43
 
 // SofaStandUpSelected
 #define SofaStandUpSelected_Hi      0x0000
-#define SofaStandUpSelected_Lo      0x0F81
+#define SofaStandUpSelected_Lo      0x1AE5
 
 // SofaStandUpActivated
 #define SofaStandUpActivated_Hi     0x0000
-#define SofaStandUpActivated_Lo     0x0F30
+#define SofaStandUpActivated_Lo     0x1A94
 
 
 // Slope
@@ -135,7 +135,7 @@
 
 // SlopeUp
 #define SlopeUp_Hi      0x0000
-#define SlopeUp_Lo      0x0CA8
+#define SlopeUp_Lo      0x1D6D
 
 // SlopeUpSelected
 #define SlopeUpSelected_Hi      0x0000
@@ -147,7 +147,7 @@
 
 // SlopeDown
 #define SlopeDown_Hi        0x0000
-#define SlopeDown_Lo        0x0BB5
+#define SlopeDown_Lo        0x1C29
 
 // SlopeDownSelected
 #define SlopeDownSelected_Hi        0x0000
@@ -159,15 +159,15 @@
 
 // SlopeDownFinal
 #define SlopeDownFinal_Hi        0x0000
-#define SlopeDownFinal_Lo        0x0BB5
+#define SlopeDownFinal_Lo        0x1C7A
 
 // SlopeDownFinalSelected
 #define SlopeDownFinalSelected_Hi        0x0000
-#define SlopeDownFinalSelected_Lo        0x0C57
+#define SlopeDownFinalSelected_Lo        0x1D1C
 
 // SlopeDownFinalActivated
 #define SlopeDownFinalActivated_Hi       0x0000
-#define SlopeDownFinalActivated_Lo       0x0C06
+#define SlopeDownFinalActivated_Lo       0x1CCB
 
 
 // RoughTerrain 
@@ -202,7 +202,7 @@
 
 //  StairsUp
 #define StairsUp_Hi            0x0000
-#define StairsUp_Lo            0x1116
+#define StairsUp_Lo            0x1F02
 
 //  StairsUpSelected
 #define StairsUpSelected_Hi    0x0000
@@ -214,7 +214,7 @@
 
 //  StairsDown
 #define StairsDown_Hi          0x0000
-#define StairsDown_Lo          0x1023
+#define StairsDown_Lo          0x1DBE
 
 //  StairsDownSelected,
 #define StairsDownSelected_Hi  0x0000
@@ -226,15 +226,15 @@
 
 //  StairsDownFinal
 #define StairsDownFinal_Hi          0x0000
-#define StairsDownFinal_Lo          0x1023
+#define StairsDownFinal_Lo          0x1E0F
 
 //  StairsDownFinalSelected,
 #define StairsDownFinalSelected_Hi  0x0000
-#define StairsDownFinalSelected_Lo  0x10C5
+#define StairsDownFinalSelected_Lo  0x1EB1
 
 //  StairsDownFinalActivated  
 #define StairsDownFinalActivated_Hi 0x0000
-#define StairsDownFinalActivated_Lo 0x1074
+#define StairsDownFinalActivated_Lo 0x1E60
 
 
 
