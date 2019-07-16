@@ -13,27 +13,28 @@
 #include <std_msgs/String.h>
 #include <std_msgs/Int16.h>
 #include <std_msgs/Time.h>
+#include <std_msgs/Bool.h>
 #include <ros/time.h>
 #include <WirelessConnection.h>
 #include <march_shared_resources/GaitInstruction.h>
 
 // Pin definitions
 // Trigger
-#define TRIGGER           26
+#define TRIGGER 26
 // Rocker Switch
-#define ROCKER_UP         2
-#define ROCKER_DOWN       5
+#define ROCKER_UP 2
+#define ROCKER_DOWN 5
 // Joystick
-#define JOYSTICK_LEFT     23
-#define JOYSTICK_RIGHT    14
-#define JOYSTICK_UP       12
-#define JOYSTICK_DOWN     19
-#define JOYSTICK_PUSH     18
+#define JOYSTICK_LEFT 23
+#define JOYSTICK_RIGHT 14
+#define JOYSTICK_UP 12
+#define JOYSTICK_DOWN 19
+#define JOYSTICK_PUSH 18
 // Screen
-#define UART_TX           32 // Software serial
-#define UART_RX           34 // Software serial
-#define RST               13 // Reset
-#define BAUD_SCREEN       9600
+#define UART_TX 32  // Software serial
+#define UART_RX 34  // Software serial
+#define RST 13      // Reset
+#define BAUD_SCREEN 9600
 
 //#define USE_WIRELESS  // comment this to use wired connection.
 
@@ -54,7 +55,7 @@ StateMachine stateMachine;
 
 // Haptic Driver
 Adafruit_DRV2605 driver;
-uint8_t effect = 14; // Select the desired effect, for now test effect "Buzz 100%"
+uint8_t effect = 14;  // Select the desired effect, for now test effect "Buzz 100%"
 
 // Create ros nodehandle with publishers
 #ifdef USE_WIRELESS
@@ -62,6 +63,15 @@ ros::NodeHandle_<WiFiHardware> nh;
 #else
 ros::NodeHandle nh;
 #endif
+
+bool received_gait_instruction_response;
+void gaitInstructionResponseCallback(const std_msgs::Bool& msg)
+{
+  received_gait_instruction_response = true;
+}
+
+ros::Subscriber<std_msgs::Bool> gait_instruction_result_subscriber("/march/input_device/instruction_response",
+                                                                   &gaitInstructionResponseCallback);
 
 march_shared_resources::GaitInstruction gaitInstructionMessage;
 ros::Publisher gait_instruction_publisher("/march/input_device/instruction", &gaitInstructionMessage);
@@ -122,6 +132,7 @@ void setup()
   nh.initNode();
   nh.advertise(gait_instruction_publisher);
   nh.advertise(ping_publisher);
+  nh.subscribe(gait_instruction_result_subscriber);
   Serial.println("ros node initialized");
 
   // Reset the joystick right pin, this needed after the ROS node init pin 14 is apparently used by ROS.
@@ -134,6 +145,7 @@ void setup()
 
 void loop()
 {
+
   // Get button states
   String rockerState = rocker.get_position();
   String joystickState = joystick.get_position();
@@ -148,6 +160,13 @@ void loop()
   if (triggerPress == "PUSH")
   {
     driver.go();
+  }
+
+  if (received_gait_instruction_response)
+  {
+    // This means gait instruction handled
+    triggerPress = "PUSH";
+    received_gait_instruction_response = false;
   }
 
   // Determine new state
