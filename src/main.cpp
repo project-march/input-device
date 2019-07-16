@@ -128,7 +128,6 @@ void setup()
   screen.initialize();
   sleep(1);
 }
-
 void loop()
 {
   // Get button states
