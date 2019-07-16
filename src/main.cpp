@@ -124,10 +124,14 @@ void setup()
   nh.advertise(ping_publisher);
   Serial.println("ros node initialized");
 
+  // Reset the joystick right pin, this needed after the ROS node init pin 14 is apparently used by ROS.
+  pinMode(JOYSTICK_RIGHT, INPUT_PULLUP);
+
   // initialize screen by resetting, initing uSD card, clearing screen
   screen.initialize();
   sleep(1);
 }
+
 void loop()
 {
   // Get button states
