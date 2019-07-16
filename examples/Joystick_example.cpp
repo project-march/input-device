@@ -27,6 +27,8 @@ void loop() {
     Serial.print("\n");
   }
   if (press != "HOLDING" && press != "NEUTRAL"){
-    Serial.println("Joystick pressed!");
+    Serial.print("Joystick press: ");
+    Serial.print(press);
+    Serial.print("\n");
   }
 }
