@@ -78,8 +78,6 @@ ros::Publisher gait_instruction_publisher("/march/input_device/instruction", &ga
 std_msgs::Time timeMessage;
 ros::Publisher ping_publisher("/march/input_device/alive", &timeMessage);
 
-State lastState;
-
 void sendGaitMessage(State state)
 {
   Serial.print("sendGaitMessage state ");
@@ -190,7 +188,6 @@ void loop()
     // If the trigger press is not to select a gait, it's interpreted as a stop.
     sendStopMessage();
   }
-  lastState = newState;
 
   // Average loop frequency is around 20hz.
   sendAliveMessage();
