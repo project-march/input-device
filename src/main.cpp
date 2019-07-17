@@ -156,6 +156,7 @@ void loop()
   // Waveforms can be combined, to create new wavefroms, see driver datasheet
   driver.setWaveform(0, effect);  // Setup the waveform(s)
   driver.setWaveform(1, 0);       // end of waveform waveform
+
   // When button is pressed, vibrate
   if (triggerPress == "PUSH")
   {
@@ -165,7 +166,7 @@ void loop()
   if (received_gait_instruction_response)
   {
     // This means gait instruction handled
-    triggerPress = "PUSH";
+    triggerPress = "EXIT_GAIT";
     received_gait_instruction_response = false;
   }
 
@@ -180,7 +181,7 @@ void loop()
   std::string name = stateMachine.getGaitName(newState);
 
   // If there is a transition to a new screen which belongs to a gait send message with this gait.
-  if (lastState != newState && !name.empty())
+  if (!name.empty())
   {
     sendGaitMessage(newState);
   }
