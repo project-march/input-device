@@ -78,17 +78,17 @@ ros::Publisher gait_instruction_publisher("/march/input_device/instruction", &ga
 std_msgs::Time timeMessage;
 ros::Publisher ping_publisher("/march/input_device/alive", &timeMessage);
 
-void sendGaitMessage(State state)
+void sendGaitMessage(std::string name)
 {
   Serial.print("sendGaitMessage state ");
-  const char* name = stateMachine.getGaitName(state);
-  if (strncmp(name, "", 1) != 0)
+  if (name.empty())
   {
     gaitInstructionMessage.type = march_shared_resources::GaitInstruction::GAIT;
-    gaitInstructionMessage.gait_name = name;
+    gaitInstructionMessage.gait_name = name.c_str();
     gait_instruction_publisher.publish(&gaitInstructionMessage);
   }
 }
+
 void sendStopMessage()
 {
   Serial.println("sendStopMessage");
@@ -99,7 +99,6 @@ void sendStopMessage()
 
 void sendAliveMessage()
 {
-  Serial.println("Staying alive");
   timeMessage.data = nh.now();
   ping_publisher.publish(&timeMessage);
 }
@@ -176,12 +175,12 @@ void loop()
   screen.draw_image(*(drawSdAddresses), *(drawSdAddresses + 1));
 
   State newState = stateMachine.getCurrentState();
-  std::string name = stateMachine.getGaitName(newState);
+  std::string name = stateMachine.getGaitNameOfState(newState);
 
   // If there is a transition to a new screen which belongs to a gait send message with this gait.
   if (!name.empty())
   {
-    sendGaitMessage(newState);
+    sendGaitMessage(name);
   }
   else if (triggerPress == "PUSH")
   {

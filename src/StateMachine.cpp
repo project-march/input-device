@@ -16,10 +16,10 @@ StateMachine::StateMachine()
 }
 
 State StateMachine::getCurrentState(){
-    return this->currentState;    
+    return this->currentState;
 }
 
-const char* StateMachine::getGaitName(State state){
+std::string StateMachine::getGaitNameOfState(State state){
   if(stateToGaitMapping.count(state) > 0){
     return stateToGaitMapping[state];
   }

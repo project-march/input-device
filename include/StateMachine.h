@@ -132,7 +132,7 @@ public:
     void updateState(String joystickState = "NEUTRAL", String joystickPress = "NEUTRAL", String rockerState = "NEUTRAL", String triggerPress = "NEUTRAL");
     int * getScreenImage();
     State getCurrentState();
-    const char* getGaitName(State state);
+    std::string getGaitNameOfState(State state);
 };
 
 
