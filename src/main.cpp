@@ -80,8 +80,7 @@ ros::Publisher ping_publisher("/march/input_device/alive", &timeMessage);
 
 void sendGaitMessage(std::string name)
 {
-  Serial.print("sendGaitMessage state ");
-  if (name.empty())
+  if (!name.empty())
   {
     gaitInstructionMessage.type = march_shared_resources::GaitInstruction::GAIT;
     gaitInstructionMessage.gait_name = name.c_str();
@@ -91,7 +90,6 @@ void sendGaitMessage(std::string name)
 
 void sendStopMessage()
 {
-  Serial.println("sendStopMessage");
   gaitInstructionMessage.type = march_shared_resources::GaitInstruction::STOP;
   gaitInstructionMessage.gait_name = "";
   gait_instruction_publisher.publish(&gaitInstructionMessage);
