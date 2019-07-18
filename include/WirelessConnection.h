@@ -1,7 +1,7 @@
 // Copyright 2018 Project March.
 
-#ifndef WII_NUNCHUK_UNO_ROS_WIFI_H
-#define WII_NUNCHUK_UNO_ROS_WIFI_H
+#ifndef WIRELESS_CONNECTION_H
+#define WIRELESS_CONNECTION_H
 //////////////////////
 // WiFi Definitions //
 //////////////////////
@@ -68,4 +68,4 @@ public:
   }
 };
 
-#endif  // WII_NUNCHUK_UNO_ROS_WIFI_H
+#endif  // WIRELESS_CONNECTION_H
