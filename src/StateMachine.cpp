@@ -1,4 +1,4 @@
-#include "StateMachine.h"
+#include <StateMachine.h>
 
 // Constructor
 StateMachine::StateMachine()
@@ -6,6 +6,24 @@ StateMachine::StateMachine()
     this->currentState = State::HomeSit;
     this->rememberStateObstacle = State::Sofa;
     this->rememberStateObstacleWIB = State::Slope;
+    stateToGaitMapping[State::WalkNormalActivated] = "gait_walk";
+    stateToGaitMapping[State::SitActivated] = "gait_sit";
+    stateToGaitMapping[State::StandUpActivated] = "gait_stand";
+    stateToGaitMapping[State::HomeStandActivated] = "home_Stand";
+    stateToGaitMapping[State::HomeSitActivated] = "home_sit";
+    stateToGaitMapping[State::SingleStepNormalActivated] = "gait_single_step";
+
+}
+
+State StateMachine::getCurrentState(){
+    return this->currentState;
+}
+
+std::string StateMachine::getGaitNameOfState(State state){
+  if(stateToGaitMapping.count(state) > 0){
+    return stateToGaitMapping[state];
+  }
+  return "";
 }
 
 // Updates the current state based on the button inputs
@@ -95,22 +113,22 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
 
         //Activated
         case State::HomeSitActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::StandUp; //Automatically
             }
             break;
         case State::StandUpActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::Walk; //Automatically
             }
             break;
         case State::HomeStandStartActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::Walk; //Automatically
             }
             break;
         case State::TurnOffStartActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::HomeSit; //Automatically
             }
             break;
@@ -189,17 +207,17 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
 
         //Activated
         case State::SitActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::StandUp; //Automatically
             }
             break;
         case State::HomeStandActivated:
-            if(triggerPress = "PUSH"){
+            if(triggerPress = "EXIT_GAIT"){
                 this->currentState = State::Walk; //Automatically
             }
             break;
         case State::TurnOffActivated:
-            if(triggerPress = "PUSH"){
+            if(triggerPress = "EXIT_GAIT"){
                 this->currentState = State::HomeSit; //Automatically
             }
             break;
@@ -501,46 +519,46 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
 
         //Activated
         case State::WalkSmallActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::Walk; //Automatically
             }
             break;
         case State::WalkNormalActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::Walk; //Automatically
 
             }
             break;
         case State::WalkLargeActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::Walk; //Automatically
 
             }
             break;
         case State::SingleStepSmallActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::SingleStep; //Automatically
 
             }
             break;
         case State::SingleStepNormalActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::SingleStep; //Automatically
 
             }
             break;
         case State::SingleStepLargeActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::SingleStep; //Automatically
             }
             break;
         case State::SideStepLeftActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::SideStep; //Automatically
             }
             break;
         case State::SideStepRightActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::SideStep; //Automatically
             }
             break;
@@ -781,7 +799,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             }
             break;
         case State::SofaSitActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::SofaStandUp; //Automatically
             }
             break;
@@ -794,7 +812,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             }
             break;
         case State::SofaStandUpActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::WalkObstacle; //Automatically
                 this->rememberStateObstacleWIB = State::RoughTerrain;
             }
@@ -811,7 +829,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             }
             break;
         case State::SlopeUpActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->rememberStateObstacleWIB = State::SlopeDown; //Automatically
                 this->currentState = State::WalkObstacle;
             }
@@ -825,7 +843,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             }
             break;
         case State::SlopeDownActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->rememberStateObstacleWIB = State::Sofa; //Automatically
                 this->currentState = State::WalkObstacle;
             }
@@ -839,7 +857,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             }
             break;
         case State::SlopeDownFinalActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->rememberStateObstacleWIB = State::Sofa; //Automatically
                 this->currentState = State::WalkObstacle;
             }
@@ -855,7 +873,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             }
             break;
         case State::RoughTerrainActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->rememberStateObstacleWIB = State::Stairs;//Automatically
                 this->currentState = State::WalkObstacle;
             }
@@ -871,7 +889,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             }
             break;
         case State::TiltedPathActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->rememberStateObstacleWIB = State::Slope;    
                 this->currentState = State::WalkObstacle; //Automatically
             }
@@ -888,7 +906,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             break;
 
         case State::StairsUpActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->rememberStateObstacleWIB = State::StairsDown;
                 this->currentState = State::WalkObstacle; //Automatically
             }
@@ -903,7 +921,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             break;
 
         case State::StairsDownActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->rememberStateObstacleWIB = State::TiltedPath;
                 this->currentState = State::WalkObstacle; //Automatically
             }
@@ -918,7 +936,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             break;
 
         case State::StairsDownFinalActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->rememberStateObstacleWIB = State::TiltedPath;
                 this->currentState = State::WalkObstacle; //Automatically
             }
@@ -1097,36 +1115,36 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
 
         //Activated
         case State::WalkObstacleSmallActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::SingleStepObstacle; //Automatically
             }
             break;
         case State::WalkObstacleNormalActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::SingleStepObstacle; //Automatically
 
             }
             break;
         case State::WalkObstacleLargeActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::SingleStepObstacle; //Automatically
 
             }
             break;
         case State::SingleStepObstacleSmallActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = rememberStateObstacleWIB; //Automatically
 
             }
             break;
         case State::SingleStepObstacleNormalActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = rememberStateObstacleWIB; //Automatically
 
             }
             break;
         case State::SingleStepObstacleLargeActivated:
-            if(triggerPress == "PUSH"){
+            if(triggerPress == "EXIT_GAIT"){
                 this->currentState = rememberStateObstacleWIB; //Automatically
             }
             break;
