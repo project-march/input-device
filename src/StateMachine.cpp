@@ -9,7 +9,7 @@ StateMachine::StateMachine()
     stateToGaitMapping[State::WalkNormalActivated] = "gait_walk";
     stateToGaitMapping[State::SitActivated] = "gait_sit";
     stateToGaitMapping[State::StandUpActivated] = "gait_stand";
-    stateToGaitMapping[State::HomeStandActivated] = "home_Stand";
+    stateToGaitMapping[State::HomeStandActivated] = "home_stand";
     stateToGaitMapping[State::HomeSitActivated] = "home_sit";
     stateToGaitMapping[State::SingleStepNormalActivated] = "gait_single_step";
 
