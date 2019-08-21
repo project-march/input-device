@@ -65,6 +65,7 @@ ros::NodeHandle nh;
 #endif
 
 bool received_gait_instruction_response;
+bool send_gait_message;
 void gaitInstructionResponseCallback(const std_msgs::Bool& msg)
 {
   received_gait_instruction_response = true;
@@ -80,11 +81,12 @@ ros::Publisher ping_publisher("/march/input_device/alive", &timeMessage);
 
 void sendGaitMessage(std::string name)
 {
-  if (!name.empty())
+  if (!name.empty() && !send_gait_message)
   {
     gaitInstructionMessage.type = march_shared_resources::GaitInstruction::GAIT;
     gaitInstructionMessage.gait_name = name.c_str();
     gait_instruction_publisher.publish(&gaitInstructionMessage);
+    send_gait_message = true;
   }
 }
 
@@ -163,6 +165,7 @@ void loop()
     // This means gait instruction handled
     triggerPress = "EXIT_GAIT";
     received_gait_instruction_response = false;
+    send_gait_message = false;
   }
 
   // Determine new state
