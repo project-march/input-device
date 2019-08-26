@@ -61,7 +61,7 @@
 
 //  Sit
 #define Sit_Hi                 0x0000
-#define Sit_Lo                 0x0A71
+#define Sit_Lo                 0x222C
 
 //  SitSelected
 #define SitSelected_Hi         0x0000
@@ -73,7 +73,7 @@
 
 // HomeSit
 #define HomeSit_Hi             0x0000
-#define HomeSit_Lo             0x0000
+#define HomeSit_Lo             0x218A
 
 // HomeSitSelected
 #define HomeSitSelected_Hi      0x0000
@@ -85,21 +85,21 @@
 
 //  HomeStand
 #define HomeStand_Hi           0x0000
-#define HomeStand_Lo           0x00F3
+#define HomeStand_Lo           0x21DB
 
 // HomeStandSelected unknown
 #define HomeStandSelected_Hi        0x0000
-#define HomeStandSelected_Lo        0x0195
+#define HomeStandSelected_Lo        0x0288
                     
 // HomeStandActivated unknown
 #define HomeStandActivated_Hi       0x0000
-#define HomeStandActivated_Lo       0x0144
+#define HomeStandActivated_Lo       0x0237
 
 
 
 //  TurnOff
 #define TurnOff_Hi             0x0000
-#define TurnOff_Lo             0x13EF
+#define TurnOff_Lo             0x227D
 
 // TurnOffSelected
 #define TurnOffSelected_Hi      0x0000
