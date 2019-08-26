@@ -6,15 +6,15 @@
 #include <vector>
 #include "SD_sector_addresses.h"
 
-enum class State {  HomeSit,
-                    HomeSitSelected,
-                    HomeSitActivated,
+enum class State {  HomeSitStart,
+                    HomeSitStartSelected,
+                    HomeSitStartActivated,
                     StandUp,
                     StandUpSelected,
                     StandUpActivated,
                     TurnOffStart,
-                    TurnOffStartSelected,
-                    TurnOffStartActivated,
+        //            TurnOffStartSelected,
+        //            TurnOffStartActivated,
                     HomeStandStart,
                     HomeStandStartSelected,
                     HomeStandStartActivated,
@@ -22,12 +22,15 @@ enum class State {  HomeSit,
                     Sit,
                     SitSelected,
                     SitActivated,
+                    HomeSit,
+                    HomeSitSelected,
+                    HomeSitActivated,
                     HomeStand,
                     HomeStandSelected,
                     HomeStandActivated,
                     TurnOff,
-                    TurnOffSelected,
-                    TurnOffActivated,
+        //            TurnOffSelected,
+        //            TurnOffActivated,
 
                     Walk,
                     WalkSmall,
@@ -35,20 +38,20 @@ enum class State {  HomeSit,
                     WalkLarge,
                     WalkSmallSelected,
                     WalkNormalSelected,
-                    WalkLargeSelected,
+        //            WalkLargeSelected,
                     WalkSmallActivated,
                     WalkNormalActivated,
-                    WalkLargeActivated,
+        //            WalkLargeActivated,
                     SingleStep,
                     SingleStepSmall,
                     SingleStepNormal,
                     SingleStepLarge,
                     SingleStepSmallSelected,
                     SingleStepNormalSelected,
-                    SingleStepLargeSelected,
+        //            SingleStepLargeSelected,
                     SingleStepSmallActivated,
                     SingleStepNormalActivated,
-                    SingleStepLargeActivated,
+        //            SingleStepLargeActivated,
                     SideStep,
                     SideStepLeft,
                     SideStepRight,
@@ -64,21 +67,6 @@ enum class State {  HomeSit,
                     SofaStandUp,
                     SofaStandUpSelected,
                     SofaStandUpActivated,
-
-                    Slope,
-                    SlopeUp,
-                    SlopeUpSelected,
-                    SlopeUpActivated,
-                    SlopeDown,
-                    SlopeDownSelected,
-                    SlopeDownActivated,
-                    SlopeDownFinal,
-                    SlopeDownFinalSelected,
-                    SlopeDownFinalActivated,
-                    
-                    RoughTerrain,
-                    RoughTerrainSelected,
-                    RoughTerrainActivated,
 
                     TiltedPath,
                     TiltedPathSelected,
@@ -101,21 +89,22 @@ enum class State {  HomeSit,
                     WalkObstacleLarge,
                     WalkObstacleSmallSelected, // same image as WalkSmallSelected
                     WalkObstacleNormalSelected, // same image as WalkNormalSelected
-                    WalkObstacleLargeSelected, // same image as WalkLargeSelected
+        //            WalkObstacleLargeSelected, // same image as WalkLargeSelected
                     WalkObstacleSmallActivated, // same image as WalkSmallActivated
                     WalkObstacleNormalActivated, // same image as WalkNormalActivated
-                    WalkObstacleLargeActivated, // same image as WalkLargeActivated
+        //            WalkObstacleLargeActivated, // same image as WalkLargeActivated
                     SingleStepObstacle,
                     SingleStepObstacleSmall,
                     SingleStepObstacleNormal,
                     SingleStepObstacleLarge,
                     SingleStepObstacleSmallSelected, // same image as SingleStepSmallSelected
                     SingleStepObstacleNormalSelected, // same image as SingleStepNormalSelected
-                    SingleStepObstacleLargeSelected, // same image as SignleStepLargeSelected
+        //            SingleStepObstacleLargeSelected, // same image as SignleStepLargeSelected
                     SingleStepObstacleSmallActivated, // same image as SingleStepSmallActivated
-                    SingleStepObstacleNormalActivated, // same image as SingleStepNormalActivated
-                    SingleStepObstacleLargeActivated}; // same image as SingleStepLargeActivated
+                    SingleStepObstacleNormalActivated}; // same image as SingleStepNormalActivated
+        //            SingleStepObstacleLargeActivated}; // same image as SingleStepLargeActivated
                     
+                
 
 class StateMachine
 {
