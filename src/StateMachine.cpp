@@ -10,19 +10,22 @@ StateMachine::StateMachine()
     stateToGaitMapping[State::StandUpActivated] = "gait_stand";
     stateToGaitMapping[State::HomeStandActivated] = "home_stand";
 
-    stateToGaitMapping[State::WalkNormalActivated] = "gait_walk";
+    stateToGaitMapping[State::WalkNormalActivated] = "gait_walk";                               // check gait name
     stateToGaitMapping[State::WalkSmallActivated] = "gait_walk_small";                          // check gait name
-    stateToGaitMapping[State::SingleStepNormalActivated] = "gait_single_step";              
+    stateToGaitMapping[State::SingleStepNormalActivated] = "gait_single_step_normal";           // check gait name   
     stateToGaitMapping[State::SingleStepSmallActivated] = "gait_single_step_small";             // check gait name
     
     stateToGaitMapping[State::SitActivated] = "gait_sit";
     stateToGaitMapping[State::HomeSitActivated] = "home_sit";
     stateToGaitMapping[State::HomeStandActivated] = "home_stand";
 
-    stateToGaitMapping[State::WalkObstacleNormalActivated] = "gait_walk";
+    stateToGaitMapping[State::WalkObstacleNormalActivated] = "gait_walk";                       // check gait name
     stateToGaitMapping[State::WalkObstacleSmallActivated] = "gait_walk_small";                  // check gait name
-    stateToGaitMapping[State::SingleStepObstacleNormalActivated] = "gait_single_step";
+    stateToGaitMapping[State::SingleStepObstacleNormalActivated] = "gait_single_step_normal";   // check gait name
     stateToGaitMapping[State::SingleStepObstacleSmallActivated] = "gait_single_step_small";      // check gait name
+
+    stateToGaitMapping[State::SideStepLeftActivated] = "gait_side_step_left";
+    stateToGaitMapping[State::SideStepRightActivated] = "gait_side_step_right";
 }
 
 State StateMachine::getCurrentState(){
