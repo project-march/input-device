@@ -8,21 +8,24 @@ StateMachine::StateMachine()
     this->rememberStateObstacleWIB = State::TiltedPath;
     stateToGaitMapping[State::HomeSitStartActivated] = "home_sit";
     stateToGaitMapping[State::StandUpActivated] = "gait_stand";
-    stateToGaitMapping[State::HomeStandActivated] = "home_stand";
+    stateToGaitMapping[State::HomeStandStartActivated] = "home_stand";
 
-    stateToGaitMapping[State::WalkNormalActivated] = "gait_walk";                               // check gait name
-    stateToGaitMapping[State::WalkSmallActivated] = "gait_walk_small";                          // check gait name
-    stateToGaitMapping[State::SingleStepNormalActivated] = "gait_single_step_normal";           // check gait name   
-    stateToGaitMapping[State::SingleStepSmallActivated] = "gait_single_step_small";             // check gait name
+    stateToGaitMapping[State::WalkNormalActivated] = "gait_walk";
+    stateToGaitMapping[State::WalkSmallActivated] = "gait_walk_small";
+    stateToGaitMapping[State::SingleStepNormalActivated] = "gait_single_step_normal"; 
+    stateToGaitMapping[State::SingleStepSmallActivated] = "gait_single_step_small";
     
     stateToGaitMapping[State::SitActivated] = "gait_sit";
     stateToGaitMapping[State::HomeSitActivated] = "home_sit";
     stateToGaitMapping[State::HomeStandActivated] = "home_stand";
 
-    stateToGaitMapping[State::WalkObstacleNormalActivated] = "gait_walk";                       // check gait name
-    stateToGaitMapping[State::WalkObstacleSmallActivated] = "gait_walk_small";                  // check gait name
-    stateToGaitMapping[State::SingleStepObstacleNormalActivated] = "gait_single_step_normal";   // check gait name
-    stateToGaitMapping[State::SingleStepObstacleSmallActivated] = "gait_single_step_small";      // check gait name
+    stateToGaitMapping[State::WalkObstacleNormalActivated] = "gait_walk";
+    stateToGaitMapping[State::WalkObstacleSmallActivated] = "gait_walk_small";
+    stateToGaitMapping[State::SingleStepObstacleNormalActivated] = "gait_single_step_normal";
+    stateToGaitMapping[State::SingleStepObstacleSmallActivated] = "gait_single_step_small";
+
+    stateToGaitMapping[State::StairsUpActivated] = "gait_stairs_up";
+    stateToGaitMapping[State::StairsDownActivated] = "gait_stairs_down";
 
     stateToGaitMapping[State::SideStepLeftActivated] = "gait_side_step_left";
     stateToGaitMapping[State::SideStepRightActivated] = "gait_side_step_right";
@@ -667,7 +670,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
                 this->currentState = State::StairsDown;
             }
             else if(joystickState == "LEFT"){
-                this->currentState = State::StairsDownFinal;
+                // this->currentState = State::StairsDownFinal;
             }
             break;
 
@@ -679,27 +682,27 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
                 this->currentState = State::Stairs;
             }
             else if(joystickState == "RIGHT"){
-                this->currentState = State::StairsDownFinal;
+                // this->currentState = State::StairsDownFinal;
             }
             else if(joystickState == "LEFT"){
                 this->currentState = State::StairsUp;
             }
             break;
 
-        case State::StairsDownFinal:
-            if(joystickPress == "PUSH"){
-                this->currentState = State::StairsDownFinalSelected;
-            }
-            else if(joystickPress == "DOUBLE"){ 
-                this->currentState = State::Stairs;
-            }
-            else if(joystickState == "RIGHT"){
-                this->currentState = State::StairsUp;
-            }
-            else if(joystickState == "LEFT"){
-                this->currentState = State::StairsDown;
-            }
-            break;
+        // case State::StairsDownFinal:
+        //     if(joystickPress == "PUSH"){
+        //         this->currentState = State::StairsDownFinalSelected;
+        //     }
+        //     else if(joystickPress == "DOUBLE"){ 
+        //         this->currentState = State::Stairs;
+        //     }
+        //     else if(joystickState == "RIGHT"){
+        //         this->currentState = State::StairsUp;
+        //     }
+        //     else if(joystickState == "LEFT"){
+        //         this->currentState = State::StairsDown;
+        //     }
+        //     break;
 
             //Selected and activated submenus
 
@@ -776,24 +779,23 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
 
         case State::StairsDownActivated:
             if(triggerPress == "EXIT_GAIT"){
-                this->currentState = State::StairsDownFinal; //Automatically
-            }
-            break;
-        case State::StairsDownFinalSelected:
-            if(triggerPress == "PUSH"){
-                this->currentState = State::StairsDownFinalActivated;
-            }
-            else if(joystickPress == "DOUBLE"){
-                this->currentState = State::StairsDownFinal;
-            }
-            break;
-
-        case State::StairsDownFinalActivated:
-            if(triggerPress == "EXIT_GAIT"){
-                this->rememberStateObstacleWIB = State::TiltedPath;
                 this->currentState = State::WalkObstacle; //Automatically
             }
             break;
+        // case State::StairsDownFinalSelected:
+        //     if(triggerPress == "PUSH"){
+        //         this->currentState = State::StairsDownFinalActivated;
+        //     }
+        //     else if(joystickPress == "DOUBLE"){
+        //         this->currentState = State::StairsDownFinal;
+        //     }
+        //     break;
+        // case State::StairsDownFinalActivated:
+        //     if(triggerPress == "EXIT_GAIT"){
+        //         this->rememberStateObstacleWIB = State::TiltedPath;
+        //         this->currentState = State::WalkObstacle; //Automatically
+        //     }
+        //     break;
 
      
         //Walk in between obstacles
@@ -1168,18 +1170,18 @@ int * StateMachine::getScreenImage(){
             currentSdAddresses[0] = StairsDownActivated_Hi;
             currentSdAddresses[1] = StairsDownActivated_Lo;
             break;
-        case State::StairsDownFinal:
-            currentSdAddresses[0] = StairsDownFinal_Hi;
-            currentSdAddresses[1] = StairsDownFinal_Lo;
-            break;
-        case State::StairsDownFinalSelected:
-            currentSdAddresses[0] = StairsDownFinalSelected_Hi;
-            currentSdAddresses[1] = StairsDownFinalSelected_Lo; 
-            break;
-        case State::StairsDownFinalActivated:
-            currentSdAddresses[0] = StairsDownFinalActivated_Hi;
-            currentSdAddresses[1] = StairsDownFinalActivated_Lo;
-            break;
+        // case State::StairsDownFinal:
+        //     currentSdAddresses[0] = StairsDownFinal_Hi;
+        //     currentSdAddresses[1] = StairsDownFinal_Lo;
+        //     break;
+        // case State::StairsDownFinalSelected:
+        //     currentSdAddresses[0] = StairsDownFinalSelected_Hi;
+        //     currentSdAddresses[1] = StairsDownFinalSelected_Lo; 
+        //     break;
+        // case State::StairsDownFinalActivated:
+        //     currentSdAddresses[0] = StairsDownFinalActivated_Hi;
+        //     currentSdAddresses[1] = StairsDownFinalActivated_Lo;
+        //     break;
 
 //WIB
         case State::WalkObstacle:

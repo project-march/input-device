@@ -235,16 +235,16 @@
 #define StairsDownActivated_Lo 0x1074
 
 //  StairsDownFinal
-#define StairsDownFinal_Hi          0x0000
-#define StairsDownFinal_Lo          0x24B4
+// #define StairsDownFinal_Hi          0x0000
+// #define StairsDownFinal_Lo          0x24B4
 
 //  StairsDownFinalSelected,
-#define StairsDownFinalSelected_Hi  0x0000
-#define StairsDownFinalSelected_Lo  0x10C5
+// #define StairsDownFinalSelected_Hi  0x0000
+// #define StairsDownFinalSelected_Lo  0x10C5
 
-//  StairsDownFinalActivated  
-#define StairsDownFinalActivated_Hi 0x0000
-#define StairsDownFinalActivated_Lo 0x1074
+//  StairsDownFinalActivated
+// #define StairsDownFinalActivated_Hi 0x0000
+// #define StairsDownFinalActivated_Lo 0x1074
 
 
 
