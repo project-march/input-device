@@ -780,6 +780,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
         case State::StairsDownActivated:
             if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::WalkObstacle; //Automatically
+                this->rememberStateObstacleWIB = State::TiltedPath;
             }
             break;
         // case State::StairsDownFinalSelected:
