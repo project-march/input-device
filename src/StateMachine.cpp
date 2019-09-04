@@ -29,6 +29,18 @@ StateMachine::StateMachine()
 
     stateToGaitMapping[State::SideStepLeftActivated] = "gait_side_step_left";
     stateToGaitMapping[State::SideStepRightActivated] = "gait_side_step_right";
+    stateToGaitMapping[State::SideStepLeftSmallActivated] = "side_step_left_small";
+    stateToGaitMapping[State::SideStepRightSmallActivated] = "side_step_right_small";
+
+    stateToGaitMapping[State::TiltedPathStartHomeToMin5Activated] = "gait_set_ankle_from_2_5_to_min5";
+    stateToGaitMapping[State::FirstStartStepActivated] = "gait_tilted_path_first_starting_step";
+    stateToGaitMapping[State::SecondStartStepActivated] = "gait_tilted_path_second_starting_step";
+    stateToGaitMapping[State::HomeStandToMin10Activated] = "gait_set_ankle_from_min5_to_min10";
+    stateToGaitMapping[State::TiltedPathMiddleStepActivated] = "gait_tilted_path_middle_step";
+    stateToGaitMapping[State::HomeStandToMin5Activated] = "gait_set_ankle_from_min10_to_min5";
+    stateToGaitMapping[State::FirstEndStepActivated] = "gait_tilted_path_first_ending_step";
+    stateToGaitMapping[State::SecondEndStepActivated] = "gait_tilted_path_second_ending_step";
+    stateToGaitMapping[State::HomeForWalk25Activated] = "gait_set_ankle_from_min5_to_2_5";
 }
 
 State StateMachine::getCurrentState(){
@@ -618,7 +630,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
                 this->currentState = State::Stairs;
             }
             else if(joystickPress == "PUSH"){
-                this->currentState = State::TiltedPathSelected;             //We still have to decide how to tackle this obstacle
+                this->currentState = State::TiltedPathHometToMin5;             
             }
             else if(joystickState =="DOWN"){
                 this->rememberStateObstacle = currentState;
@@ -628,6 +640,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
         
 
         //Submenu obstacles
+        //Sofa
         case State::SofaSit:
             if(joystickPress == "PUSH"){
                 this->currentState = State::SofaSitSelected;
@@ -658,7 +671,41 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             }
             break;
         
+        case State::SofaSitSelected:
+            if(triggerPress == "PUSH"){
+                this->currentState = State::SofaSitActivated;
+            }
+            else if(joystickPress == "DOUBLE"){ 
+                this->currentState = State::SofaSit;
+            }
+            break;
+        
+        case State::SofaSitActivated:
+            if(triggerPress == "EXIT_GAIT"){
+                this->currentState = State::SofaStandUp; //Automatically
+            }
+            break;
+        
+        case State::SofaStandUpSelected:
+            if(triggerPress == "PUSH"){
+                this->currentState = State::SofaStandUpActivated;
+            }
+            else if(joystickPress == "DOUBLE"){ 
+                this->currentState = State::SofaStandUp;
+            }
+            break;
+        
+        case State::SofaStandUpActivated:
+            if(triggerPress == "EXIT_GAIT"){
+                this->currentState = State::WalkObstacle; //Automatically
+                this->rememberStateObstacleWIB = State::Stairs;
+            }
+            break;
        
+        
+            
+        
+        //Stairs
         case State::StairsUp:
             if(joystickPress == "PUSH"){
                 this->currentState = State::StairsUpSelected;
@@ -670,7 +717,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
                 this->currentState = State::StairsDown;
             }
             else if(joystickState == "LEFT"){
-                // this->currentState = State::StairsDownFinal;
+                this->currentState = State::StairsDown;             // old: this->currentState = State::StairsDownFinal;
             }
             break;
 
@@ -682,77 +729,13 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
                 this->currentState = State::Stairs;
             }
             else if(joystickState == "RIGHT"){
-                // this->currentState = State::StairsDownFinal;
+                this->currentState = State::StairsUp;               // old: this->currentState = State::StairsDownFinal;
             }
             else if(joystickState == "LEFT"){
                 this->currentState = State::StairsUp;
             }
             break;
-
-        // case State::StairsDownFinal:
-        //     if(joystickPress == "PUSH"){
-        //         this->currentState = State::StairsDownFinalSelected;
-        //     }
-        //     else if(joystickPress == "DOUBLE"){ 
-        //         this->currentState = State::Stairs;
-        //     }
-        //     else if(joystickState == "RIGHT"){
-        //         this->currentState = State::StairsUp;
-        //     }
-        //     else if(joystickState == "LEFT"){
-        //         this->currentState = State::StairsDown;
-        //     }
-        //     break;
-
-            //Selected and activated submenus
-
-            //Sofa
-        case State::SofaSitSelected:
-            if(triggerPress == "PUSH"){
-                this->currentState = State::SofaSitActivated;
-            }
-            else if(joystickPress == "DOUBLE"){ 
-                this->currentState = State::SofaSit;
-            }
-            break;
-        case State::SofaSitActivated:
-            if(triggerPress == "EXIT_GAIT"){
-                this->currentState = State::SofaStandUp; //Automatically
-            }
-            break;
-        case State::SofaStandUpSelected:
-            if(triggerPress == "PUSH"){
-                this->currentState = State::SofaStandUpActivated;
-            }
-            else if(joystickPress == "DOUBLE"){ 
-                this->currentState = State::SofaStandUp;
-            }
-            break;
-        case State::SofaStandUpActivated:
-            if(triggerPress == "EXIT_GAIT"){
-                this->currentState = State::WalkObstacle; //Automatically
-                this->rememberStateObstacleWIB = State::Stairs;
-            }
-            break;
-
-
-        //Tilted Path    //We still have to decide how to tackle this obstacle
-        case State::TiltedPathSelected:
-            if(triggerPress == "PUSH"){
-                this->currentState = State::TiltedPathActivated;
-            }
-            else if(joystickPress == "DOUBLE"){
-                this->currentState = State::TiltedPath; 
-            }
-            break;
-        case State::TiltedPathActivated:
-            if(triggerPress == "EXIT_GAIT"){
-                this->rememberStateObstacleWIB = State::Sofa;    
-                this->currentState = State::WalkObstacle; //Automatically
-            }
-            break;
-
-        //Stairs
+            
         case State::StairsUpSelected:
             if(triggerPress == "PUSH"){
                 this->currentState = State::StairsUpActivated;
@@ -798,7 +781,231 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
         //     }
         //     break;
 
-     
+        
+
+        // case State::StairsDownFinal:
+        //     if(joystickPress == "PUSH"){
+        //         this->currentState = State::StairsDownFinalSelected;
+        //     }
+        //     else if(joystickPress == "DOUBLE"){ 
+        //         this->currentState = State::Stairs;
+        //     }
+        //     else if(joystickState == "RIGHT"){
+        //         this->currentState = State::StairsUp;
+        //     }
+        //     else if(joystickState == "LEFT"){
+        //         this->currentState = State::StairsDown;
+        //     }
+        //     break;
+
+            //Selected and activated submenus
+
+     //Tilted Path    
+        case State::TiltedPathStartHometToMin5:                     // first home ankles to -5 before going on the tilted path
+            if(joystickPress == "PUSH"){
+                this->currentState = State::TiltedPathStartHometToMin5Selected;
+            }
+            else if(joystickPress == "DOUBLE"){ 
+                this->currentState = State::TiltedPath;
+            }
+            else if(joystickState == "LEFT"){
+                this->currentState = State::HomeForWalk25;
+            }
+            else if(joystickState == "RIGHT"){
+                this->currentState = State::FirstStartStep;
+            }
+            break;
+
+        case State::TiltedPathStartHomeToMin5Selected:                  // we want the first gait to be selected & activated, to others only need to be triggered
+            if(triggerPress == "PUSH"){
+                this->currentState = State::TiltedPathStartHomeToMin5Activated;
+            }
+            else if(joystickPress == "DOUBLE"){ 
+                this->currentState = State::TiltedPathStartHomeToMin5;
+            }
+            break;
+        
+        case State::TiltedPathStartHomeToMin5Activated:
+            if(triggerPress == "EXIT_GAIT"){
+                this->currentState = State::FirstStartStep; //Automatically
+            }
+            break;    
+
+
+        case State::FirstStartStep:                             // first step on the tilted path
+            if(triggerPress == "PUSH"){
+                this->currentState = State::FirstStartStepActivated;
+            }
+            else if(joystickPress == "DOUBLE"){ 
+                this->currentState = State::TiltedPath;
+            }
+            else if(joystickState == "LEFT"){
+                this->currentState = State::TiltedPathStartHometToMin5;
+            }
+            else if(joystickState == "RIGHT"){
+                this->currentState = State::SecondStartStep;
+            }
+            break;
+            
+        case State::FirstStartStepActivated:
+            if(triggerPress == "EXIT_GAIT"){
+                this->currentState = State::SecondStartStep; //Automatically
+            }
+            break; 
+        
+       
+            
+        case State::SecondStartStep:                        // second step on tilted path, after this gait we will stand on the middle part
+            if(triggerPress == "PUSH"){
+                this->currentState = State::SecondStartStepActivated;
+            }
+            else if(joystickPress == "DOUBLE"){ 
+                this->currentState = State::TiltedPath;
+            }
+            else if(joystickState == "LEFT"){
+                this->currentState = State::FirstStartStep;
+            }
+            else if(joystickState == "RIGHT"){
+                this->currentState = State::HomeStandToMin10;
+            }
+            break;
+            
+        case State::SecondStartStepActivated:
+            if(triggerPress == "EXIT_GAIT"){
+                this->currentState = State::HomeStandToMin10; //Automatically
+            }
+            break; 
+            
+
+        case State::HomeStandToMin10:                       // before doing side steps on the middle part we have to home to an ankle position -10
+            if(triggerPress == "PUSH"){
+                this->currentState = State::HomeStandToMin10Activated;
+            }
+            else if(joystickPress == "DOUBLE"){ 
+                this->currentState = State::TiltedPath;
+            }
+            else if(joystickState == "LEFT"){
+                this->currentState = State::SecondStartStep;
+            }
+            else if(joystickState == "RIGHT"){
+                this->currentState = State::TiltedPathMiddleStep;
+            }
+            break;
+            
+        case State::HomeStandToMin10Activated:
+            if(triggerPress == "EXIT_GAIT"){
+                this->currentState = State::TiltedPathMiddleStep; //Automatically
+            }
+            break; 
+            
+
+        case State::TiltedPathMiddleStep:                   // after activating a side step for the middle part you can do this action again, when you are at the end you have to push the joystick to the right. 
+            if(triggerPress == "PUSH"){
+                this->currentState = State::TiltedPathMiddleStepActivated;
+            }
+            else if(joystickPress == "DOUBLE"){ 
+                this->currentState = State::TiltedPath;
+            }
+            else if(joystickState == "LEFT"){
+                this->currentState = State::HomeStandToMin10;
+            }
+            else if(joystickState == "RIGHT"){
+                this->currentState = State::HomeStandToMin5;
+            }
+            break;
+
+        case State::TiltedPathMiddleStepActivated:
+            if(triggerPress == "EXIT_GAIT"){
+                this->currentState = State::TiltedPathMiddleStep; //Automatically
+            }
+            break; 
+
+        case State::HomeStandToMin5:                    // before going off the tilted path we have to home ankles to -5
+            if(triggerPress == "PUSH"){
+                this->currentState = State::HomeStandToMin5Activated;
+            }
+            else if(joystickPress == "DOUBLE"){ 
+                this->currentState = State::TiltedPath;
+            }
+            else if(joystickState == "LEFT"){
+                this->currentState = State::TiltedPathMiddleStep;
+            }
+            else if(joystickState == "RIGHT"){
+                this->currentState = State::FirstEndStep;
+            }
+            break;
+
+        case State::HomeStandToMin5Activated:
+            if(triggerPress == "EXIT_GAIT"){
+                this->currentState = State::FirstEndStep; //Automatically
+            }
+            break; 
+
+        case State::FirstEndStep:                           // first step for the end of the tilted path
+            if(triggerPress == "PUSH"){
+                this->currentState = State::FirstEndStepActivated;
+            }
+            else if(joystickPress == "DOUBLE"){ 
+                this->currentState = State::TiltedPath;
+            }
+            else if(joystickState == "LEFT"){
+                this->currentState = State::HomeStandToMin5;
+            }
+            else if(joystickState == "RIGHT"){
+                this->currentState = State::SecondEndStep;
+            }
+            break; 
+
+        case State::FirstEndStepActivated:
+            if(triggerPress == "EXIT_GAIT"){
+                this->currentState = State::SecondEndStep; //Automatically
+            }
+            break; 
+
+        case State::SecondEndStep:                          // second step for the end of the tilted path
+            if(triggerPress == "PUSH"){
+                this->currentState = State::SecondEndStepActivated;
+            }
+            else if(joystickPress == "DOUBLE"){ 
+                this->currentState = State::TiltedPath;
+            }
+            else if(joystickState == "LEFT"){
+                this->currentState = State::FirstEndStep;
+            }
+            else if(joystickState == "RIGHT"){
+                this->currentState = State::HomeForWalk25;
+            }
+            break;    
+
+        case State::SecondEndStepActivated:
+            if(triggerPress == "EXIT_GAIT"){
+                this->currentState = State::HomeForWalk25; //Automatically
+            }
+            break; 
+
+        case State::HomeForWalk25:                          // We are now finished with the tilted path, but before we can walk we have to set ankles back to 2.5 for walking -> home.
+            if(triggerPress == "PUSH"){
+                this->currentState = State::HomeForWalk25Activated;
+            }
+            else if(joystickPress == "DOUBLE"){ 
+                this->currentState = State::TiltedPath;
+            }
+            else if(joystickState == "LEFT"){
+                this->currentState = State::SecondEndStep;
+            }
+            else if(joystickState == "RIGHT"){
+                this->currentState = State::TiltedPathStartHometToMin5;
+            }
+            break;
+
+        case State::HomeForWalk25Activated:
+            if(triggerPress == "EXIT_GAIT"){
+                this->currentState = State::WalkObstacle; //Automatically
+                this->rememberStateObstacleWIB = State::Sofa;
+            }
+            break;    
+            
+
         //Walk in between obstacles
         case State::WalkObstacle:
             if(joystickPress == "PUSH"){
