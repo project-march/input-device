@@ -28,7 +28,7 @@ StateMachine::StateMachine()
     stateToGaitMapping[State::StairsDownActivated] = "gait_stairs_down";
 
     stateToGaitMapping[State::SideStepLeftNormalActivated] = "gait_side_step_left";
-    stateToGaitMapping[State::SideStepRighNormaltActivated] = "gait_side_step_right";
+    stateToGaitMapping[State::SideStepRightNormalActivated] = "gait_side_step_right";
     stateToGaitMapping[State::SideStepLeftSmallActivated] = "side_step_left_small";
     stateToGaitMapping[State::SideStepRightSmallActivated] = "side_step_right_small";
 
@@ -1434,15 +1434,83 @@ int * StateMachine::getScreenImage(){
             currentSdAddresses[0] = TiltedPath_Hi;
             currentSdAddresses[1] = TiltedPath_Lo;    
             break;  
-        case State::TiltedPathSelected:
-            currentSdAddresses[0] = TiltedPathSelected_Hi;
-            currentSdAddresses[1] = TiltedPathSelected_Lo;   
-            break;  
-        case State::TiltedPathActivated:
-            currentSdAddresses[0] = TiltedPathActivated_Hi;
-            currentSdAddresses[1] = TiltedPathActivated_Lo;   
-            break;  
-          
+        case State::TiltedPathStartHomeToMin5:
+            currentSdAddresses[0] = TiltedPathStartHomeToMin5_Hi;
+            currentSdAddresses[1] = TiltedPathStartHomeToMin5_Lo;    
+            break; 
+        case State::TiltedPathStartHomeToMin5Selected:
+            currentSdAddresses[0] = TiltedPathStartHomeToMin5Selected_Hi;
+            currentSdAddresses[1] = TiltedPathStartHomeToMin5Selected_Lo;    
+            break;    
+        case State::TiltedPathStartHomeToMin5Activated:
+            currentSdAddresses[0] = TiltedPathStartHomeToMin5Activated_Hi;
+            currentSdAddresses[1] = TiltedPathStartHomeToMin5Activated_Lo;    
+            break;    
+        case State::FirstStartStep:
+            currentSdAddresses[0] = FirstStartStep_Hi;
+            currentSdAddresses[1] = FirstStartStep_Lo;    
+            break;
+        case State::FirstStartStepActivated:
+            currentSdAddresses[0] = FirstStartStepActivated_Hi;
+            currentSdAddresses[1] = FirstStartStepActivated_Lo;    
+            break;   
+        case State::SecondStartStep:
+            currentSdAddresses[0] = SecondStartStep_Hi;
+            currentSdAddresses[1] = SecondStartStep_Lo;    
+            break; 
+        case State::SecondStartStepActivated:
+            currentSdAddresses[0] = SecondStartStepActivated_Hi;
+            currentSdAddresses[1] = SecondStartStepActivated_Lo;    
+            break;       
+        case State::HomeStandToMin10:
+            currentSdAddresses[0] = HomeStandToMin10_Hi;
+            currentSdAddresses[1] = HomeStandToMin10_Lo;    
+            break; 
+        case State::HomeStandToMin10Activated:
+            currentSdAddresses[0] = HomeStandToMin10Activated_Hi;
+            currentSdAddresses[1] = HomeStandToMin10Activated_Lo;    
+            break;     
+        case State::TiltedPathMiddleStep:
+            currentSdAddresses[0] = TiltedPathMiddleStep_Hi;
+            currentSdAddresses[1] = TiltedPathMiddleStep_Lo;    
+            break; 
+        case State::TiltedPathMiddleStepActivated:
+            currentSdAddresses[0] = TiltedPathMiddleStepActivated_Hi;
+            currentSdAddresses[1] = TiltedPathMiddleStepActivated_Lo;    
+            break;
+        case State::HomeStandToMin5:
+            currentSdAddresses[0] = HomeStandToMin5_Hi;
+            currentSdAddresses[1] = HomeStandToMin5_Lo;    
+            break; 
+        case State::HomeStandToMin5Activated:
+            currentSdAddresses[0] = HomeStandToMin5Activated_Hi;
+            currentSdAddresses[1] = HomeStandToMin5Activated_Lo;    
+            break;
+        case State::FirstEndStep:
+            currentSdAddresses[0] = FirstEndStep_Hi;
+            currentSdAddresses[1] = FirstEndStep_Lo;    
+            break; 
+        case State::FirstEndStepActivated:
+            currentSdAddresses[0] = FirstEndStepActivated_Hi;
+            currentSdAddresses[1] = FirstEndStepActivated_Lo;    
+            break;
+        case State::SecondEndStep:
+            currentSdAddresses[0] = SecondEndStep_Hi;
+            currentSdAddresses[1] = SecondEndStep_Lo;    
+            break; 
+        case State::SecondEndStepActivated:
+            currentSdAddresses[0] = SecondEndStepActivated_Hi;
+            currentSdAddresses[1] = SecondEndStepActivated_Lo;    
+            break;    
+        case State::HomeForWalk25:
+            currentSdAddresses[0] = HomeForWalk25_Hi;
+            currentSdAddresses[1] = HomeForWalk25_Lo;    
+            break; 
+        case State::HomeForWalk25Activated:
+            currentSdAddresses[0] = HomeForWalk25Activated_Hi;
+            currentSdAddresses[1] = HomeForWalk25Activated_Lo;    
+            break;
+
         case State::Stairs:
             currentSdAddresses[0] = Stairs_Hi;
             currentSdAddresses[1] = Stairs_Lo;    
@@ -1483,6 +1551,8 @@ int * StateMachine::getScreenImage(){
         //     currentSdAddresses[0] = StairsDownFinalActivated_Hi;
         //     currentSdAddresses[1] = StairsDownFinalActivated_Lo;
         //     break;
+
+
 
 //WIB
         case State::WalkObstacle:
@@ -1631,22 +1701,54 @@ int * StateMachine::getScreenImage(){
             currentSdAddresses[0] = SideStepRight_Hi;
             currentSdAddresses[1] = SideStepRight_Lo;  
             break;
-        case State::SideStepLeftSelected:
-            currentSdAddresses[0] = SideStepLeftSelected_Hi;
-            currentSdAddresses[1] = SideStepLeftSelected_Lo;  
+        case State::SideStepLeftSmall:
+            currentSdAddresses[0] = SideStepLeftSmall_Hi;
+            currentSdAddresses[1] = SideStepLeftSmall_Lo;  
             break;
-        case State::SideStepRightSelected:
-            currentSdAddresses[0] = SideStepRightSelected_Hi;
-            currentSdAddresses[1] = SideStepRightSelected_Lo;  
+        case State::SideStepLeftSmallSelected:
+            currentSdAddresses[0] = SideStepLeftSmallSelected_Hi;
+            currentSdAddresses[1] = SideStepLeftSmallSelected_Lo;  
             break;
-        case State::SideStepLeftActivated:
-            currentSdAddresses[0] = SideStepLeftActivated_Hi;
-            currentSdAddresses[1] = SideStepLeftActivated_Lo;  
+        case State::SideStepLeftSmallActivated:
+            currentSdAddresses[0] = SideStepLeftSmallActivated_Hi;
+            currentSdAddresses[1] = SideStepLeftSmallActivated_Lo;  
+            break;   
+        case State::SideStepLeftNormal:
+            currentSdAddresses[0] = SideStepLeftNormal_Hi;
+            currentSdAddresses[1] = SideStepLeftNormal_Lo;  
             break;
-        case State::SideStepRightActivated:
-            currentSdAddresses[0] = SideStepRightActivated_Hi;
-            currentSdAddresses[1] = SideStepRightActivated_Lo; 
+        case State::SideStepLeftNormalSelected:
+            currentSdAddresses[0] = SideStepLeftNormalSelected_Hi;
+            currentSdAddresses[1] = SideStepLeftNormalSelected_Lo; 
             break;
+        case State::SideStepLeftNormalActivated:
+            currentSdAddresses[0] = SideStepLeftNormalActivated_Hi;
+            currentSdAddresses[1] = SideStepLeftNormalActivated_Lo;
+            break;
+        case State::SideStepRightSmall:
+            currentSdAddresses[0] = SideStepRightSmall_Hi;
+            currentSdAddresses[1] = SideStepRightSmall_Lo;  
+            break;
+        case State::SideStepRightSmallSelected:
+            currentSdAddresses[0] = SideStepRightSmallSelected_Hi;
+            currentSdAddresses[1] = SideStepRightSmallSelected_Lo;  
+            break;
+        case State::SideStepRightSmallActivated:
+            currentSdAddresses[0] = SideStepRightSmallActivated_Hi;
+            currentSdAddresses[1] = SideStepRightSmallActivated_Lo;  
+            break;   
+        case State::SideStepRightNormal:
+            currentSdAddresses[0] = SideStepRightNormal_Hi;
+            currentSdAddresses[1] = SideStepRightNormal_Lo;  
+            break;
+        case State::SideStepRightNormalSelected:
+            currentSdAddresses[0] = SideStepRightNormalSelected_Hi;
+            currentSdAddresses[1] = SideStepRightNormalSelected_Lo;  
+            break;
+        case State::SideStepRightNormalActivated:
+            currentSdAddresses[0] = SideStepRightSmallActivated_Hi;
+            currentSdAddresses[1] = SideStepRightSmallActivated_Lo;  
+            break;  
         default:
             Serial.println("Can't draw this state");
             currentSdAddresses[0] = 0;
