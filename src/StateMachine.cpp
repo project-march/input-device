@@ -27,8 +27,8 @@ StateMachine::StateMachine()
     stateToGaitMapping[State::StairsUpActivated] = "gait_stairs_up";
     stateToGaitMapping[State::StairsDownActivated] = "gait_stairs_down";
 
-    stateToGaitMapping[State::SideStepLeftActivated] = "gait_side_step_left";
-    stateToGaitMapping[State::SideStepRightActivated] = "gait_side_step_right";
+    stateToGaitMapping[State::SideStepLeftNormalActivated] = "gait_side_step_left";
+    stateToGaitMapping[State::SideStepRighNormaltActivated] = "gait_side_step_right";
     stateToGaitMapping[State::SideStepLeftSmallActivated] = "side_step_left_small";
     stateToGaitMapping[State::SideStepRightSmallActivated] = "side_step_right_small";
 
@@ -447,7 +447,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
                 this->currentState = State::SideStepRight;
             }
             else if(joystickPress == "PUSH"){
-                this->currentState = State::SideStepLeftSelected;
+                this->currentState = State::SideStepLeftNormal;
            }
             else if(joystickPress == "DOUBLE"){
                 this->currentState = State::SideStep;
@@ -459,6 +459,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
                 this->currentState = State::Sit;
             }
             break;
+
         case State::SideStepRight:
             if (joystickState == "LEFT"){
                 this->currentState = State::SideStepLeft;
@@ -467,7 +468,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
                 this->currentState = State::SideStepLeft;
             }
             else if(joystickPress == "PUSH"){
-                this->currentState = State::SideStepRightSelected;
+                this->currentState = State::SideStepRightNormal;
             }
             else if(joystickPress == "DOUBLE"){ 
                 this->currentState = State::SideStep;
@@ -479,6 +480,68 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
                 this->currentState = State::Sit;
             }
             break;
+
+        case State::SideStepLeftNormal:
+            if (joystickState == "LEFT"){
+                this->currentState = State::SideStepLeftSmall;
+            }
+            else if (joystickState == "RIGHT"){
+                this->currentState = State::SideStepLeftSmall;
+            }
+            else if(joystickPress == "PUSH"){
+                this->currentState = State::SideStepLeftNormalSelected;
+           }
+            else if(joystickPress == "DOUBLE"){
+                this->currentState = State::SideStepLeft;
+            }
+            break;
+
+        case State::SideStepLeftSmall:
+            if (joystickState == "LEFT"){
+                this->currentState = State::SideStepLeftNormal;
+            }
+            else if (joystickState == "RIGHT"){
+                this->currentState = State::SideStepLeftNormal;
+            }
+            else if(joystickPress == "PUSH"){
+                this->currentState = State::SideStepLeftSmallSelected;
+           }
+            else if(joystickPress == "DOUBLE"){
+                this->currentState = State::SideStepLeft;
+            }
+            break;
+
+        case State::SideStepRightNormal:
+            if (joystickState == "LEFT"){
+                this->currentState = State::SideStepRightSmall;
+            }
+            else if (joystickState == "RIGHT"){
+                this->currentState = State::SideStepRightSmall;
+            }
+            else if(joystickPress == "PUSH"){
+                this->currentState = State::SideStepRightNormalSelected;
+           }
+            else if(joystickPress == "DOUBLE"){
+                this->currentState = State::SideStepRight;
+            }
+            break;
+
+        case State::SideStepRightSmall:
+            if (joystickState == "LEFT"){
+                this->currentState = State::SideStepRightNormal;
+            }
+            else if (joystickState == "RIGHT"){
+                this->currentState = State::SideStepRightNormal;
+            }
+            else if(joystickPress == "PUSH"){
+                this->currentState = State::SideStepRightSmallSelected;
+           }
+            else if(joystickPress == "DOUBLE"){
+                this->currentState = State::SideStepRight;
+            }
+            break;
+
+
         
         //Selected
         case State::WalkSmallSelected:
@@ -529,22 +592,42 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
         //         this->currentState = State::SingleStepLarge;
         //     }
         //     break;
-        case State::SideStepLeftSelected:
+        case State::SideStepLeftNormalSelected:
             if(triggerPress == "PUSH"){
-                this->currentState = State::SideStepLeftActivated;
+                this->currentState = State::SideStepLeftNormalActivated;
             }
             else if(joystickPress == "DOUBLE"){ 
-                this->currentState = State::SideStepLeft;
+                this->currentState = State::SideStepLeftNormal;
             }
             break;
-        case State::SideStepRightSelected:
+
+        case State::SideStepLeftSmallSelected:
             if(triggerPress == "PUSH"){
-                this->currentState = State::SideStepRightActivated;
+                this->currentState = State::SideStepLeftSmallActivated;
             }
-            else if(joystickPress == "DOUBLE"){
-                this->currentState = State::SideStepRight;
+            else if(joystickPress == "DOUBLE"){ 
+                this->currentState = State::SideStepLeftSmall;
             }
             break;
+
+        case State::SideStepRightNormalSelected:
+            if(triggerPress == "PUSH"){
+                this->currentState = State::SideStepRightNormalActivated;
+            }
+            else if(joystickPress == "DOUBLE"){ 
+                this->currentState = State::SideStepRightNormal;
+            }
+            break;
+
+        case State::SideStepRightSmallSelected:
+            if(triggerPress == "PUSH"){
+                this->currentState = State::SideStepRightSmallActivated;
+            }
+            else if(joystickPress == "DOUBLE"){ 
+                this->currentState = State::SideStepRightSmall;
+            }
+            break;
+
 
         //Activated
         case State::WalkSmallActivated:
@@ -577,12 +660,22 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
         //         this->currentState = State::SingleStep; //Automatically
         //     }
         //     break;
-        case State::SideStepLeftActivated:
+        case State::SideStepLeftNormalActivated:
             if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::SideStep; //Automatically
             }
             break;
-        case State::SideStepRightActivated:
+        case State::SideStepLeftSmallActivated:
+            if(triggerPress == "EXIT_GAIT"){
+                this->currentState = State::SideStep; //Automatically
+            }
+            break;    
+        case State::SideStepRightSmallActivated:
+            if(triggerPress == "EXIT_GAIT"){
+                this->currentState = State::SideStep; //Automatically
+            }
+            break;
+        case State::SideStepRightNormalActivated:
             if(triggerPress == "EXIT_GAIT"){
                 this->currentState = State::SideStep; //Automatically
             }
@@ -630,7 +723,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
                 this->currentState = State::Stairs;
             }
             else if(joystickPress == "PUSH"){
-                this->currentState = State::TiltedPathHometToMin5;             
+                this->currentState = State::TiltedPathStartHomeToMin5;             
             }
             else if(joystickState =="DOWN"){
                 this->rememberStateObstacle = currentState;
@@ -801,9 +894,9 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             //Selected and activated submenus
 
      //Tilted Path    
-        case State::TiltedPathStartHometToMin5:                     // first home ankles to -5 before going on the tilted path
+        case State::TiltedPathStartHomeToMin5:                     // first home ankles to -5 before going on the tilted path
             if(joystickPress == "PUSH"){
-                this->currentState = State::TiltedPathStartHometToMin5Selected;
+                this->currentState = State::TiltedPathStartHomeToMin5Selected;
             }
             else if(joystickPress == "DOUBLE"){ 
                 this->currentState = State::TiltedPath;
@@ -840,7 +933,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
                 this->currentState = State::TiltedPath;
             }
             else if(joystickState == "LEFT"){
-                this->currentState = State::TiltedPathStartHometToMin5;
+                this->currentState = State::TiltedPathStartHomeToMin5;
             }
             else if(joystickState == "RIGHT"){
                 this->currentState = State::SecondStartStep;
@@ -994,7 +1087,7 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
                 this->currentState = State::SecondEndStep;
             }
             else if(joystickState == "RIGHT"){
-                this->currentState = State::TiltedPathStartHometToMin5;
+                this->currentState = State::TiltedPathStartHomeToMin5;
             }
             break;
 
