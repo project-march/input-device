@@ -440,128 +440,128 @@
 #define SideStepRightActivated_Lo       0x0561
 
 //SiderStepLeftSmall
-#define SideStepLeftSmall_Hi
-#define SideStepLeftSmall_Lo
+#define SideStepLeftSmall_Hi            0x0000
+#define SideStepLeftSmall_Lo            0x2F76
             
 //SideStepLeftSmallSelected
-#define SideStepLeftSmallSelected_Hi
-#define SideStepLeftSmallSelected_Lo
+#define SideStepLeftSmallSelected_Hi    0x0000
+#define SideStepLeftSmallSelected_Lo    0x3018
             
 //SideStepLeftSmallActivated
-#define SideStepLeftSmallActivated_Hi
-#define SideStepLeftSmallActivated_Lo
+#define SideStepLeftSmallActivated_Hi   0x0000
+#define SideStepLeftSmallActivated_Lo   0x2FC7
            
 //SideStepLeftNormal
-#define SideStepLeftNormal_Hi
-#define SideStepLeftNormal_Lo  
+#define SideStepLeftNormal_Hi           0x0000
+#define SideStepLeftNormal_Lo           0x2C9D
 
 //SideStepLeftNormalSelected
-#define SideStepLeftNormalSelected_Hi
-#define SideStepLeftNormalSelected_Lo
+#define SideStepLeftNormalSelected_Hi   0x0000
+#define SideStepLeftNormalSelected_Lo   0x2D3F
 
 //SideStepLeftNormalActivated
-#define SideStepLeftNormalActivated_Hi
-#define SideStepLeftNormalActivated_Lo
+#define SideStepLeftNormalActivated_Hi  0x0000
+#define SideStepLeftNormalActivated_Lo  0x2CEE
 
 //SiderStepRightSmall
-#define SideStepRightSmall_Hi
-#define SideStepRightSmall_Lo
+#define SideStepRightSmall_Hi           0x0000
+#define SideStepRightSmall_Lo           0x3069
             
 //SideStepRightRightSelected
-#define SideStepRightSmallSelected_Hi
-#define SideStepRightSmallSelected_Lo
+#define SideStepRightSmallSelected_Hi   0x0000
+#define SideStepRightSmallSelected_Lo   0x310B
             
 //SideStepRightSmallActivated
-#define SideStepRightSmallActivated_Hi
-#define SideStepRightSmallActivated_Lo
+#define SideStepRightSmallActivated_Hi  0x0000
+#define SideStepRightSmallActivated_Lo  0x30BA
            
 //SideStepRightNormal
-#define SideStepRightNormal_Hi
-#define SideStepRightNormal_Lo  
+#define SideStepRightNormal_Hi          0x0000
+#define SideStepRightNormal_Lo          0x2D90
 
 //SideStepRightNormalSelected
-#define SideStepRightNormalSelected_Hi
-#define SideStepRightNormalSelected_Lo
+#define SideStepRightNormalSelected_Hi  0x0000
+#define SideStepRightNormalSelected_Lo  0x2E32
 
 //SideStepRightNormalActivated
-#define SideStepRightNormalActivated_Hi
-#define SideStepRightNormalActivated_Lo
+#define SideStepRightNormalActivated_Hi 0x0000
+#define SideStepRightNormalActivated_Lo 
 
 //TiltedPathStartHomeToMin5
-#define TiltedPathStartHomeToMin5_Hi
-#define TiltedPathStartHomeToMin5_Lo    
+#define TiltedPathStartHomeToMin5_Hi    0x0000
+#define TiltedPathStartHomeToMin5_Lo    0x2B59
 
 //TiltedPathStartHomeToMin5Selected
-#define TiltedPathStartHomeToMin5Selected_Hi
-#define TiltedPathStartHomeToMin5Selected_Lo    
+#define TiltedPathStartHomeToMin5Selected_Hi    0x0000
+#define TiltedPathStartHomeToMin5Selected_Lo    0x2BFB
 
 //TiltedPathStartHomeToMin5Activated
-#define TiltedPathStartHomeToMin5Activated_Hi
-#define TiltedPathStartHomeToMin5Activated_Lo    
+#define TiltedPathStartHomeToMin5Activated_Hi   0x0000
+#define TiltedPathStartHomeToMin5Activated_Lo   0x2BAA
 
 //FirstStartStep
-#define FirstStartStep_Hi
-#define FirstStartStep_Lo    
+#define FirstStartStep_Hi                       0x0000
+#define FirstStartStep_Lo                       0x2A66
 
 //FirstStartStepActivated
-#define FirstStartStepActivated_Hi
-#define FirstStartStepActivated_Lo    
+#define FirstStartStepActivated_Hi              0x0000
+#define FirstStartStepActivated_Lo              0x2A66
 
 //SecondStartStep
-#define SecondStartStep_Hi
-#define SecondStartStep_Lo    
+#define SecondStartStep_Hi                      0x0000
+#define SecondStartStep_Lo                      0x2F25
 
 //SecondStartStepActivated
-#define SecondStartStepActivated_Hi
-#define SecondStartStepActivated_Lo    
+#define SecondStartStepActivated_Hi             0x0000
+#define SecondStartStepActivated_Lo             0x2F25
             
 //HomeStandToMin10
-#define HomeStandToMin10_Hi
-#define HomeStandToMin10_Lo    
+#define HomeStandToMin10_Hi                     0x0000
+#define HomeStandToMin10_Lo                     0x2C4C
             
 //HomeStandToMin10Activated
-#define HomeStandToMin10Activated_Hi
-#define HomeStandToMin10Activated_Lo    
+#define HomeStandToMin10Activated_Hi            0x0000
+#define HomeStandToMin10Activated_Lo            0x2C4C
 
 //TiltedPathMiddleStep
-#define TiltedPathMiddleStep_Hi
-#define TiltedPathMiddleStep_Lo    
+#define TiltedPathMiddleStep_Hi                 0x0000
+#define TiltedPathMiddleStep_Lo                 0x2E83
             
 //TiltedPathMiddleStepActivated
-#define TiltedPathMiddleStepActivated_Hi
-#define TiltedPathMiddleStepActivated_Lo    
+#define TiltedPathMiddleStepActivated_Hi        0x0000
+#define TiltedPathMiddleStepActivated_Lo        0x2E83
 
 //HomeStandToMin5
-#define HomeStandToMin5_Hi
-#define HomeStandToMin5_Lo    
+#define HomeStandToMin5_Hi                      0x0000
+#define HomeStandToMin5_Lo                      0x2B08
             
 //HomeStandToMin5Activated
-#define HomeStandToMin5Activated_Hi
-#define HomeStandToMin5Activated_Lo    
+#define HomeStandToMin5Activated_Hi             0x0000
+#define HomeStandToMin5Activated_Lo             0x2B08
 
 //FirstEndStep
-#define FirstEndStep_Hi
-#define FirstEndStep_Lo    
+#define FirstEndStep_Hi                         0x0000
+#define FirstEndStep_Lo                         0x2A15
 
 //FirstEndStepActivated
-#define FirstEndStepActivated_Hi
-#define FirstEndStepActivated_Lo    
+#define FirstEndStepActivated_Hi                0x0000
+#define FirstEndStepActivated_Lo                0x2A15
             
 //SecondEndStep
-#define SecondEndStep_Hi
-#define SecondEndStep_Lo    
+#define SecondEndStep_Hi                        0x0000
+#define SecondEndStep_Lo                        0x2ED4
     
 //SecondEndStepActivated
-#define SecondEndStepActivated_Hi
-#define SecondEndStepActivated_Lo    
+#define SecondEndStepActivated_Hi               0x0000
+#define SecondEndStepActivated_Lo               0x2ED4
 
 //HomeForWalk25
-#define HomeForWalk25_Hi
-#define HomeForWalk25_Lo    
+#define HomeForWalk25_Hi                        0x0000
+#define HomeForWalk25_Lo                        0x2AB7
 
 //HomeForWalk25Activated
-#define HomeForWalk25Activated_Hi
-#define HomeForWalk25Activated_Lo    
+#define HomeForWalk25Activated_Hi               0x0000
+#define HomeForWalk25Activated_Lo               0x2AB7
     
 
 #endif //SD_ADDRESSES_H
