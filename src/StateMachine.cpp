@@ -29,8 +29,8 @@ StateMachine::StateMachine()
 
     stateToGaitMapping[State::SideStepLeftNormalActivated] = "gait_side_step_left";
     stateToGaitMapping[State::SideStepRightNormalActivated] = "gait_side_step_right";
-    stateToGaitMapping[State::SideStepLeftSmallActivated] = "side_step_left_small";
-    stateToGaitMapping[State::SideStepRightSmallActivated] = "side_step_right_small";
+    stateToGaitMapping[State::SideStepLeftSmallActivated] = "gait_side_step_left_small";
+    stateToGaitMapping[State::SideStepRightSmallActivated] = "gait_side_step_right_small";
 
     stateToGaitMapping[State::TiltedPathStartHomeToMin5Activated] = "gait_set_ankle_from_2_5_to_min5";
     stateToGaitMapping[State::FirstStartStepActivated] = "gait_tilted_path_first_starting_step";
