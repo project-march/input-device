@@ -24,6 +24,9 @@ StateMachine::StateMachine()
     stateToGaitMapping[State::SingleStepObstacleNormalActivated] = "gait_single_step_normal";
     stateToGaitMapping[State::SingleStepObstacleSmallActivated] = "gait_single_step_small";
 
+    stateToGaitMapping[State::SofaSitActivated] = "gait_sofa_sit";
+    stateToGaitMapping[State::SofaStandUpActivated] = "gait_sofa_stand";
+
     stateToGaitMapping[State::StairsUpActivated] = "gait_stairs_up";
     stateToGaitMapping[State::StairsDownActivated] = "gait_stairs_down";
 
