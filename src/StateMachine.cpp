@@ -753,8 +753,8 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             break;
 
         case State::SofaStandUp:
-            if(joystickPress == "PUSH"){
-                this->currentState = State::SofaStandUpSelected;
+            if(triggerPress == "PUSH"){
+                this->currentState = State::SofaStandUpActivated;
             }
             else if(joystickPress == "DOUBLE"){ 
                 this->currentState = State::Sofa;
@@ -782,14 +782,14 @@ void StateMachine::updateState(String joystickState, String joystickPress, Strin
             }
             break;
         
-        case State::SofaStandUpSelected:
-            if(triggerPress == "PUSH"){
-                this->currentState = State::SofaStandUpActivated;
-            }
-            else if(joystickPress == "DOUBLE"){ 
-                this->currentState = State::SofaStandUp;
-            }
-            break;
+        // case State::SofaStandUpSelected:
+        //     if(triggerPress == "PUSH"){
+        //         this->currentState = State::SofaStandUpActivated;
+        //     }
+        //     else if(joystickPress == "DOUBLE"){ 
+        //         this->currentState = State::SofaStandUp;
+        //     }
+        //     break;
         
         case State::SofaStandUpActivated:
             if(triggerPress == "EXIT_GAIT"){
