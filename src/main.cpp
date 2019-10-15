@@ -87,6 +87,9 @@ void sendGaitMessage(std::string name)
     gaitInstructionMessage.gait_name = name.c_str();
     gait_instruction_publisher.publish(&gaitInstructionMessage);
     gait_message_send = true;
+#ifdef DEMO_INPUT_DEVICE
+    received_gait_instruction_response = true;
+#endif
   }
 }
 
