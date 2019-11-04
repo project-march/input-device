@@ -15,6 +15,25 @@ Add your custom messages to the rosserial_msgs package in rosserial. And build a
 ## Add Messages from package
 http://wiki.ros.org/rosserial_arduino/Tutorials/Adding%20Custom%20Messages
 
+## Building
+The project can be built with `pio run`.
+There exist three environments for building:
+
+1. `demo`: builds in debug mode and does not wait for a response from the
+   master.
+2. `debug`: builds in debug mode.
+2. `release`: builds in release mode.
+
+To choose an environment use the `--environment (-e)` option. For example to
+build the release environment run:
+
+    pio run -e release
+
+This only builds the project. To actually upload the project, connect the
+input device and use the `--target (-t)` option.
+
+    pio run -e <choose an env> -t upload
+
 ## Configure CLion
 1. Install platformio and integrate it within the Clion ide, using the
    following

@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "ros/msg.h"
+#include "std_msgs/Header.h"
 
 namespace march_shared_resources
 {
@@ -12,16 +13,17 @@ namespace march_shared_resources
   class Error : public ros::Msg
   {
     public:
-      typedef int16_t _error_code_type;
-      _error_code_type error_code;
+      typedef std_msgs::Header _header_type;
+      _header_type header;
       typedef const char* _error_message_type;
       _error_message_type error_message;
       typedef uint8_t _type_type;
       _type_type type;
       enum { FATAL =  0      };
+      enum { NON_FATAL =  1      };
 
     Error():
-      error_code(0),
+      header(),
       error_message(""),
       type(0)
     {
@@ -30,14 +32,7 @@ namespace march_shared_resources
     virtual int serialize(unsigned char *outbuffer) const
     {
       int offset = 0;
-      union {
-        int16_t real;
-        uint16_t base;
-      } u_error_code;
-      u_error_code.real = this->error_code;
-      *(outbuffer + offset + 0) = (u_error_code.base >> (8 * 0)) & 0xFF;
-      *(outbuffer + offset + 1) = (u_error_code.base >> (8 * 1)) & 0xFF;
-      offset += sizeof(this->error_code);
+      offset += this->header.serialize(outbuffer + offset);
       uint32_t length_error_message = strlen(this->error_message);
       varToArr(outbuffer + offset, length_error_message);
       offset += 4;
@@ -51,15 +46,7 @@ namespace march_shared_resources
     virtual int deserialize(unsigned char *inbuffer)
     {
       int offset = 0;
-      union {
-        int16_t real;
-        uint16_t base;
-      } u_error_code;
-      u_error_code.base = 0;
-      u_error_code.base |= ((uint16_t) (*(inbuffer + offset + 0))) << (8 * 0);
-      u_error_code.base |= ((uint16_t) (*(inbuffer + offset + 1))) << (8 * 1);
-      this->error_code = u_error_code.real;
-      offset += sizeof(this->error_code);
+      offset += this->header.deserialize(inbuffer + offset);
       uint32_t length_error_message;
       arrToVar(length_error_message, (inbuffer + offset));
       offset += 4;
@@ -75,7 +62,7 @@ namespace march_shared_resources
     }
 
     const char * getType(){ return "march_shared_resources/Error"; };
-    const char * getMD5(){ return "69eb7217b9c1a457282de062edd13773"; };
+    const char * getMD5(){ return "33219ea76fe005430968f80b14f32d57"; };
 
   };
 
