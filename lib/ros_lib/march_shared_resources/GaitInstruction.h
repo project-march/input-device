@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "ros/msg.h"
+#include "std_msgs/Header.h"
 
 namespace march_shared_resources
 {
@@ -12,6 +13,8 @@ namespace march_shared_resources
   class GaitInstruction : public ros::Msg
   {
     public:
+      typedef std_msgs::Header _header_type;
+      _header_type header;
       typedef int16_t _type_type;
       _type_type type;
       typedef const char* _gait_name_type;
@@ -23,6 +26,7 @@ namespace march_shared_resources
       enum { CONTINUE =  3 };
 
     GaitInstruction():
+      header(),
       type(0),
       gait_name("")
     {
@@ -31,6 +35,7 @@ namespace march_shared_resources
     virtual int serialize(unsigned char *outbuffer) const
     {
       int offset = 0;
+      offset += this->header.serialize(outbuffer + offset);
       union {
         int16_t real;
         uint16_t base;
@@ -50,6 +55,7 @@ namespace march_shared_resources
     virtual int deserialize(unsigned char *inbuffer)
     {
       int offset = 0;
+      offset += this->header.deserialize(inbuffer + offset);
       union {
         int16_t real;
         uint16_t base;
@@ -72,7 +78,7 @@ namespace march_shared_resources
     }
 
     const char * getType(){ return "march_shared_resources/GaitInstruction"; };
-    const char * getMD5(){ return "abd2750b2844ffd9e9397ec5f63a164d"; };
+    const char * getMD5(){ return "33baee28fc7d9ee7dee1e42d340e1783"; };
 
   };
 

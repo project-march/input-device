@@ -163,7 +163,7 @@ namespace march_shared_resources
     }
 
     const char * getType(){ return "march_shared_resources/Subgait"; };
-    const char * getMD5(){ return "8ce7dc4e4385fc416a6f898dbcb9c8d2"; };
+    const char * getMD5(){ return "56dd95f06d51574a3fc7a0eac6b1b780"; };
 
   };
 

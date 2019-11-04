@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "ros/msg.h"
+#include "std_msgs/Header.h"
 #include "march_shared_resources/LowVoltageNet.h"
 #include "march_shared_resources/HighVoltageNet.h"
 
@@ -14,6 +15,8 @@ namespace march_shared_resources
   class PowerDistributionBoardState : public ros::Msg
   {
     public:
+      typedef std_msgs::Header _header_type;
+      _header_type header;
       typedef bool _high_voltage_enabled_type;
       _high_voltage_enabled_type high_voltage_enabled;
       typedef float _power_distribution_board_current_type;
@@ -32,6 +35,7 @@ namespace march_shared_resources
       _high_voltage_nets_type * high_voltage_nets;
 
     PowerDistributionBoardState():
+      header(),
       high_voltage_enabled(0),
       power_distribution_board_current(0),
       high_voltage_net_current(0),
@@ -44,6 +48,7 @@ namespace march_shared_resources
     virtual int serialize(unsigned char *outbuffer) const
     {
       int offset = 0;
+      offset += this->header.serialize(outbuffer + offset);
       union {
         bool real;
         uint8_t base;
@@ -100,6 +105,7 @@ namespace march_shared_resources
     virtual int deserialize(unsigned char *inbuffer)
     {
       int offset = 0;
+      offset += this->header.deserialize(inbuffer + offset);
       union {
         bool real;
         uint8_t base;
@@ -166,7 +172,7 @@ namespace march_shared_resources
     }
 
     const char * getType(){ return "march_shared_resources/PowerDistributionBoardState"; };
-    const char * getMD5(){ return "6391d38822cbb4b74fcf04938eb383f5"; };
+    const char * getMD5(){ return "2ff720814f62ef92954d191a316aeaf3"; };
 
   };
 
