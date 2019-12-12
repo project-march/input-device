@@ -4,17 +4,6 @@
 
 #include <string>
 
-class AbstractState {
-public:
-  virtual AbstractState* left() = 0;
-  virtual AbstractState* right() = 0;
-  virtual AbstractState* up() = 0;
-  virtual AbstractState* down() = 0;
-
-  virtual AbstractState* back() = 0;
-  virtual AbstractState* select() = 0;
-  virtual AbstractState* activate() = 0;
-};
 
 class State {
 public:

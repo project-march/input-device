@@ -5,13 +5,12 @@
 
 #include <Arduino.h>
 
-#include <map>
 #include <string>
 #include <vector>
 
 class StateMachine {
 public:
-  StateMachine();
+  StateMachine() = default;
 
   const std::string& getCurrentGaitName() const;
 

@@ -1,7 +1,5 @@
 #include "state_machine.h"
 
-StateMachine::StateMachine() {}
-
 const std::string& StateMachine::getCurrentGaitName() const {
   return this->current_state_->getGaitName();
 }
