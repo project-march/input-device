@@ -39,7 +39,7 @@ public:
     void initialize();
     void clear();
     void reset();
-    void draw_image(int addr_hi, int addr_lo);
+    void draw_image(word addr_hi, word addr_lo);
 
 private:
     SoftwareSerial *            m_serial;

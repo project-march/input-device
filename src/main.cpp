@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <WiFi.h>
-#include <StateMachine.h>
+#include <state_machine.h>
 #include <RockerSwitch.h>
 #include <string.h>
 #include <Joystick.h>
@@ -51,7 +51,7 @@ Goldelox_Serial_4DLib screenGoldelox(&screenSerial);
 // Wrapper instance of the screen
 Screen screen(&screenGoldelox, &screenSerial, RST, BAUD_SCREEN);
 // State Machine
-StateMachine stateMachine;
+StateMachine state_machine;
 
 // Haptic Driver
 Adafruit_DRV2605 driver;
@@ -75,8 +75,8 @@ ros::Subscriber<std_msgs::Bool> gait_instruction_result_subscriber("/march/input
                                                                    &gaitInstructionResponseCallback);
 
 march_shared_resources::GaitInstruction gaitInstructionMessage;
-ros::Publisher gait_instruction_publisher("/march/input_device/instruction", &gaitInstructionMessage);
 std_msgs::Time timeMessage;
+ros::Publisher gait_instruction_publisher("/march/input_device/instruction", &gaitInstructionMessage);
 ros::Publisher ping_publisher("/march/input_device/alive", &timeMessage);
 
 void sendGaitMessage(std::string name)
@@ -171,25 +171,40 @@ void loop()
     gait_message_send = false;
   }
 
-  // Determine new state
-  stateMachine.updateState(joystickState, joystickPress, rockerState, triggerPress);
-
-  // Draw appropriate image
-  int* drawSdAddresses = stateMachine.getScreenImage();
-  screen.draw_image(*(drawSdAddresses), *(drawSdAddresses + 1));
-
-  State newState = stateMachine.getCurrentState();
-  std::string name = stateMachine.getGaitNameOfState(newState);
-
-  // If there is a transition to a new screen which belongs to a gait send message with this gait.
-  if (!name.empty())
-  {
-    sendGaitMessage(name);
+  bool state_has_changed = false;
+  if (joystickState == "LEFT") {
+    state_has_changed = state_machine.left();
+  } else if (joystickState == "RIGHT") {
+    state_has_changed = state_machine.right();
+  } else if (joystickState == "UP") {
+    state_has_changed = state_machine.up();
+  } else if (joystickState == "DOWN") {
+    state_has_changed = state_machine.down();
+  } else if (joystickPress == "PUSH") {
+    state_has_changed = state_machine.select();
+  } else if (joystickPress == "DOUBLE") {
+    state_has_changed = state_machine.back();
+  } else if (triggerPress == "PUSH") {
+    state_has_changed = state_machine.activate();
   }
-  else if (triggerPress == "PUSH")
-  {
-    // If the trigger press is not to select a gait, it's interpreted as a stop.
-    sendStopMessage();
+
+  if (state_has_changed) {
+    word address_hi = 0;
+    word address_lo = 0;
+    state_machine.getCurrentImage(address_hi, address_lo);
+    screen.draw_image(address_hi, address_lo);
+
+    const std::string& gait_name = state_machine.getCurrentGaitName();
+
+    // If there is a transition to a new screen which belongs to a gait send
+    // message with this gait.
+    if (!gait_name.empty()) {
+      sendGaitMessage(gait_name);
+    } else if (triggerPress == "PUSH") {
+      // If the trigger press is not to select a gait, it's interpreted as a
+      // stop.
+      sendStopMessage();
+    }
   }
 
   // Average loop frequency is around 20hz.

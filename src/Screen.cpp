@@ -43,7 +43,7 @@ void Screen::reset(){
     sleep(3);
 };
 
-void Screen::draw_image(int addr_hi, int addr_lo){
+void Screen::draw_image(word addr_hi, word addr_lo){
     if((millis() - m_lastDrawTime)*1000 > m_waitTimeUs){
         m_screen->media_SetSector(addr_hi, addr_lo);
         m_screen->media_Image(0,0);
