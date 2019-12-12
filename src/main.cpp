@@ -8,7 +8,7 @@
 #include <SoftwareSerial.h>
 #include <Goldelox_Serial_4DLib.h>
 #include <Screen.h>
-#include "Adafruit_DRV2605.h"
+#include <Adafruit_DRV2605.h>
 #include <ros.h>
 #include <std_msgs/String.h>
 #include <std_msgs/Int16.h>
