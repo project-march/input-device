@@ -1,7 +1,7 @@
 // Copyright 2018 Project March.
-
 #ifndef WIRELESS_CONNECTION_H
 #define WIRELESS_CONNECTION_H
+#include <WiFi.h>
 //////////////////////
 // WiFi Definitions //
 //////////////////////

@@ -1,5 +1,5 @@
-#ifndef INPUT_DEVICE_STATE_MACHINE_H
-#define INPUT_DEVICE_STATE_MACHINE_H
+#ifndef STATE_MACHINE_H
+#define STATE_MACHINE_H
 #include "SD_sector_addresses.h"
 #include "state.h"
 
@@ -32,4 +32,4 @@ private:
   State* current_state_ = nullptr;
 };
 
-#endif // INPUT_DEVICE_STATE_MACHINE_H
+#endif // STATE_MACHINE_H

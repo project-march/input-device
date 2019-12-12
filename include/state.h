@@ -1,5 +1,5 @@
-#ifndef INPUT_DEVICE_STATE_H
-#define INPUT_DEVICE_STATE_H
+#ifndef STATE_H
+#define STATE_H
 #include <Arduino.h>
 
 #include <string>
@@ -44,4 +44,4 @@ private:
   State* activate_ = nullptr;
 };
 
-#endif // INPUT_DEVICE_STATE_H
+#endif // STATE_H

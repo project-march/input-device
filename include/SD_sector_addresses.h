@@ -1,5 +1,5 @@
-#ifndef SD_ADDRESSES_H
-#define SD_ADDRESSES_H
+#ifndef SD_SECTOR_ADDRESSES_H
+#define SD_SECTOR_ADDRESSES_H
 
 // This file defines the sector addresses of the images to be loaded on the screen
 // The sector addresses can be found via the 4D Systems Workshop 4D IDE
@@ -564,4 +564,4 @@
 #define HomeForWalk25Activated_Lo               0x2AB7
     
 
-#endif //SD_ADDRESSES_H
+#endif // SD_SECTOR_ADDRESSES_H

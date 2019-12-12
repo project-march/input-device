@@ -1,22 +1,22 @@
-#include <Arduino.h>
-#include <WiFi.h>
-#include <state_machine.h>
-#include <RockerSwitch.h>
-#include <string.h>
-#include <Joystick.h>
-#include <Button.h>
-#include <SoftwareSerial.h>
-#include <Goldelox_Serial_4DLib.h>
-#include <Screen.h>
+#include "button.h"
+#include "joystick.h"
+#include "rocker_switch.h"
+#include "screen.h"
+#include "state_machine.h"
+#include "wireless_connection.h"
+
 #include <Adafruit_DRV2605.h>
-#include <ros.h>
-#include <std_msgs/String.h>
-#include <std_msgs/Int16.h>
-#include <std_msgs/Time.h>
-#include <std_msgs/Bool.h>
-#include <ros/time.h>
-#include <WirelessConnection.h>
+#include <Arduino.h>
+#include <Goldelox_Serial_4DLib.h>
+#include <SoftwareSerial.h>
+#include <WiFi.h>
 #include <march_shared_resources/GaitInstruction.h>
+#include <ros.h>
+#include <ros/time.h>
+#include <std_msgs/Bool.h>
+#include <std_msgs/Int16.h>
+#include <std_msgs/String.h>
+#include <std_msgs/Time.h>
 
 // Pin definitions
 // Trigger
@@ -31,10 +31,15 @@
 #define JOYSTICK_DOWN 19
 #define JOYSTICK_PUSH 18
 // Screen
-#define UART_TX 32  // Software serial
-#define UART_RX 34  // Software serial
-#define RST 13      // Reset
+#define UART_TX 32 // Software serial
+#define UART_RX 34 // Software serial
+#define RST 13     // Reset
 #define BAUD_SCREEN 9600
+
+#undef LEFT
+#undef RIGHT
+#undef UP
+#undef DOWN
 
 //#define USE_WIRELESS  // comment this to use wired connection.
 
@@ -43,19 +48,21 @@ Button trigger(TRIGGER);
 // Rocker switch
 RockerSwitch rocker(ROCKER_UP, ROCKER_DOWN);
 // Joystick
-Joystick joystick(JOYSTICK_LEFT, JOYSTICK_RIGHT, JOYSTICK_UP, JOYSTICK_DOWN, JOYSTICK_PUSH);
+Joystick joystick(JOYSTICK_LEFT, JOYSTICK_RIGHT, JOYSTICK_UP, JOYSTICK_DOWN,
+                  JOYSTICK_PUSH);
 // Serial communication between Lolin and Screen
-SoftwareSerial screenSerial(UART_RX, UART_TX);
+SoftwareSerial screen_serial(UART_RX, UART_TX);
 // Instance of the screen as in Goldelox_Serial library
-Goldelox_Serial_4DLib screenGoldelox(&screenSerial);
+Goldelox_Serial_4DLib screen_goldelox(&screen_serial);
 // Wrapper instance of the screen
-Screen screen(&screenGoldelox, &screenSerial, RST, BAUD_SCREEN);
+Screen screen(&screen_goldelox, &screen_serial, RST, BAUD_SCREEN);
 // State Machine
 StateMachine state_machine;
 
 // Haptic Driver
 Adafruit_DRV2605 driver;
-uint8_t effect = 14;  // Select the desired effect, for now test effect "Buzz 100%"
+uint8_t effect =
+    14; // Select the desired effect, for now test effect "Buzz 100%"
 
 // Create ros nodehandle with publishers
 #ifdef USE_WIRELESS
@@ -66,26 +73,25 @@ ros::NodeHandle nh;
 
 bool received_gait_instruction_response;
 bool gait_message_send;
-void gaitInstructionResponseCallback(const std_msgs::Bool& msg)
-{
+void gaitInstructionResponseCallback(const std_msgs::Bool& msg) {
   received_gait_instruction_response = true;
 }
 
-ros::Subscriber<std_msgs::Bool> gait_instruction_result_subscriber("/march/input_device/instruction_response",
-                                                                   &gaitInstructionResponseCallback);
+ros::Subscriber<std_msgs::Bool> gait_instruction_result_subscriber(
+    "/march/input_device/instruction_response",
+    &gaitInstructionResponseCallback);
 
-march_shared_resources::GaitInstruction gaitInstructionMessage;
-std_msgs::Time timeMessage;
-ros::Publisher gait_instruction_publisher("/march/input_device/instruction", &gaitInstructionMessage);
-ros::Publisher ping_publisher("/march/input_device/alive", &timeMessage);
+march_shared_resources::GaitInstruction gait_instruction_msg;
+std_msgs::Time time_msg;
+ros::Publisher gait_instruction_publisher("/march/input_device/instruction",
+                                          &gait_instruction_msg);
+ros::Publisher ping_publisher("/march/input_device/alive", &time_msg);
 
-void sendGaitMessage(std::string name)
-{
-  if (!name.empty() && !gait_message_send)
-  {
-    gaitInstructionMessage.type = march_shared_resources::GaitInstruction::GAIT;
-    gaitInstructionMessage.gait_name = name.c_str();
-    gait_instruction_publisher.publish(&gaitInstructionMessage);
+void sendGaitMessage(const std::string& name) {
+  if (!name.empty() && !gait_message_send) {
+    gait_instruction_msg.type = march_shared_resources::GaitInstruction::GAIT;
+    gait_instruction_msg.gait_name = name.c_str();
+    gait_instruction_publisher.publish(&gait_instruction_msg);
     gait_message_send = true;
 #ifdef DEMO_INPUT_DEVICE
     received_gait_instruction_response = true;
@@ -93,21 +99,18 @@ void sendGaitMessage(std::string name)
   }
 }
 
-void sendStopMessage()
-{
-  gaitInstructionMessage.type = march_shared_resources::GaitInstruction::STOP;
-  gaitInstructionMessage.gait_name = "";
-  gait_instruction_publisher.publish(&gaitInstructionMessage);
+void sendStopMessage() {
+  gait_instruction_msg.type = march_shared_resources::GaitInstruction::STOP;
+  gait_instruction_msg.gait_name = "";
+  gait_instruction_publisher.publish(&gait_instruction_msg);
 }
 
-void sendAliveMessage()
-{
-  timeMessage.data = nh.now();
-  ping_publisher.publish(&timeMessage);
+void sendAliveMessage() {
+  time_msg.data = nh.now();
+  ping_publisher.publish(&time_msg);
 }
 
-void setup()
-{
+void setup() {
   Serial.begin(57600);
   Serial.println("Start Input Device");
 
@@ -135,7 +138,8 @@ void setup()
   nh.subscribe(gait_instruction_result_subscriber);
   Serial.println("ros node initialized");
 
-  // Reset the joystick right pin, this needed after the ROS node init pin 14 is apparently used by ROS.
+  // Reset the joystick right pin, this needed after the ROS node init pin 14 is
+  // apparently used by ROS.
   pinMode(JOYSTICK_RIGHT, INPUT_PULLUP);
 
   // initialize screen by resetting, initing uSD card, clearing screen
@@ -143,48 +147,44 @@ void setup()
   sleep(1);
 }
 
-void loop()
-{
-
+void loop() {
   // Get button states
-  String rockerState = rocker.get_position();
-  String joystickState = joystick.get_position();
-  String joystickPress = joystick.get_press();
-  String triggerPress = trigger.read_state();
+  RockerSwitchState rocker_switch_state = rocker.getState();
+  JoystickPosition joystick_position = joystick.getPosition();
+  ButtonState joystick_state = joystick.getState();
+  ButtonState trigger_state = trigger.getState();
 
   // Set the effect to be played hoi
   // Waveforms can be combined, to create new wavefroms, see driver datasheet
-  driver.setWaveform(0, effect);  // Setup the waveform(s)
-  driver.setWaveform(1, 0);       // end of waveform waveform
+  driver.setWaveform(0, effect); // Setup the waveform(s)
+  driver.setWaveform(1, 0);      // end of waveform waveform
 
   // When button is pressed, vibrate
-  if (triggerPress == "PUSH")
-  {
+  if (trigger_state == ButtonState::PUSH) {
     driver.go();
   }
 
-  if (received_gait_instruction_response)
-  {
+  if (received_gait_instruction_response) {
     // This means gait instruction handled
-    triggerPress = "EXIT_GAIT";
+    // trigger_state = "EXIT_GAIT";
     received_gait_instruction_response = false;
     gait_message_send = false;
   }
 
   bool state_has_changed = false;
-  if (joystickState == "LEFT") {
+  if (joystick_position == JoystickPosition::LEFT) {
     state_has_changed = state_machine.left();
-  } else if (joystickState == "RIGHT") {
+  } else if (joystick_position == JoystickPosition::RIGHT) {
     state_has_changed = state_machine.right();
-  } else if (joystickState == "UP") {
+  } else if (joystick_position == JoystickPosition::UP) {
     state_has_changed = state_machine.up();
-  } else if (joystickState == "DOWN") {
+  } else if (joystick_position == JoystickPosition::DOWN) {
     state_has_changed = state_machine.down();
-  } else if (joystickPress == "PUSH") {
+  } else if (joystick_state == ButtonState::PUSH) {
     state_has_changed = state_machine.select();
-  } else if (joystickPress == "DOUBLE") {
+  } else if (joystick_state == ButtonState::DOUBLE) {
     state_has_changed = state_machine.back();
-  } else if (triggerPress == "PUSH") {
+  } else if (trigger_state == ButtonState::PUSH) {
     state_has_changed = state_machine.activate();
   }
 
@@ -200,7 +200,7 @@ void loop()
     // message with this gait.
     if (!gait_name.empty()) {
       sendGaitMessage(gait_name);
-    } else if (triggerPress == "PUSH") {
+    } else if (trigger_state == ButtonState::PUSH) {
       // If the trigger press is not to select a gait, it's interpreted as a
       // stop.
       sendStopMessage();
