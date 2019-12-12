@@ -1,13 +1,11 @@
+os: linux
 language: python
-python:
-  - '2.7'
 
 notifications:
   slack:
     secure: DX4zerMP4tLgR8rMBnY36YhrdtULunl+aROFq7dWy0vXvxiegWfvGY0eWU7K36kcVToPV1LJ9ilFGxfOi5VELkFQHsxYCRaBddSgQ4pAxppygVPhlmOUdpkZsGxrJU27ajcy6OY/pwEFBsABIXitoEC2U0yDzx3J9bWjzz+QH14MLfH07zeYuuAfhloZ8IZk6TbSVeg8X/jhc1QUZhn7QgN+hvXo1MMSaq99TXXK7jO7soq5oRbTSOkohSiVm7XgbjL9haoWXQSBJlb82qu94wFlBBZlZ05oEVGzith36d4gVPJ5wbmoRQy5X/shGBBNGiyv8JRQ6Z18zgdsra1sWPNI7Yv5o91sMySx/g+OOqyJqQKq5y5ohb1Y4hI24zy9Xj8Bjac9wt9O4wvgn5+dlz2qgIkXbJeSodEB4OE0lBEeiQACkYpHz9UbxZrcaBtrq9tEHSrl7lwj/AgRckaIIr+6BURvQ21RIqXhajKiaSO05KqL0spyM8pVvNHn+0W1oznVuEMZOywy7bZ83JiodKVZPwJQWPetOAet8r4PnkulUSseJ8ckVpoz5Kfs/IrSAKMSlOeD19AgLm7Q/ejpoimfTJUJsDRgP7asRVuqgzl7ruBuQOwbaWg3FRgaW7WJ66LPmdNwI5bokThaMaE3oB17l2Y+Kt93CAxUDAKSStI=
   email: false
 
-sudo: false
 cache:
   directories:
     - "~/.platformio"
@@ -18,4 +16,5 @@ install:
 
 script:
   - platformio run
+  - platformio check --environment debug
 # - platformio test
