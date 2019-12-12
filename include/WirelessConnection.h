@@ -22,7 +22,6 @@ void setupWiFi()
   WiFi.begin(ssid, password);
   Serial.print("\nConnecting to ");
   Serial.println(ssid);
-  uint8_t i = 0;
   while (WiFi.status() != WL_CONNECTED)
   {
     delay(500);
