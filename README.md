@@ -27,9 +27,18 @@ build the release environment run:
     pio run -e release
 
 This only builds the project. To actually upload the project, connect the
-input device and use the `--target (-t)` option.
+input device and use the `--target (-t)` option. This will by default upload
+the `debug` environment.
 
     pio run -t upload
+
+When you run the input device you can read the messages sent over the
+USB serial by adding the `monitor` target.
+
+    pio run -t upload -t monitor
+
+This will build, upload and then print messages sent over the serial
+by the input device using `Serial.println()`.
 
 ## 🚀 Launch process
 The input device can be launched with a ROS serial connection.
