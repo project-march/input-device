@@ -17,4 +17,4 @@ install:
 
 script:
   - platformio run
-  - platformio check --environment debug
+  - platformio check
