@@ -4,7 +4,6 @@
 
 #include <string>
 
-
 class State {
 public:
   State(const word address_hi = 0, const word address_lo = 0,
