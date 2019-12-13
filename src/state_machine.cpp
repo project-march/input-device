@@ -9,31 +9,41 @@ void StateMachine::getCurrentImage(word& address_hi, word& address_lo) const {
 }
 
 bool StateMachine::left() {
-  return this->setCurrentState(this->current_state_->left());
+  return this->hasState() &&
+         this->setCurrentState(this->current_state_->left());
 }
 
 bool StateMachine::right() {
-  return this->setCurrentState(this->current_state_->right());
+  return this->hasState() &&
+         this->setCurrentState(this->current_state_->right());
 }
 
 bool StateMachine::up() {
-  return this->setCurrentState(this->current_state_->up());
+  return this->hasState() && this->setCurrentState(this->current_state_->up());
 }
 
 bool StateMachine::down() {
-  return this->setCurrentState(this->current_state_->down());
+  return this->hasState() &&
+         this->setCurrentState(this->current_state_->down());
 }
 
 bool StateMachine::back() {
-  return this->setCurrentState(this->current_state_->back());
+  return this->hasState() &&
+         this->setCurrentState(this->current_state_->back());
 }
 
 bool StateMachine::select() {
-  return this->setCurrentState(this->current_state_->select());
+  return this->hasState() &&
+         this->setCurrentState(this->current_state_->select());
 }
 
 bool StateMachine::activate() {
-  return this->setCurrentState(this->current_state_->activate());
+  return this->hasState() &&
+         this->setCurrentState(this->current_state_->activate());
+}
+
+bool StateMachine::hasState() const {
+  return this->current_state_ != nullptr;
 }
 
 bool StateMachine::setCurrentState(State* new_state) {

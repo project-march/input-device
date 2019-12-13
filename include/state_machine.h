@@ -26,6 +26,7 @@ public:
   bool activate();
 
 private:
+  bool hasState() const;
   bool setCurrentState(State* new_state);
 
   std::vector<State> states_;
