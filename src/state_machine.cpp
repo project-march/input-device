@@ -1,11 +1,16 @@
 #include "state_machine.h"
 
 const std::string& StateMachine::getCurrentGaitName() const {
-  return this->current_state_->getGaitName();
+  if (this->hasState()) {
+    return this->current_state_->getGaitName();
+  }
+  return "";
 }
 
 void StateMachine::getCurrentImage(word& address_hi, word& address_lo) const {
-  this->current_state_->getImage(address_hi, address_lo);
+  if (this->hasState()) {
+    this->current_state_->getImage(address_hi, address_lo);
+  }
 }
 
 bool StateMachine::left() {
