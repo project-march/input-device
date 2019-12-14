@@ -110,6 +110,13 @@ void sendAliveMessage() {
   ping_publisher.publish(&time_msg);
 }
 
+void drawCurrentImage() {
+  word address_hi = 0;
+  word address_lo = 0;
+  state_machine.getCurrentImage(address_hi, address_lo);
+  screen.draw_image(address_hi, address_lo);
+}
+
 void setup() {
   Serial.begin(57600);
   Serial.println();
@@ -147,6 +154,8 @@ void setup() {
   screen.initialize();
   Serial.println("Screen initialized");
   sleep(1);
+
+  drawCurrentImage();
   Serial.println("Ready for use");
 }
 
@@ -199,10 +208,7 @@ void loop() {
   }
 
   if (state_has_changed) {
-    word address_hi = 0;
-    word address_lo = 0;
-    state_machine.getCurrentImage(address_hi, address_lo);
-    screen.draw_image(address_hi, address_lo);
+    drawCurrentImage();
 
     const std::string& gait_name = state_machine.getCurrentGaitName();
 
