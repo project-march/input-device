@@ -1,22 +1,19 @@
 #ifndef STATE_H
 #define STATE_H
-#include <Arduino.h>
-
 #include <string>
 
 class State {
 public:
-  State(const word address_hi, const word address_lo, const std::string& gait)
+  State(const unsigned int address_hi, const unsigned int address_lo, const std::string& gait)
       : gait_(gait), image_address_hi_(address_hi),
-        image_address_lo_(address_lo), left_(this), right_(this), up_(this),
-        down_(this) {}
+        image_address_lo_(address_lo) {}
 
-  State(const word address_hi, const word address_lo)
+  State(const unsigned int address_hi, const unsigned int address_lo)
       : State(address_hi, address_lo, "") {}
 
   const std::string& getGaitName() const { return this->gait_; }
 
-  void getImage(word& image_address_hi, word& image_address_lo) const {
+  void getImage(unsigned int& image_address_hi, unsigned int& image_address_lo) const {
     image_address_hi = this->image_address_hi_;
     image_address_lo = this->image_address_lo_;
   };
@@ -32,17 +29,17 @@ public:
 
 private:
   const std::string gait_;
-  const word image_address_hi_;
-  const word image_address_lo_;
+  const unsigned int image_address_hi_;
+  const unsigned int image_address_lo_;
 
-  const State* left_ = nullptr;
-  const State* right_ = nullptr;
-  const State* up_ = nullptr;
-  const State* down_ = nullptr;
+  const State* left_ = this;
+  const State* right_ = this;
+  const State* up_ = this;
+  const State* down_ = this;
 
-  const State* back_ = nullptr;
-  const State* select_ = nullptr;
-  const State* activate_ = nullptr;
+  const State* back_ = this;
+  const State* select_ = this;
+  const State* activate_ = this;
 };
 
 #endif // STATE_H

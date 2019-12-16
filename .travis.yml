@@ -21,6 +21,7 @@ install:
   - platformio lib install
 
 script:
-  - wget -qO- https://raw.githubusercontent.com/Sarcasm/run-clang-format/master/run-clang-format.py | python - -r src include
   - platformio run
+  - platformio test --environment native
   - platformio check
+  - wget -qO- https://raw.githubusercontent.com/Sarcasm/run-clang-format/master/run-clang-format.py | python - -r src include test

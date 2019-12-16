@@ -2,8 +2,6 @@
 #define STATE_MACHINE_H
 #include "state.h"
 
-#include <Arduino.h>
-
 #include <string>
 #include <vector>
 
@@ -15,7 +13,7 @@ public:
 
   std::string getCurrentGaitName() const;
 
-  void getCurrentImage(word& address_hi, word& address_lo) const;
+  void getCurrentImage(unsigned int& address_hi, unsigned int& address_lo) const;
 
   bool left();
   bool right();

@@ -14,7 +14,7 @@ std::string StateMachine::getCurrentGaitName() const {
   return std::string();
 }
 
-void StateMachine::getCurrentImage(word& address_hi, word& address_lo) const {
+void StateMachine::getCurrentImage(unsigned int& address_hi, unsigned int& address_lo) const {
   if (this->hasState()) {
     this->current_state_->getImage(address_hi, address_lo);
   }
