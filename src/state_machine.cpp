@@ -58,7 +58,7 @@ bool StateMachine::hasState() const {
   return this->current_state_ != nullptr;
 }
 
-bool StateMachine::setCurrentState(State* new_state) {
+bool StateMachine::setCurrentState(const State* new_state) {
   bool has_changed = this->current_state_ != new_state;
   this->current_state_ = new_state;
   return has_changed;

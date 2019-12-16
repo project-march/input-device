@@ -21,28 +21,28 @@ public:
     image_address_lo = this->image_address_lo_;
   };
 
-  State* left() const { return this->left_; }
-  State* right() const { return this->right_; }
-  State* up() const { return this->up_; }
-  State* down() const { return this->down_; }
+  const State* left() const { return this->left_; }
+  const State* right() const { return this->right_; }
+  const State* up() const { return this->up_; }
+  const State* down() const { return this->down_; }
 
-  State* back() const { return this->back_; }
-  State* select() const { return this->select_; }
-  State* activate() const { return this->activate_; }
+  const State* back() const { return this->back_; }
+  const State* select() const { return this->select_; }
+  const State* activate() const { return this->activate_; }
 
 private:
-  std::string gait_;
+  const std::string gait_;
   const word image_address_hi_;
   const word image_address_lo_;
 
-  State* left_ = nullptr;
-  State* right_ = nullptr;
-  State* up_ = nullptr;
-  State* down_ = nullptr;
+  const State* left_ = nullptr;
+  const State* right_ = nullptr;
+  const State* up_ = nullptr;
+  const State* down_ = nullptr;
 
-  State* back_ = nullptr;
-  State* select_ = nullptr;
-  State* activate_ = nullptr;
+  const State* back_ = nullptr;
+  const State* select_ = nullptr;
+  const State* activate_ = nullptr;
 };
 
 #endif // STATE_H

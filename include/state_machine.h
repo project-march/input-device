@@ -28,10 +28,10 @@ public:
 
 private:
   bool hasState() const;
-  bool setCurrentState(State* new_state);
+  bool setCurrentState(const State* new_state);
 
   std::vector<State> states_;
-  State* current_state_ = nullptr;
+  const State* current_state_ = nullptr;
 };
 
 #endif // STATE_MACHINE_H
