@@ -119,12 +119,6 @@ void drawCurrentImage() {
 
 void setup() {
   Serial.begin(57600);
-  Serial.println();
-  Serial.println("Start Input Device");
-
-  Serial.println("Constructing state machine");
-  state_machine.construct();
-  Serial.println("Constructed state machine");
 
 #ifdef USE_WIRELESS
   setupWiFi();
@@ -148,7 +142,6 @@ void setup() {
   nh.advertise(gait_instruction_publisher);
   nh.advertise(ping_publisher);
   nh.subscribe(gait_instruction_result_subscriber);
-  Serial.println("ROS node initialized");
 
   // Reset the joystick right pin, this needed after the ROS node init pin 14 is
   // apparently used by ROS.
@@ -156,11 +149,11 @@ void setup() {
 
   // initialize screen by resetting, initing uSD card, clearing screen
   screen.initialize();
-  Serial.println("Screen initialized");
   sleep(1);
 
+  state_machine.construct();
+
   drawCurrentImage();
-  Serial.println("Ready for use");
 }
 
 void loop() {
@@ -190,32 +183,24 @@ void loop() {
   bool state_has_changed = false;
   if (joystick_position == JoystickPosition::LEFT) {
     state_has_changed = state_machine.left();
-    Serial.println("Joystick left");
   } else if (joystick_position == JoystickPosition::RIGHT) {
     state_has_changed = state_machine.right();
-    Serial.println("Joystick right");
   } else if (joystick_position == JoystickPosition::UP) {
     state_has_changed = state_machine.up();
-    Serial.println("Joystick up");
   } else if (joystick_position == JoystickPosition::DOWN) {
     state_has_changed = state_machine.down();
-    Serial.println("Joystick down");
   } else if (joystick_state == ButtonState::PUSH) {
     state_has_changed = state_machine.select();
-    Serial.println("Joystick pushed");
   } else if (joystick_state == ButtonState::DOUBLE) {
     state_has_changed = state_machine.back();
-    Serial.println("Joystick double");
   } else if (trigger_state == ButtonState::PUSH) {
     state_has_changed = state_machine.activate();
-    Serial.println("Trigger pushed");
   }
 
   drawCurrentImage();
 
   if (state_has_changed) {
     std::string gait_name = state_machine.getCurrentGaitName();
-    Serial.println(gait_name.c_str());
 
     // If there is a transition to a new screen which belongs to a gait send
     // message with this gait.

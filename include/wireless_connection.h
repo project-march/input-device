@@ -19,17 +19,9 @@ WiFiClient client;
 
 void setupWiFi() {
   WiFi.begin(ssid, password);
-  Serial.print("\nConnecting to ");
-  Serial.println(ssid);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
-    Serial.print("Could not connect to ");
-    Serial.println(ssid);
   }
-
-  Serial.print("Ready! Use ");
-  Serial.print(WiFi.localIP());
-  Serial.println(" to access client");
 }
 
 class WiFiHardware {
