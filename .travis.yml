@@ -1,6 +1,11 @@
 os: linux
 language: python
 
+addons:
+  apt:
+    packages:
+      - clang-format
+
 notifications:
   slack:
     secure: agpTHpiGJVNU8EtJV+nbiM8LYp7RkXPMpvrpa7yjlNKep4i0jQscFpOyylh+7Toekfh1F7ZMGhyBQfWsgzSKK4OtKgUY36jV3NJ04d1Jjf4CaypUsXe9eQ7KNIHLI+zPgwan+yf1iL6daF8uvRNT8SHCxTdRfVcwWaViQuh6/JbusxpSSojaT/BinCF/lItHC2+ixO1cQ7iFbBsaRyrEI76IUeaoMAUogqoNx+KdAYORMTcFI1i+6bw5TzsWY8Md8Kxn1YhvyeJv87LJjRhLyXLqzhp4XFjPUY0Vb9/iSihX7UfFoAPTPqmrlaATW6TEu0uo5fVJY6MWifAlcsuNGqL//saVqPHTiOqyEg1LcEUtdmR5+ljyMaSirV+pJA/vBNo61bjQeFzBf4d/kXiej0UQfLG1DFjUlYij++t6kr+EklYkwNYbfOQ75cLXrneG+nxjwg8KID2AVkjshLdjOfHFlGuzDTliId4lYU5FMdBl/dVS2u5qvVo8kaaTvvoAWjzp9KfdWHB1BmpAX06PblLWHnXuhJujBEyeT/9+D9eGmCmvYAsfLpky2hxWOHTkTbKGS9K60c2pHIhhzMRiOMZAVmbG7A2+7XdoaeBJ9cEHET09Ep2WY76jX5hTDbbA3xLZJB8e8O6TdCxXxp9xQvoPpmRK3rjsiun3thlFDBI=
@@ -16,5 +21,6 @@ install:
   - platformio lib install
 
 script:
+  - wget -qO- https://raw.githubusercontent.com/Sarcasm/run-clang-format/master/run-clang-format.py | python - -r src include
   - platformio run
   - platformio check
