@@ -4,7 +4,8 @@
 
 class State {
 public:
-  State(const unsigned int address_hi, const unsigned int address_lo, const std::string& gait)
+  State(const unsigned int address_hi, const unsigned int address_lo,
+        const std::string& gait)
       : gait_(gait), image_address_hi_(address_hi),
         image_address_lo_(address_lo) {}
 
@@ -13,7 +14,8 @@ public:
 
   const std::string& getGaitName() const { return this->gait_; }
 
-  void getImage(unsigned int& image_address_hi, unsigned int& image_address_lo) const {
+  void getImage(unsigned int& image_address_hi,
+                unsigned int& image_address_lo) const {
     image_address_hi = this->image_address_hi_;
     image_address_lo = this->image_address_lo_;
   };

@@ -13,7 +13,8 @@ public:
 
   std::string getCurrentGaitName() const;
 
-  void getCurrentImage(unsigned int& address_hi, unsigned int& address_lo) const;
+  void getCurrentImage(unsigned int& address_hi,
+                       unsigned int& address_lo) const;
 
   bool left();
   bool right();
