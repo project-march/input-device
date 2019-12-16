@@ -2,7 +2,9 @@
 #include "version.h"
 
 // 16-bit color March blue converted from 24bit 0x126287
-#define MARCH_COLOR 0x218B
+const word MARCH_COLOR = 0x218B;
+
+const useconds_t MSECONDS_IN_SECOND = 1000;
 
 Screen::Screen(Goldelox_Serial_4DLib* screen, SoftwareSerial* screen_serial,
                uint8_t rst, uint32_t baud)
@@ -43,7 +45,8 @@ void Screen::reset() {
 }
 
 void Screen::draw_image(word addr_hi, word addr_lo) {
-  if ((millis() - this->last_draw_time_) * 1000 > this->wait_time_ms_) {
+  if ((millis() - this->last_draw_time_) * MSECONDS_IN_SECOND >
+      this->wait_time_ms_) {
     this->screen_->media_SetSector(addr_hi, addr_lo);
     this->screen_->media_Image(0, 0);
     this->last_draw_time_ = millis();

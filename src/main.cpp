@@ -15,24 +15,27 @@
 #include <ros.h>
 #include <std_msgs/Time.h>
 
-// Pin definitions
-// Trigger
-#define TRIGGER 26
-// Rocker Switch
-#define ROCKER_UP 2
-#define ROCKER_DOWN 5
-// Joystick
-#define JOYSTICK_LEFT 23
-#define JOYSTICK_RIGHT 14
-#define JOYSTICK_UP 12
-#define JOYSTICK_DOWN 19
-#define JOYSTICK_PUSH 18
-// Screen
-#define UART_TX 32 // Software serial
-#define UART_RX 34 // Software serial
-#define RST 13     // Reset
-#define BAUD_SCREEN 9600
+namespace pins {
+const uint8_t TRIGGER = 26;
 
+const uint8_t ROCKER_UP = 2;
+const uint8_t ROCKER_DOWN = 5;
+
+const uint8_t JOYSTICK_LEFT = 23;
+const uint8_t JOYSTICK_RIGHT = 14;
+const uint8_t JOYSTICK_UP = 12;
+const uint8_t JOYSTICK_DOWN = 19;
+const uint8_t JOYSTICK_PUSH = 18;
+const uint8_t UART_TX = 32; // Software serial
+const uint8_t UART_RX = 34; // Software serial
+const uint8_t RST = 13;     // Reset
+} // namespace pins
+
+const uint32_t BAUD_SCREEN = 9600;
+const uint64_t BAUD_SERIAL = 57600;
+
+// Necessary, since the 4dsystems defines these
+// and they clash with our joystick definitions
 #undef LEFT
 #undef RIGHT
 #undef UP
@@ -40,26 +43,20 @@
 
 //#define USE_WIRELESS  // comment this to use wired connection.
 
-// Trigger
-Button trigger(TRIGGER);
-// Rocker switch
-RockerSwitch rocker(ROCKER_UP, ROCKER_DOWN);
-// Joystick
-Joystick joystick(JOYSTICK_LEFT, JOYSTICK_RIGHT, JOYSTICK_UP, JOYSTICK_DOWN,
-                  JOYSTICK_PUSH);
-// Serial communication between Lolin and Screen
-SoftwareSerial screen_serial(UART_RX, UART_TX);
-// Instance of the screen as in Goldelox_Serial library
+Button trigger(pins::TRIGGER);
+RockerSwitch rocker(pins::ROCKER_UP, pins::ROCKER_DOWN);
+Joystick joystick(pins::JOYSTICK_LEFT, pins::JOYSTICK_RIGHT, pins::JOYSTICK_UP,
+                  pins::JOYSTICK_DOWN, pins::JOYSTICK_PUSH);
+
+SoftwareSerial screen_serial(pins::UART_RX, pins::UART_TX);
 Goldelox_Serial_4DLib screen_goldelox(&screen_serial);
-// Wrapper instance of the screen
-Screen screen(&screen_goldelox, &screen_serial, RST, BAUD_SCREEN);
-// State Machine
+Screen screen(&screen_goldelox, &screen_serial, pins::RST, BAUD_SCREEN);
+
 StateMachine state_machine;
 
-// Haptic Driver
 Adafruit_DRV2605 driver;
-uint8_t effect =
-    14; // Select the desired effect, for now test effect "Buzz 100%"
+// Select the desired effect, for now test effect "Buzz 100%"
+const uint8_t EFFECT = 14;
 
 // Create ros nodehandle with publishers
 #ifdef USE_WIRELESS
@@ -119,22 +116,20 @@ void drawCurrentImage() {
 }
 
 void setup() {
-  Serial.begin(57600);
+  Serial.begin(BAUD_SCREEN);
 
 #ifdef USE_WIRELESS
   setupWiFi();
 #endif
 
-  // Set screen pins as either input or output
-  pinMode(UART_TX, OUTPUT);
-  pinMode(UART_RX, INPUT);
+  pinMode(pins::UART_TX, OUTPUT);
+  pinMode(pins::UART_RX, INPUT);
 
   // initialize screen by resetting, initing uSD card, clearing screen
   screen.init();
 
   // Setup I2C protocol
   driver.begin();
-  // Select the effect library
   driver.selectLibrary(2);
   // I2C trigger by sending 'go' command
   // default, internal trigger when sending GO command
@@ -148,7 +143,7 @@ void setup() {
 
   // Reset the joystick right pin, this needed after the ROS node init pin 14 is
   // apparently used by ROS.
-  pinMode(JOYSTICK_RIGHT, INPUT_PULLUP);
+  pinMode(pins::JOYSTICK_RIGHT, INPUT_PULLUP);
 
   state_machine.construct();
 
@@ -165,7 +160,7 @@ void loop() {
   // When button is pressed, vibrate
   if (trigger_state == ButtonState::PUSH) {
     // Waveforms can be combined, to create new wavefroms, see driver datasheet
-    driver.setWaveform(0, effect); // Setup the waveform(s)
+    driver.setWaveform(0, EFFECT); // Setup the waveform(s)
     driver.setWaveform(1, 0);      // end of waveform waveform
 
     driver.go();
@@ -174,7 +169,6 @@ void loop() {
   bool state_has_changed = false;
   if (received_gait_instruction_response) {
     // This means gait instruction handled
-    // trigger_state = "EXIT_GAIT";
     received_gait_instruction_response = false;
     gait_message_send = false;
     state_machine.activate();
@@ -212,6 +206,5 @@ void loop() {
   // Average loop frequency is around 20hz.
   sendAliveMessage();
 
-  // Spin ros node
   nh.spinOnce();
 }
