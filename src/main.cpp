@@ -14,8 +14,6 @@
 #include <ros.h>
 #include <ros/time.h>
 #include <std_msgs/Bool.h>
-#include <std_msgs/Int16.h>
-#include <std_msgs/String.h>
 #include <std_msgs/Time.h>
 
 // Pin definitions
@@ -125,9 +123,11 @@ void setup() {
 #endif
 
   // Set screen pins as either input or output
-  pinMode(RST, OUTPUT);
   pinMode(UART_TX, OUTPUT);
   pinMode(UART_RX, INPUT);
+
+  // initialize screen by resetting, initing uSD card, clearing screen
+  screen.init();
 
   // Setup I2C protocol
   driver.begin();
@@ -147,10 +147,6 @@ void setup() {
   // apparently used by ROS.
   pinMode(JOYSTICK_RIGHT, INPUT_PULLUP);
 
-  // initialize screen by resetting, initing uSD card, clearing screen
-  screen.initialize();
-  sleep(1);
-
   state_machine.construct();
 
   drawCurrentImage();
@@ -158,7 +154,7 @@ void setup() {
 
 void loop() {
   // Get button states
-  RockerSwitchState rocker_switch_state = rocker.getState();
+  // RockerSwitchState rocker_switch_state = rocker.getState();
   JoystickPosition joystick_position = joystick.getPosition();
   ButtonState joystick_state = joystick.getState();
   ButtonState trigger_state = trigger.getState();

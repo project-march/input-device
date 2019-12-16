@@ -35,27 +35,28 @@ to the  *
 
 class Screen {
 public:
-  // Constructors
   Screen(Goldelox_Serial_4DLib* screen, SoftwareSerial* screen_serial,
          uint8_t rst, uint32_t baud);
 
-  // Public member functions
-  void initialize();
+  void init();
   void clear();
-  void reset();
   void draw_image(word addr_hi, word addr_lo);
 
 private:
+  void reset();
+
+  void printVersion();
+  void mountImages();
+
   Goldelox_Serial_4DLib* screen_;
   SoftwareSerial* serial_;
-  word media_initialized_ = 0;
   unsigned long last_draw_time_ = 0;
 
   const uint8_t rst_;
   const uint32_t baud_;
 
-  const useconds_t wait_time_ms_ =
-      500000; // Needed for functioning, can still be optimized
+  // In microseconds. Needed for functioning, can still be optimized
+  const useconds_t wait_time_ms_ = 500000;
 };
 
 #endif // SCREEN_H
