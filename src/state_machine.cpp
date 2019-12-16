@@ -3,19 +3,31 @@
 
 void StateMachine::construct() {
   State& home_sit_start = this->createState(HomeSitStart_Hi, HomeSitStart_Lo);
-  State& home_sit_start_activated = this->createState(HomeSitStartActivated_Hi, HomeSitStartActivated_Lo, "home_sit");
-  State& home_sit_start_selected = this->createState(HomeSitStartSelected_Hi, HomeSitStartSelected_Lo).withBack(&home_sit_start).withActivate(&home_sit_start_activated);
+  State& home_sit_start_activated = this->createState(
+      HomeSitStartActivated_Hi, HomeSitStartActivated_Lo, "home_sit");
+  State& home_sit_start_selected =
+      this->createState(HomeSitStartSelected_Hi, HomeSitStartSelected_Lo)
+          .withBack(&home_sit_start)
+          .withActivate(&home_sit_start_activated);
 
   State& stand_up =
       this->createState(StandUp_Hi, StandUp_Lo).withLeft(&home_sit_start);
-  State& stand_up_activated = this->createState(StandUpActivated_Hi, StandUpActivated_Lo, "gait_sit");
-  State& stand_up_selected = this->createState(StandUpSelected_Hi, StandUpSelected_Lo).withBack(&stand_up).withActivate(&stand_up_activated);
+  State& stand_up_activated =
+      this->createState(StandUpActivated_Hi, StandUpActivated_Lo, "gait_sit");
+  State& stand_up_selected =
+      this->createState(StandUpSelected_Hi, StandUpSelected_Lo)
+          .withBack(&stand_up)
+          .withActivate(&stand_up_activated);
 
   State& home_stand_start =
       this->createState(HomeStandStart_Hi, HomeStandStart_Lo)
           .withLeft(&stand_up);
-  State& home_stand_activated = this->createState(HomeStandActivated_Hi, HomeStandActivated_Lo, "home_stand");
-  State& home_stand_selected = this->createState(HomeStandSelected_Hi, HomeStandSelected_Lo).withBack(&home_stand_start).withActivate(&home_stand_activated);
+  State& home_stand_activated = this->createState(
+      HomeStandActivated_Hi, HomeStandActivated_Lo, "home_stand");
+  State& home_stand_selected =
+      this->createState(HomeStandSelected_Hi, HomeStandSelected_Lo)
+          .withBack(&home_stand_start)
+          .withActivate(&home_stand_activated);
   State& power_off = this->createState(TurnOff_Hi, TurnOff_Lo)
                          .withLeft(&home_stand_start)
                          .withRight(&home_sit_start);

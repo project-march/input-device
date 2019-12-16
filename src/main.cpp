@@ -11,9 +11,8 @@
 #include <SoftwareSerial.h>
 #include <WiFi.h>
 #include <march_shared_resources/GaitInstruction.h>
+#include <march_shared_resources/GaitInstructionResponse.h>
 #include <ros.h>
-#include <ros/time.h>
-#include <std_msgs/Bool.h>
 #include <std_msgs/Time.h>
 
 // Pin definitions
@@ -69,15 +68,19 @@ ros::NodeHandle_<WiFiHardware> nh;
 ros::NodeHandle nh;
 #endif
 
-bool received_gait_instruction_response;
-bool gait_message_send;
-void gaitInstructionResponseCallback(const std_msgs::Bool& msg) {
-  received_gait_instruction_response = true;
+bool received_gait_instruction_response = false;
+bool gait_message_send = false;
+void gaitInstructionResponseCallback(
+    const march_shared_resources::GaitInstructionResponse& msg) {
+  if (msg.result == msg.GAIT_FINISHED) {
+    received_gait_instruction_response = true;
+  }
 }
 
-ros::Subscriber<std_msgs::Bool> gait_instruction_result_subscriber(
-    "/march/input_device/instruction_response",
-    &gaitInstructionResponseCallback);
+ros::Subscriber<march_shared_resources::GaitInstructionResponse>
+    gait_instruction_result_subscriber(
+        "/march/input_device/instruction_response",
+        &gaitInstructionResponseCallback);
 
 march_shared_resources::GaitInstruction gait_instruction_msg;
 std_msgs::Time time_msg;
@@ -159,53 +162,50 @@ void loop() {
   ButtonState joystick_state = joystick.getState();
   ButtonState trigger_state = trigger.getState();
 
-  // Set the effect to be played hoi
-  // Waveforms can be combined, to create new wavefroms, see driver datasheet
-  driver.setWaveform(0, effect); // Setup the waveform(s)
-  driver.setWaveform(1, 0);      // end of waveform waveform
-
   // When button is pressed, vibrate
   if (trigger_state == ButtonState::PUSH) {
+    // Waveforms can be combined, to create new wavefroms, see driver datasheet
+    driver.setWaveform(0, effect); // Setup the waveform(s)
+    driver.setWaveform(1, 0);      // end of waveform waveform
+
     driver.go();
   }
 
+  bool state_has_changed = false;
   if (received_gait_instruction_response) {
     // This means gait instruction handled
     // trigger_state = "EXIT_GAIT";
     received_gait_instruction_response = false;
     gait_message_send = false;
-  }
-
-  bool state_has_changed = false;
-  if (joystick_position == JoystickPosition::LEFT) {
-    state_has_changed = state_machine.left();
-  } else if (joystick_position == JoystickPosition::RIGHT) {
-    state_has_changed = state_machine.right();
-  } else if (joystick_position == JoystickPosition::UP) {
-    state_has_changed = state_machine.up();
-  } else if (joystick_position == JoystickPosition::DOWN) {
-    state_has_changed = state_machine.down();
-  } else if (joystick_state == ButtonState::PUSH) {
-    state_has_changed = state_machine.select();
-  } else if (joystick_state == ButtonState::DOUBLE) {
-    state_has_changed = state_machine.back();
-  } else if (trigger_state == ButtonState::PUSH) {
-    state_has_changed = state_machine.activate();
+    state_machine.activate();
+  } else if (gait_message_send) {
+    if (joystick_state == ButtonState::PUSH) {
+      sendStopMessage();
+    }
+  } else {
+    if (joystick_position == JoystickPosition::LEFT) {
+      state_has_changed = state_machine.left();
+    } else if (joystick_position == JoystickPosition::RIGHT) {
+      state_has_changed = state_machine.right();
+    } else if (joystick_position == JoystickPosition::UP) {
+      state_has_changed = state_machine.up();
+    } else if (joystick_position == JoystickPosition::DOWN) {
+      state_has_changed = state_machine.down();
+    } else if (joystick_state == ButtonState::PUSH) {
+      state_has_changed = state_machine.select();
+    } else if (joystick_state == ButtonState::DOUBLE) {
+      state_has_changed = state_machine.back();
+    } else if (trigger_state == ButtonState::PUSH) {
+      state_has_changed = state_machine.activate();
+    }
   }
 
   drawCurrentImage();
 
   if (state_has_changed) {
     std::string gait_name = state_machine.getCurrentGaitName();
-
-    // If there is a transition to a new screen which belongs to a gait send
-    // message with this gait.
     if (!gait_name.empty()) {
       sendGaitMessage(gait_name);
-    } else if (trigger_state == ButtonState::PUSH) {
-      // If the trigger press is not to select a gait, it's interpreted as a
-      // stop.
-      sendStopMessage();
     }
   }
 
