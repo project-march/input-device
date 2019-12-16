@@ -29,6 +29,47 @@ public:
   const State* select() const { return this->select_; }
   const State* activate() const { return this->activate_; }
 
+  State& withLeft(State* left) {
+    this->left_ = left;
+    left->right_ = this;
+    return *this;
+  }
+
+  State& withRight(State* right) {
+    this->right_ = right;
+    right->left_ = this;
+    return *this;
+  }
+
+  State& withUp(State* up) {
+    this->up_ = up;
+    up->down_ = this;
+    return *this;
+  }
+
+  State& withDown(State* down) {
+    this->down_ = down;
+    down->up_ = this;
+    return *this;
+  }
+
+  State& withBack(State* back) {
+    this->back_ = back;
+    back->select_ = this;
+    return *this;
+  }
+
+  State& withSelect(State* select) {
+    this->select_ = select;
+    select->back_ = this;
+    return *this;
+  }
+
+  State& withActivate(State* activate) {
+    this->activate_ = activate;
+    return *this;
+  }
+
 private:
   const std::string gait_;
   const unsigned int image_address_hi_;

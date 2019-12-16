@@ -2,8 +2,8 @@
 #define STATE_MACHINE_H
 #include "state.h"
 
+#include <list>
 #include <string>
-#include <vector>
 
 class StateMachine {
 public:
@@ -15,6 +15,8 @@ public:
 
   void getCurrentImage(unsigned int& address_hi,
                        unsigned int& address_lo) const;
+
+  size_t size() const;
 
   bool left();
   bool right();
@@ -29,7 +31,11 @@ private:
   bool hasState() const;
   bool setCurrentState(const State* new_state);
 
-  std::vector<State> states_;
+  State& createState(const unsigned int address_hi,
+                     const unsigned int address_lo,
+                     const std::string& gait_name = "");
+
+  std::list<State> states_;
   const State* current_state_ = nullptr;
 };
 
