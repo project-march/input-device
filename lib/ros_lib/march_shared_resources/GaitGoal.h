@@ -59,7 +59,7 @@ namespace march_shared_resources
     }
 
     const char * getType(){ return "march_shared_resources/GaitGoal"; };
-    const char * getMD5(){ return "1bbe0ea9e2df05297b8428716718f7d2"; };
+    const char * getMD5(){ return "de1744cba95645d4a7c6f1406b2d6f43"; };
 
   };
 
