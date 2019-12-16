@@ -122,6 +122,10 @@ void setup() {
   Serial.println();
   Serial.println("Start Input Device");
 
+  Serial.println("Constructing state machine");
+  state_machine.construct();
+  Serial.println("Constructed state machine");
+
 #ifdef USE_WIRELESS
   setupWiFi();
 #endif

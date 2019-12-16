@@ -1,4 +1,11 @@
 #include "state_machine.h"
+#include "sd_sector_addresses.h"
+
+void StateMachine::construct() {
+  this->states_.emplace_back(HomeSitStart_Hi, HomeSitStart_Lo);
+
+  this->current_state_ = &this->states_[0];
+}
 
 const std::string& StateMachine::getCurrentGaitName() const {
   if (this->hasState()) {

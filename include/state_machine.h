@@ -1,6 +1,5 @@
 #ifndef STATE_MACHINE_H
 #define STATE_MACHINE_H
-#include "SD_sector_addresses.h"
 #include "state.h"
 
 #include <Arduino.h>
@@ -11,6 +10,8 @@
 class StateMachine {
 public:
   StateMachine() = default;
+
+  void construct();
 
   const std::string& getCurrentGaitName() const;
 
