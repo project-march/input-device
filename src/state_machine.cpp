@@ -7,11 +7,11 @@ void StateMachine::construct() {
   this->current_state_ = &this->states_[0];
 }
 
-const std::string& StateMachine::getCurrentGaitName() const {
+std::string StateMachine::getCurrentGaitName() const {
   if (this->hasState()) {
     return this->current_state_->getGaitName();
   }
-  return "";
+  return std::string();
 }
 
 void StateMachine::getCurrentImage(word& address_hi, word& address_lo) const {

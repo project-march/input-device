@@ -6,11 +6,13 @@
 
 class State {
 public:
-  State(const word address_hi = 0, const word address_lo = 0,
-        const std::string& gait = "")
+  State(const word address_hi, const word address_lo, const std::string& gait)
       : gait_(gait), image_address_hi_(address_hi),
         image_address_lo_(address_lo), left_(this), right_(this), up_(this),
         down_(this) {}
+
+  State(const word address_hi, const word address_lo)
+      : State(address_hi, address_lo, "") {}
 
   const std::string& getGaitName() const { return this->gait_; }
 

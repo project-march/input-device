@@ -13,7 +13,7 @@ public:
 
   void construct();
 
-  const std::string& getCurrentGaitName() const;
+  std::string getCurrentGaitName() const;
 
   void getCurrentImage(word& address_hi, word& address_lo) const;
 

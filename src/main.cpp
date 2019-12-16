@@ -211,10 +211,11 @@ void loop() {
     Serial.println("Trigger pushed");
   }
 
-  if (state_has_changed) {
-    drawCurrentImage();
+  drawCurrentImage();
 
-    const std::string& gait_name = state_machine.getCurrentGaitName();
+  if (state_has_changed) {
+    std::string gait_name = state_machine.getCurrentGaitName();
+    Serial.println(gait_name.c_str());
 
     // If there is a transition to a new screen which belongs to a gait send
     // message with this gait.
