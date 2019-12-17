@@ -6,12 +6,12 @@
 
 void test_state_get_gait_name() {
   std::string gait("test");
-  State state({ 0, 0 }, gait);
+  State state({0, 0}, gait);
   TEST_ASSERT_EQUAL_STRING(gait.c_str(), state.getGaitName().c_str());
 }
 
 void test_state_get_address() {
-  SectorAddress expected = { 7, 8 };
+  SectorAddress expected = {7, 8};
   State state(expected);
 
   SectorAddress address;
@@ -21,7 +21,7 @@ void test_state_get_address() {
 }
 
 void test_state_default_transitions() {
-  State state({ 0, 0 });
+  State state({0, 0});
   TEST_ASSERT_EQUAL(&state, state.left());
   TEST_ASSERT_EQUAL(&state, state.right());
   TEST_ASSERT_EQUAL(&state, state.up());
