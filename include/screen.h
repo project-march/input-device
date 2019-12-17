@@ -29,6 +29,8 @@ to the  *
 * * * * */
 #ifndef SCREEN_H
 #define SCREEN_H
+#include "sd_sector_addresses.h"
+
 #include <Arduino.h>
 #include <Goldelox_Serial_4DLib.h>
 #include <SoftwareSerial.h>
@@ -40,7 +42,7 @@ public:
 
   void init();
   void clear();
-  void draw_image(word addr_hi, word addr_lo);
+  void draw_image(SectorAddress address);
 
 private:
   void reset();

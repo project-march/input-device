@@ -92,6 +92,7 @@ void sendGaitMessage(const std::string& name) {
     gait_instruction_publisher.publish(&gait_instruction_msg);
     gait_message_send = true;
 #ifdef DEMO_INPUT_DEVICE
+    sleep(1);
     received_gait_instruction_response = true;
 #endif
   }
@@ -109,10 +110,9 @@ void sendAliveMessage() {
 }
 
 void drawCurrentImage() {
-  word address_hi = 0;
-  word address_lo = 0;
-  state_machine.getCurrentImage(address_hi, address_lo);
-  screen.draw_image(address_hi, address_lo);
+  SectorAddress address;
+  state_machine.getCurrentImage(address);
+  screen.draw_image(address);
 }
 
 void setup() {
@@ -172,7 +172,7 @@ void loop() {
     // This means gait instruction handled
     received_gait_instruction_response = false;
     gait_message_send = false;
-    state_machine.activate();
+    state_has_changed = state_machine.activate();
   } else if (gait_message_send) {
     if (joystick_state == ButtonState::PUSH) {
       sendStopMessage();
@@ -194,7 +194,6 @@ void loop() {
       state_has_changed = state_machine.activate();
     }
   }
-
 
   if (state_has_changed) {
     drawCurrentImage();

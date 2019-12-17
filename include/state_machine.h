@@ -13,8 +13,7 @@ public:
 
   std::string getCurrentGaitName() const;
 
-  void getCurrentImage(unsigned int& address_hi,
-                       unsigned int& address_lo) const;
+  void getCurrentImage(SectorAddress& address) const;
 
   size_t size() const;
 
@@ -31,8 +30,7 @@ private:
   bool hasState() const;
   bool setCurrentState(const State* new_state);
 
-  State& createState(const unsigned int address_hi,
-                     const unsigned int address_lo,
+  State& createState(const SectorAddress address,
                      const std::string& gait_name = "");
 
   std::list<State> states_;

@@ -1,23 +1,20 @@
 #ifndef STATE_H
 #define STATE_H
+#include "sd_sector_addresses.h"
+
 #include <string>
 
 class State {
 public:
-  State(const unsigned int address_hi, const unsigned int address_lo,
-        const std::string& gait)
-      : gait_(gait), image_address_hi_(address_hi),
-        image_address_lo_(address_lo) {}
+  State(SectorAddress address, const std::string& gait)
+      : gait_(gait), address_(address) {}
 
-  State(const unsigned int address_hi, const unsigned int address_lo)
-      : State(address_hi, address_lo, "") {}
+  State(SectorAddress address) : State(address, "") {}
 
   const std::string& getGaitName() const { return this->gait_; }
 
-  void getImage(unsigned int& image_address_hi,
-                unsigned int& image_address_lo) const {
-    image_address_hi = this->image_address_hi_;
-    image_address_lo = this->image_address_lo_;
+  void getImage(SectorAddress& image_address) const {
+    image_address = this->address_;
   };
 
   const State* left() const { return this->left_; }
@@ -59,6 +56,11 @@ public:
     return *this;
   }
 
+  State& backFrom(State* from) {
+    from->back_ = this;
+    return *this;
+  }
+
   State& withSelect(State* select) {
     this->select_ = select;
     select->back_ = this;
@@ -72,8 +74,7 @@ public:
 
 private:
   const std::string gait_;
-  const unsigned int image_address_hi_;
-  const unsigned int image_address_lo_;
+  const SectorAddress address_;
 
   const State* left_ = this;
   const State* right_ = this;

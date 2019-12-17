@@ -48,9 +48,9 @@ void Screen::reset() {
   sleep(3);
 }
 
-void Screen::draw_image(word addr_hi, word addr_lo) {
+void Screen::draw_image(SectorAddress address) {
   if ((millis() - this->last_draw_time_) > this->draw_speed_ms_) {
-    this->screen_->media_SetSector(addr_hi, addr_lo);
+    this->screen_->media_SetSector(address.hi, address.lo);
     this->screen_->media_Image(0, 0);
     this->last_draw_time_ = millis();
   }
