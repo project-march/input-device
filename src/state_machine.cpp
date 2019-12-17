@@ -1,6 +1,8 @@
 #include "state_machine.h"
 #include "sd_sector_addresses.h"
 
+#include <list>
+
 void StateMachine::construct() {
   State& walk_small = this->createState(WALK_SMALL);
   State& walk_small_selected = this->createState(WALK_SMALL_SELECTED);
