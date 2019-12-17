@@ -12,13 +12,11 @@ void test_get_gait_name() {
 
 void test_get_image() {
   StateMachine state_machine;
-  unsigned int expected_hi = 2;
-  unsigned int expected_lo = 3;
-  unsigned int hi = expected_hi;
-  unsigned int lo = expected_lo;
-  state_machine.getCurrentImage(hi, lo);
-  TEST_ASSERT_EQUAL(expected_hi, hi);
-  TEST_ASSERT_EQUAL(expected_lo, lo);
+  SectorAddress expected({2, 3});
+  SectorAddress address = expected;
+  state_machine.getCurrentImage(address);
+  TEST_ASSERT_EQUAL(expected.hi, address.hi);
+  TEST_ASSERT_EQUAL(expected.lo, address.lo);
 }
 
 void test_state_machine_default_no_transitions() {
@@ -32,11 +30,17 @@ void test_state_machine_default_no_transitions() {
   TEST_ASSERT_FALSE(state_machine.activate());
 }
 
+void test_default_empty() {
+  StateMachine state_machine;
+  TEST_ASSERT_EQUAL(0, state_machine.size());
+}
+
 int main(int argc, char** argv) {
   UNITY_BEGIN();
   RUN_TEST(test_get_gait_name);
   RUN_TEST(test_get_image);
   RUN_TEST(test_state_machine_default_no_transitions);
+  RUN_TEST(test_default_empty);
   UNITY_END();
 
   return 0;
