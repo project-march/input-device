@@ -19,6 +19,10 @@ struct SectorAddress {
 };
 
 // clang-format off
+
+/**********
+ * Start menu
+ **********/
 #define HOME_SIT_START SectorAddress { 0x0000, 0x0000 }
 #define HOME_SIT_START_SELECTED SectorAddress { 0x0000, 0x00A2 }
 #define HOME_SIT_START_ACTIVATED SectorAddress { 0x0000, 0x0051 }
@@ -34,8 +38,11 @@ struct SectorAddress {
 #define TURN_OFF_START SectorAddress { 0x0000, 0x14E2 }
 #define TURN_OFF_START_SELECTED SectorAddress { 0x0000, 0x1584 }
 #define TURN_OFF_START_ACTIVATED SectorAddress { 0x0000, 0x1533 }
+/***** Start menu *****/
 
-// Walk menu gaits
+/**********
+ * Walk menu
+ **********/
 #define WALK SectorAddress { 0x0000, 0x15D5 }
 #define SIDE_STEP SectorAddress { 0x0000, 0x03CC }
 #define SINGLE_STEP SectorAddress { 0x0000, 0x0603 }
@@ -52,7 +59,7 @@ struct SectorAddress {
 #define WALK_LARGE SectorAddress { 0x0000, 0x1626 }
 // Missing WALK_LARGE_SELECTED and WALK_LARGE_ACTIVATED
 
-// Sidestep gaits
+// Sidestep
 #define SIDE_STEP_LEFT SectorAddress { 0x0000, 0x041D }
 #define SIDE_STEP_RIGHT SectorAddress { 0x0000, 0x0510 }
 
@@ -84,91 +91,52 @@ struct SectorAddress {
 #define SINGLE_STEP_NORMAL_ACTIVATED SectorAddress { 0x0000, 0x0798 }
 
 #define SINGLE_STEP_LARGE SectorAddress { 0x0000, 0x0654 }
+/***** Walk menu *****/
 
-#define Sit SectorAddress { 0x0000, 0x222C }
+/**********
+ * Sit menu
+ **********/
+#define SIT SectorAddress { 0x0000, 0x222C }
+#define SIT_SELECTED SectorAddress { 0x0000, 0x0B13 }
+#define SIT_ACTIVATED SectorAddress { 0x0000, 0x0AC2 }
 
-#define SitSelected SectorAddress { 0x0000, 0x0B13 }
+#define HOME_SIT SectorAddress { 0x0000, 0x218A }
+#define HOME_SIT_SELECTED SectorAddress { 0x0000, 0x00A2 }
+#define HOME_SIT_ACTIVATED SectorAddress { 0x0000, 0x0051 }
 
-#define SitActivated SectorAddress { 0x0000, 0x0AC2 }
+#define HOME_STAND SectorAddress { 0x0000, 0x21DB }
+#define HOME_STAND_SELECTED SectorAddress { 0x0000, 0x0288 }
+#define HOME_STAND_ACTIVATED SectorAddress { 0x0000, 0x0237 }
 
-#define HomeSit SectorAddress { 0x0000, 0x218A }
+#define TURN_OFF SectorAddress { 0x0000, 0x227D }
+#define TURN_OFF_SELECTED SectorAddress { 0x0000, 0x1491 }
+#define TURN_OFF_ACTIVATED SectorAddress { 0x0000, 0x1440 }
+/***** Sit menu *****/
 
-#define HomeSitSelected SectorAddress { 0x0000, 0x00A2 }
+/**********
+ * Obstacle menu
+ **********/
+#define SOFA SectorAddress { 0x0000, 0x2505 }
 
-#define HomeSitActivated SectorAddress { 0x0000, 0x0051 }
+#define SOFA_SIT SectorAddress { 0x0000, 0x25F8 }
+#define SOFA_SIT_SELECTED SectorAddress { 0x0000, 0x0E8E }
+#define SOFA_SIT_ACTIVATED SectorAddress { 0x0000, 0x0E3D }
 
-#define HomeStand SectorAddress { 0x0000, 0x21DB }
+#define SOFA_STANDUP SectorAddress { 0x0000, 0x2649 }
+#define SOFA_STANDUP_SELECTED SectorAddress { 0x0000, 0x0F81 }
+#define SOFA_STANDUP_ACTIVATED SectorAddress { 0x0000, 0x0F30 }
 
-// HomeStandSelected unknown
-#define HomeStandSelected SectorAddress { 0x0000, 0x0288 }
+#define STAIRS SectorAddress { 0x0000, 0x2556 }
 
-// HomeStandActivated unknown
-#define HomeStandActivated SectorAddress { 0x0000, 0x0237 }
+#define STAIRS_UP SectorAddress { 0x0000, 0x26EB }
+#define STAIRS_UP_SELECTED SectorAddress { 0x0000, 0x11B8 }
+#define STAIRS_UP_ACTIVATED SectorAddress { 0x0000, 0x1167 }
 
-#define TurnOff SectorAddress { 0x0000, 0x227D }
+#define STAIRS_DOWN SectorAddress { 0x0000, 0x269A }
+#define STAIRS_DOWN_SELECTED SectorAddress { 0x0000, 0x10C5 }
+#define STAIRS_DOWN_ACTIVATED SectorAddress { 0x0000, 0x1074 }
+/***** Obstacle menu *****/
 
-#define TurnOffSelected SectorAddress { 0x0000, 0x1491 }
-
-#define TurnOffActivated SectorAddress { 0x0000, 0x1440 }
-
-#define Sofa SectorAddress { 0x0000, 0x2505 }
-
-#define SofaSit SectorAddress { 0x0000, 0x25F8 }
-
-#define SofaSitSelected SectorAddress { 0x0000, 0x0E8E }
-
-#define SofaSitActivated SectorAddress { 0x0000, 0x0E3D }
-
-#define SofaStandUp SectorAddress { 0x0000, 0x2649 }
-
-#define SofaStandUpSelected SectorAddress { 0x0000, 0x0F81 }
-
-#define SofaStandUpActivated SectorAddress { 0x0000, 0x0F30 }
-
-#define Stairs SectorAddress { 0x0000, 0x2556 }
-
-#define StairsUp SectorAddress { 0x0000, 0x26EB }
-
-#define StairsUpSelected SectorAddress { 0x0000, 0x11B8 }
-
-#define StairsUpActivated SectorAddress { 0x0000, 0x1167 }
-
-#define StairsDown SectorAddress { 0x0000, 0x269A }
-
-#define StairsDownSelected SectorAddress { 0x0000, 0x10C5 }
-
-#define StairsDownActivated SectorAddress { 0x0000, 0x1074 }
-
-#define WalkObstacle SectorAddress { 0x0000, 0x180C }
-
-#define WalkObstacleSmall SectorAddress { 0x0000, 0x18FF }
-
-#define WalkObstacleNormal SectorAddress { 0x0000, 0x18AE }
-
-#define WalkObstacleLarge SectorAddress { 0x0000, 0x185D }
-
-#define WalkObstacleSmallSelected SectorAddress { 0x0000, 0x19F2 }
-
-#define WalkObstacleNormalSelected SectorAddress { 0x0000, 0x17BB }
-
-#define WalkObstacleSmallActivated SectorAddress { 0x0000, 0x19A1 }
-
-#define WalkObstacleNormalActivated SectorAddress { 0x0000, 0x176A }
-
-#define SingleStepObstacle SectorAddress { 0x0000, 0x083A }
-
-#define SingleStepObstacleSmall SectorAddress { 0x0000, 0x092D }
-
-#define SingleStepObstacleNormal SectorAddress { 0x0000, 0x08DC }
-
-#define SingleStepObstacleLarge SectorAddress { 0x0000, 0x088B }
-
-#define SingleStepObstacleSmallSelected SectorAddress { 0x0000, 0x0A20 }
-
-#define SingleStepObstacleNormalSelected SectorAddress { 0x0000, 0x07E9 }
-
-#define SingleStepObstacleSmallActivated SectorAddress { 0x0000, 0x09CF }
-
-#define SingleStepObstacleNormalActivated SectorAddress { 0x0000, 0x0798 }
+// clang-format on
 
 #endif // SD_SECTOR_ADDRESSES_H
