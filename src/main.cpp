@@ -116,7 +116,7 @@ void drawCurrentImage() {
 }
 
 void setup() {
-  Serial.begin(BAUD_SCREEN);
+  Serial.begin(BAUD_SERIAL);
 
 #ifdef USE_WIRELESS
   setupWiFi();

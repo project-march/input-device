@@ -13,11 +13,10 @@ Screen::Screen(Goldelox_Serial_4DLib* screen, SoftwareSerial* screen_serial,
 }
 
 void Screen::init() {
-  digitalWrite(this->rst_, 1);
+  this->reset();
 
   this->serial_->begin(this->baud_);
 
-  this->reset();
   this->clear();
 
   this->screen_->gfx_ScreenMode(PORTRAIT);
@@ -33,9 +32,12 @@ void Screen::init() {
 
 void Screen::clear() {
   this->screen_->gfx_Cls();
+  usleep(this->wait_time_ms_);
 }
 
 void Screen::reset() {
+  digitalWrite(this->rst_, 1);
+  usleep(100000);
   digitalWrite(this->rst_, 0);
   usleep(this->wait_time_ms_);
   digitalWrite(this->rst_, 1);
@@ -72,15 +74,14 @@ void Screen::printVersion() {
 
 void Screen::mountImages() {
   word initialized = this->screen_->media_Init();
-  if (initialized == 0) {
+  if (initialized != Err4D_OK) {
     this->screen_->txt_FGcolour(RED);
-    this->screen_->print("Pls insert SD");
-    while (initialized == 0) {
+    this->screen_->println("Pls insert SD");
+    while (initialized != Err4D_OK) {
       sleep(1);
-      this->screen_->print('.');
       initialized = this->screen_->media_Init();
     }
-    this->screen_->println("Done");
     this->screen_->txt_FGcolour(WHITE);
+    this->screen_->println("Done");
   }
 }
