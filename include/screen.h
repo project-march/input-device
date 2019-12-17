@@ -57,6 +57,14 @@ private:
 
   // In microseconds. Needed for functioning, can still be optimized
   const useconds_t wait_time_ms_ = 500000;
+
+  // Milliseconds, time to wait between drawing images
+  const useconds_t draw_speed_ms_ = 100;
+
+  // Milliseconds, when the screen should start scrolling
+  const word screen_saver_timeout_ms_ = 10000;
+  // Must be value in 0-255 (fastest-slowest)
+  const word screen_saver_scroll_speed_ = 0;
 };
 
 #endif // SCREEN_H

@@ -4,8 +4,6 @@
 // 16-bit color March blue converted from 24bit 0x126287
 const word MARCH_COLOR = 0x218B;
 
-const useconds_t MSECONDS_IN_SECOND = 1000;
-
 Screen::Screen(Goldelox_Serial_4DLib* screen, SoftwareSerial* screen_serial,
                uint8_t rst, uint32_t baud)
     : screen_(screen), serial_(screen_serial), rst_(rst), baud_(baud) {
@@ -16,6 +14,10 @@ void Screen::init() {
   this->reset();
 
   this->serial_->begin(this->baud_);
+
+  // Set screen saver (SS) timeout and scroll speed
+  this->screen_->SSTimeout(this->screen_saver_timeout_ms_);
+  this->screen_->SSSpeed(this->screen_saver_scroll_speed_);
 
   this->clear();
 
@@ -47,8 +49,7 @@ void Screen::reset() {
 }
 
 void Screen::draw_image(word addr_hi, word addr_lo) {
-  if ((millis() - this->last_draw_time_) * MSECONDS_IN_SECOND >
-      this->wait_time_ms_) {
+  if ((millis() - this->last_draw_time_) > this->draw_speed_ms_) {
     this->screen_->media_SetSector(addr_hi, addr_lo);
     this->screen_->media_Image(0, 0);
     this->last_draw_time_ = millis();

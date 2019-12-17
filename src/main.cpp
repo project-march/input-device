@@ -147,6 +147,7 @@ void setup() {
 
   state_machine.construct();
 
+  sleep(2);
   drawCurrentImage();
 }
 
@@ -194,9 +195,10 @@ void loop() {
     }
   }
 
-  drawCurrentImage();
 
   if (state_has_changed) {
+    drawCurrentImage();
+
     std::string gait_name = state_machine.getCurrentGaitName();
     if (!gait_name.empty()) {
       sendGaitMessage(gait_name);
