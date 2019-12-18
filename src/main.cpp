@@ -66,10 +66,11 @@ ros::NodeHandle nh;
 #endif
 
 bool received_gait_instruction_response = false;
+bool gait_rejected = false;
 bool gait_message_send = false;
 void gaitInstructionResponseCallback(
     const march_shared_resources::GaitInstructionResponse& msg) {
-  if (msg.result == msg.GAIT_FINISHED) {
+  if (msg.result == msg.GAIT_FINISHED || msg.result == msg.GAIT_REJECTED) {
     received_gait_instruction_response = true;
   }
 }
@@ -174,7 +175,7 @@ void loop() {
     gait_message_send = false;
     state_has_changed = state_machine.activate();
   } else if (gait_message_send) {
-    if (joystick_state == ButtonState::PUSH) {
+    if (trigger_state == ButtonState::PUSH) {
       sendStopMessage();
     }
   } else {
