@@ -27,11 +27,21 @@ public:
   bool activate();
 
 private:
+  void constructWalkMenu(State* from);
+  void constructSideStepMenu(State* from);
+  void constructStepMenu(State* from);
+
   bool hasState() const;
   bool setCurrentState(const State* new_state);
 
   State& createState(const SectorAddress address,
                      const std::string& gait_name = "");
+
+  State& createGaitState(const SectorAddress addr,
+                         const SectorAddress addr_selected,
+                         const SectorAddress addr_activated,
+                         const std::string& gait_name,
+                         const State* result = nullptr);
 
   std::list<State> states_;
   const State* current_state_ = nullptr;

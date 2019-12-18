@@ -79,7 +79,7 @@ struct SectorAddress {
 
 #define SIDE_STEP_RIGHT_NORMAL SectorAddress { 0x0000, 0x2D90 }
 #define SIDE_STEP_RIGHT_NORMAL_SELECTED SectorAddress { 0x0000, 0x2E32 }
-#define SIDE_STEP_RIGHT_NORMAL_ACTIVATED SectorAddress { 0x0000, 0x0000 }
+#define SIDE_STEP_RIGHT_NORMAL_ACTIVATED SectorAddress { 0x0000, 0x0561 }
 
 // Single steps
 #define SINGLE_STEP_SMALL SectorAddress { 0x0000, 0x097E }

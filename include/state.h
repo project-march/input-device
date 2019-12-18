@@ -44,9 +44,19 @@ public:
     return *this;
   }
 
+  State& upTo(const State* up) {
+    this->up_ = up;
+    return *this;
+  }
+
   State& withDown(State* down) {
     this->down_ = down;
     down->up_ = this;
+    return *this;
+  }
+
+  State& downTo(const State* down) {
+    this->down_ = down;
     return *this;
   }
 
@@ -56,8 +66,8 @@ public:
     return *this;
   }
 
-  State& backFrom(State* from) {
-    from->back_ = this;
+  State& backTo(const State* back) {
+    this->back_ = back;
     return *this;
   }
 
@@ -67,12 +77,12 @@ public:
     return *this;
   }
 
-  State& withActivate(State* activate) {
+  State& withActivate(const State* activate) {
     this->activate_ = activate;
     return *this;
   }
 
-private:
+protected:
   const std::string gait_;
   const SectorAddress address_;
 
