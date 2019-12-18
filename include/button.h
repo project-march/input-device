@@ -15,10 +15,10 @@ private:
   ButtonState last_position_ = ButtonState::NEUTRAL;
   unsigned long last_print_time_ = 0;
 
-  const useconds_t bounce_time_ =
-      20000; // us. May introduce unwanted behaviour if changed
-  const unsigned long hold_time_ =
-      1000; // ms. Determines how often 'push' is returned if the button is held
+  // us. May introduce unwanted behaviour if changed
+  const useconds_t bounce_time_ = 20000;
+  // ms. Determines how often 'push' is returned if the button is held
+  const unsigned long hold_time_ = 1000;
 };
 
 #endif // BUTTON_H

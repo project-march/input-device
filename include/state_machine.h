@@ -43,6 +43,9 @@ private:
                          const std::string& gait_name,
                          const State* result = nullptr);
 
+  // This must be list, since that does not reallocate
+  // Items when it resizes, which a vector does.
+  // Otherwise all pointers in states would become invalid :)
   std::list<State> states_;
   const State* current_state_ = nullptr;
 };
