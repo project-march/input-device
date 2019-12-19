@@ -25,10 +25,10 @@ void Screen::init() {
 
   this->screen_->gfx_ScreenMode(PORTRAIT);
   this->printVersion();
+  sleep(5);
   this->mountImages();
   this->screen_->gfx_ScreenMode(LANDSCAPE);
 
-  sleep(5);
   this->clear();
 
   this->last_draw_time_ = millis();
@@ -75,10 +75,11 @@ void Screen::printVersion() {
 
 void Screen::mountImages() {
   word initialized = this->screen_->media_Init();
-  if (initialized != Err4D_OK) {
+
+  if (initialized == 0) {
     this->screen_->txt_FGcolour(RED);
     this->screen_->println("Pls insert SD");
-    while (initialized != Err4D_OK) {
+    while (initialized == 0) {
       sleep(1);
       initialized = this->screen_->media_Init();
     }
