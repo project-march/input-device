@@ -19,6 +19,8 @@ void Screen::init() {
   this->screen_->SSTimeout(this->screen_saver_timeout_ms_);
   this->screen_->SSSpeed(this->screen_saver_scroll_speed_);
 
+  this->screen_->TimeLimit4D = this->time_limit_;
+
   this->clear();
 
   this->screen_->gfx_ScreenMode(PORTRAIT);

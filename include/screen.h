@@ -64,6 +64,8 @@ private:
   const word screen_saver_timeout_ms_ = 10000;
   // Must be value in 0-255 (fastest-slowest)
   const word screen_saver_scroll_speed_ = 0;
+  // Sets the time out limit for screen serial commands to 2 seconds.
+  const unsigned long time_limit_ = 2000;
 };
 
 #endif // SCREEN_H
