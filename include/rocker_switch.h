@@ -1,14 +1,8 @@
 #ifndef ROCKER_SWITCH_H
 #define ROCKER_SWITCH_H
-#include <Arduino.h>
+#include "rocker_switch_state.h"
 
-enum class RockerSwitchState {
-  UP,
-  HOLDING_UP,
-  DOWN,
-  HOLDING_DOWN,
-  NEUTRAL,
-};
+#include <Arduino.h>
 
 class RockerSwitch {
 public:

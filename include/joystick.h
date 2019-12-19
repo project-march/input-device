@@ -1,17 +1,9 @@
 #ifndef JOYSTICK_H
 #define JOYSTICK_H
 #include "button_state.h"
+#include "joystick_position.h"
 
 #include <Arduino.h>
-
-enum class JoystickPosition {
-  LEFT,
-  RIGHT,
-  UP,
-  DOWN,
-  NEUTRAL,
-  HOLDING,
-};
 
 class Joystick {
 public:
