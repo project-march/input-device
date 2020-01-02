@@ -210,7 +210,8 @@ void loop()
         break;
     }
 
-    if (!state_has_changed) {
+    if (!state_has_changed)
+    {
       if (joystick_state == ButtonState::PUSH)
       {
         state_has_changed = state_machine.select();
