@@ -1,23 +1,30 @@
 #include "button.h"
 
-Button::Button(uint8_t pin) : input_pin_(pin) {
+Button::Button(uint8_t pin) : input_pin_(pin)
+{
   pinMode(pin, INPUT_PULLUP);
 }
 
 // Returns either "NEUTRAL", "PUSH" or "HOLDING"
 // It is advised to treat "HOLDING" the same as "NEUTRAL" outside this function
-ButtonState Button::getState() {
+ButtonState Button::getState()
+{
   ButtonState state;
-  if (digitalRead(this->input_pin_) == LOW) {
-    if (this->last_position_ != ButtonState::PUSH ||
-        (millis() - this->last_print_time_) > this->hold_time_) {
+  if (digitalRead(this->input_pin_) == LOW)
+  {
+    if (this->last_position_ != ButtonState::PUSH || (millis() - this->last_print_time_) > this->hold_time_)
+    {
       this->last_print_time_ = millis();
       this->last_position_ = ButtonState::PUSH;
       state = ButtonState::PUSH;
-    } else {
+    }
+    else
+    {
       state = ButtonState::HOLDING;
     }
-  } else {
+  }
+  else
+  {
     this->last_position_ = ButtonState::NEUTRAL;
     state = ButtonState::NEUTRAL;
   }

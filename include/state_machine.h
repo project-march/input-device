@@ -5,7 +5,8 @@
 #include <list>
 #include <string>
 
-class StateMachine {
+class StateMachine
+{
 public:
   StateMachine() = default;
 
@@ -36,13 +37,10 @@ private:
   bool hasState() const;
   bool setCurrentState(const State* new_state);
 
-  State& createState(const SectorAddress address,
-                     const std::string& gait_name = "");
+  State& createState(const SectorAddress address, const std::string& gait_name = "");
 
-  State& createGaitState(const SectorAddress addr,
-                         const SectorAddress addr_selected,
-                         const SectorAddress addr_activated,
-                         const std::string& gait_name,
+  State& createGaitState(const SectorAddress addr, const SectorAddress addr_selected,
+                         const SectorAddress addr_activated, const std::string& gait_name,
                          const State* result = nullptr);
 
   // This must be list, since that does not reallocate
@@ -52,4 +50,4 @@ private:
   const State* current_state_ = nullptr;
 };
 
-#endif // STATE_MACHINE_H
+#endif  // STATE_MACHINE_H

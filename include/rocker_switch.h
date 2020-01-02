@@ -4,7 +4,8 @@
 
 #include <Arduino.h>
 
-class RockerSwitch {
+class RockerSwitch
+{
 public:
   explicit RockerSwitch(uint8_t up_pin, uint8_t down_pin);
 
@@ -24,4 +25,4 @@ private:
   const unsigned long hold_time_ = 1000;
 };
 
-#endif // ROCKER_SWITCH_H
+#endif  // ROCKER_SWITCH_H

@@ -5,10 +5,10 @@
 
 #include <Arduino.h>
 
-class Joystick {
+class Joystick
+{
 public:
-  explicit Joystick(uint8_t left_pin, uint8_t right_pin, uint8_t up_pin,
-                    uint8_t down_pin, uint8_t press_pin);
+  Joystick(uint8_t left_pin, uint8_t right_pin, uint8_t up_pin, uint8_t down_pin, uint8_t press_pin);
 
   JoystickPosition getPosition();
   ButtonState getState();
@@ -37,8 +37,8 @@ private:
   // are returned if the joystick is held.
   const unsigned long hold_time_ = 1000;
 
-  const unsigned long double_click_time_ = 300;         // ms.
-  const unsigned long double_click_timeout_time_ = 500; // ms
+  const unsigned long double_click_time_ = 300;          // ms.
+  const unsigned long double_click_timeout_time_ = 500;  // ms
 };
 
-#endif // JOYSTICK_H
+#endif  // JOYSTICK_H

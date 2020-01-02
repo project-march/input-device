@@ -5,4 +5,4 @@
 #define PROJECT_NAME "input-device"
 #define VERSION "v2.0.0-beta.1"
 
-#endif // VERSION_H
+#endif  // VERSION_H

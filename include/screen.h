@@ -35,10 +35,10 @@ to the  *
 #include <Goldelox_Serial_4DLib.h>
 #include <SoftwareSerial.h>
 
-class Screen {
+class Screen
+{
 public:
-  Screen(Goldelox_Serial_4DLib* screen, SoftwareSerial* screen_serial,
-         uint8_t rst, uint32_t baud);
+  Screen(Goldelox_Serial_4DLib* screen, SoftwareSerial* screen_serial, uint8_t rst, uint32_t baud);
 
   void init();
   void clear();
@@ -68,4 +68,4 @@ private:
   const unsigned long time_limit_ = 2000;
 };
 
-#endif // SCREEN_H
+#endif  // SCREEN_H

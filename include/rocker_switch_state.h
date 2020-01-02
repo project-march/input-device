@@ -1,7 +1,8 @@
 #ifndef ROCKER_SWITCH_STATE_H
 #define ROCKER_SWITCH_STATE_H
 
-enum class RockerSwitchState {
+enum class RockerSwitchState
+{
   UP,
   HOLDING_UP,
   DOWN,
@@ -9,4 +10,4 @@ enum class RockerSwitchState {
   NEUTRAL,
 };
 
-#endif // ROCKER_SWITCH_STATE_H
+#endif  // ROCKER_SWITCH_STATE_H

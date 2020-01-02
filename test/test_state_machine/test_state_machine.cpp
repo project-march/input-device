@@ -4,22 +4,25 @@
 
 #include <string>
 
-void test_get_gait_name() {
+void test_get_gait_name()
+{
   StateMachine state_machine;
   std::string gait_name = state_machine.getCurrentGaitName();
   TEST_ASSERT_EQUAL_STRING("", gait_name.c_str());
 }
 
-void test_get_image() {
+void test_get_image()
+{
   StateMachine state_machine;
-  SectorAddress expected({2, 3});
+  SectorAddress expected({ 2, 3 });
   SectorAddress address = expected;
   state_machine.getCurrentImage(address);
   TEST_ASSERT_EQUAL(expected.hi, address.hi);
   TEST_ASSERT_EQUAL(expected.lo, address.lo);
 }
 
-void test_state_machine_default_no_transitions() {
+void test_state_machine_default_no_transitions()
+{
   StateMachine state_machine;
   TEST_ASSERT_FALSE(state_machine.left());
   TEST_ASSERT_FALSE(state_machine.right());
@@ -30,12 +33,14 @@ void test_state_machine_default_no_transitions() {
   TEST_ASSERT_FALSE(state_machine.activate());
 }
 
-void test_default_empty() {
+void test_default_empty()
+{
   StateMachine state_machine;
   TEST_ASSERT_EQUAL(0, state_machine.size());
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
   UNITY_BEGIN();
   RUN_TEST(test_get_gait_name);
   RUN_TEST(test_get_image);

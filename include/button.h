@@ -4,7 +4,8 @@
 
 #include <Arduino.h>
 
-class Button {
+class Button
+{
 public:
   explicit Button(uint8_t pin);
 
@@ -21,4 +22,4 @@ private:
   const unsigned long hold_time_ = 1000;
 };
 
-#endif // BUTTON_H
+#endif  // BUTTON_H

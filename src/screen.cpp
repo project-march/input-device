@@ -4,13 +4,14 @@
 // 16-bit color March blue converted from 24bit 0x126287
 const word MARCH_COLOR = 0x218B;
 
-Screen::Screen(Goldelox_Serial_4DLib* screen, SoftwareSerial* screen_serial,
-               uint8_t rst, uint32_t baud)
-    : screen_(screen), serial_(screen_serial), rst_(rst), baud_(baud) {
+Screen::Screen(Goldelox_Serial_4DLib* screen, SoftwareSerial* screen_serial, uint8_t rst, uint32_t baud)
+  : screen_(screen), serial_(screen_serial), rst_(rst), baud_(baud)
+{
   pinMode(rst, OUTPUT);
 }
 
-void Screen::init() {
+void Screen::init()
+{
   this->reset();
 
   this->serial_->begin(this->baud_);
@@ -34,12 +35,14 @@ void Screen::init() {
   this->last_draw_time_ = millis();
 }
 
-void Screen::clear() {
+void Screen::clear()
+{
   this->screen_->gfx_Cls();
   usleep(this->wait_time_ms_);
 }
 
-void Screen::reset() {
+void Screen::reset()
+{
   digitalWrite(this->rst_, 1);
   usleep(100000);
   digitalWrite(this->rst_, 0);
@@ -50,13 +53,15 @@ void Screen::reset() {
   sleep(3);
 }
 
-void Screen::draw_image(SectorAddress address) {
+void Screen::draw_image(SectorAddress address)
+{
   this->screen_->media_SetSector(address.hi, address.lo);
   this->screen_->media_Image(0, 0);
   this->last_draw_time_ = millis();
 }
 
-void Screen::printVersion() {
+void Screen::printVersion()
+{
   this->screen_->txt_Bold(ON);
   this->screen_->txt_Width(2);
   this->screen_->txt_Height(2);
@@ -73,13 +78,16 @@ void Screen::printVersion() {
   this->screen_->println("");
 }
 
-void Screen::mountImages() {
+void Screen::mountImages()
+{
   word initialized = this->screen_->media_Init();
 
-  if (initialized == 0) {
+  if (initialized == 0)
+  {
     this->screen_->txt_FGcolour(RED);
     this->screen_->println("Pls insert SD");
-    while (initialized == 0) {
+    while (initialized == 0)
+    {
       sleep(1);
       initialized = this->screen_->media_Init();
     }

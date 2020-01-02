@@ -4,14 +4,16 @@
 
 #include <string>
 
-void test_state_get_gait_name() {
+void test_state_get_gait_name()
+{
   std::string gait("test");
-  State state({0, 0}, gait);
+  State state({ 0, 0 }, gait);
   TEST_ASSERT_EQUAL_STRING(gait.c_str(), state.getGaitName().c_str());
 }
 
-void test_state_get_address() {
-  SectorAddress expected = {7, 8};
+void test_state_get_address()
+{
+  SectorAddress expected = { 7, 8 };
   State state(expected);
 
   SectorAddress address;
@@ -20,8 +22,9 @@ void test_state_get_address() {
   TEST_ASSERT_EQUAL(expected.lo, address.lo);
 }
 
-void test_state_default_transitions() {
-  State state({0, 0});
+void test_state_default_transitions()
+{
+  State state({ 0, 0 });
   TEST_ASSERT_EQUAL(&state, state.left());
   TEST_ASSERT_EQUAL(&state, state.right());
   TEST_ASSERT_EQUAL(&state, state.up());
@@ -31,7 +34,8 @@ void test_state_default_transitions() {
   TEST_ASSERT_EQUAL(&state, state.activate());
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
   UNITY_BEGIN();
   RUN_TEST(test_state_get_gait_name);
   RUN_TEST(test_state_get_address);

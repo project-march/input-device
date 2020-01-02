@@ -13,7 +13,8 @@
 // So, address = hi << 8 | lo
 // These two are split, since that is how the 4dsystems
 // serial library addresses images on the SD.
-struct SectorAddress {
+struct SectorAddress
+{
   unsigned int hi;
   unsigned int lo;
 };
@@ -139,4 +140,4 @@ struct SectorAddress {
 
 // clang-format on
 
-#endif // SD_SECTOR_ADDRESSES_H
+#endif  // SD_SECTOR_ADDRESSES_H
