@@ -6,13 +6,8 @@
 void StateMachine::construct() {
   // Walk menu
   State& walk = this->createState(WALK);
-  State& side_step = this->createState(SIDE_STEP).withRight(&walk);
-  State& single_step =
-      this->createState(SINGLE_STEP).withLeft(&walk).withRight(&side_step);
-
-  this->constructWalkMenu(&walk);
-  this->constructSideStepMenu(&side_step);
-  this->constructStepMenu(&single_step);
+  State& side_step = this->createState(SIDE_STEP);
+  State& single_step = this->createState(SINGLE_STEP);
 
   // Sit menu
   State& sit =
@@ -23,64 +18,45 @@ void StateMachine::construct() {
                                             HOME_STAND_ACTIVATED, "home_stand");
   State& turn_off = this->createState(TURN_OFF);
 
+  // Obstacle menu
+  State& sofa = this->createState(SOFA);
+  State& stairs = this->createState(STAIRS);
+
+  // Start menu
+  State& stand_up = this->createGaitState(
+      STAND_UP, STAND_UP_SELECTED, STAND_UP_ACTIVATED, "gait_stand", &walk);
+  State& home_sit_start =
+      this->createGaitState(HOME_SIT_START, HOME_SIT_START_SELECTED,
+                            HOME_SIT_START_ACTIVATED, "home_sit", &stand_up);
+  State& home_stand_start =
+      this->createGaitState(HOME_STAND_START, HOME_STAND_START_SELECTED,
+                            HOME_STAND_START_ACTIVATED, "home_stand", &walk);
+  State& turn_off_start = this->createState(TURN_OFF_START);
+
+  // Sub-menus
+  this->constructWalkMenu(&walk);
+  this->constructSideStepMenu(&side_step);
+  this->constructStepMenu(&single_step);
+  this->constructSofaMenu(&sofa);
+  this->constructStairsMenu(&stairs);
+
+  // Menu transitions
+  walk.withRight(&single_step).upTo(&stairs).downTo(&sit);
+  single_step.withRight(&side_step).upTo(&stairs).downTo(&sit);
+  side_step.withRight(&walk).upTo(&stairs).downTo(&sit);
+
   sit.withRight(&home_sit).upTo(&walk);
   home_sit.withRight(&home_stand).upTo(&walk);
   home_stand.withRight(&turn_off).upTo(&walk);
   turn_off.withRight(&sit).upTo(&walk);
 
-  walk.downTo(&sit);
-  side_step.downTo(&sit);
-  single_step.downTo(&sit);
-
-  // Obstacle menu
-  State& sofa = this->createState(SOFA);
-  State& stairs = this->createState(STAIRS);
-
   sofa.withRight(&stairs).downTo(&walk);
   stairs.withRight(&sofa).downTo(&walk);
 
-  walk.upTo(&stairs);
-  side_step.upTo(&stairs);
-  single_step.upTo(&stairs);
-
-  State& sofa_standup =
-      this->createGaitState(SOFA_STANDUP, SOFA_STANDUP_SELECTED,
-                            SOFA_STANDUP_ACTIVATED, "gait_sofa_stand", &walk);
-  State& sofa_sit =
-      this->createGaitState(SOFA_SIT, SOFA_SIT_SELECTED, SOFA_SIT_ACTIVATED,
-                            "gait_sofa_sit", &sofa_standup);
-
-  sofa_sit.backTo(&sofa).withRight(&sofa_standup);
-  sofa_standup.backTo(&sofa).withRight(&sofa_sit);
-  sofa.withSelect(&sofa_sit);
-
-  State& stairs_up =
-      this->createGaitState(STAIRS_UP, STAIRS_UP_SELECTED, STAIRS_UP_ACTIVATED,
-                            "gait_stairs_up", &walk);
-  State& stairs_down =
-      this->createGaitState(STAIRS_DOWN, STAIRS_DOWN_SELECTED,
-                            STAIRS_DOWN_ACTIVATED, "gait_stairs_down", &walk);
-
-  stairs_up.backTo(&stairs).withRight(&stairs_down);
-  stairs_down.backTo(&stairs).withRight(&stairs_up);
-  stairs.withSelect(&stairs_up);
-
-  // Start menu
-  State& stand_up = this->createGaitState(
-      STAND_UP, STAND_UP_SELECTED, STAND_UP_ACTIVATED, "gait_stand", &walk);
-
-  State& home_sit_start =
-      this->createGaitState(HOME_SIT_START, HOME_SIT_START_SELECTED,
-                            HOME_SIT_START_ACTIVATED, "home_sit", &stand_up)
-          .withRight(&stand_up);
-
-  State& home_stand_start =
-      this->createGaitState(HOME_STAND_START, HOME_STAND_START_SELECTED,
-                            HOME_STAND_START_ACTIVATED, "home_stand", &walk)
-          .withLeft(&stand_up);
-  State& turn_off_start = this->createState(TURN_OFF_START)
-                              .withLeft(&home_stand_start)
-                              .withRight(&home_sit_start);
+  home_sit_start.withRight(&stand_up);
+  stand_up.withRight(&home_stand_start);
+  home_stand_start.withRight(&turn_off_start);
+  turn_off_start.withRight(&home_sit_start);
 
   // Set start state
   this->current_state_ = &home_sit_start;
@@ -154,6 +130,32 @@ void StateMachine::constructStepMenu(State* from) {
   single_step_large.backTo(from).withRight(&single_step_small);
 
   from->withSelect(&single_step_normal);
+}
+
+void StateMachine::constructSofaMenu(State* from) {
+  State& sofa_standup =
+      this->createGaitState(SOFA_STANDUP, SOFA_STANDUP_SELECTED,
+                            SOFA_STANDUP_ACTIVATED, "gait_sofa_stand", from);
+  State& sofa_sit =
+      this->createGaitState(SOFA_SIT, SOFA_SIT_SELECTED, SOFA_SIT_ACTIVATED,
+                            "gait_sofa_sit", &sofa_standup);
+
+  sofa_sit.backTo(from).withRight(&sofa_standup);
+  sofa_standup.backTo(from).withRight(&sofa_sit);
+  from->withSelect(&sofa_sit);
+}
+
+void StateMachine::constructStairsMenu(State* from) {
+  State& stairs_up =
+      this->createGaitState(STAIRS_UP, STAIRS_UP_SELECTED, STAIRS_UP_ACTIVATED,
+                            "gait_stairs_up", from);
+  State& stairs_down =
+      this->createGaitState(STAIRS_DOWN, STAIRS_DOWN_SELECTED,
+                            STAIRS_DOWN_ACTIVATED, "gait_stairs_down", from);
+
+  stairs_up.backTo(from).withRight(&stairs_down);
+  stairs_down.backTo(from).withRight(&stairs_up);
+  from->withSelect(&stairs_up);
 }
 
 std::string StateMachine::getCurrentGaitName() const {

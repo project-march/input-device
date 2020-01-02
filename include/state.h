@@ -71,9 +71,9 @@ public:
     return *this;
   }
 
-  State& withSelect(State* select) {
-    this->select_ = select;
-    select->back_ = this;
+  State& withSelect(State* with_select) {
+    this->select_ = with_select;
+    with_select->back_ = this;
     return *this;
   }
 

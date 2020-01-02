@@ -179,20 +179,31 @@ void loop() {
       sendStopMessage();
     }
   } else {
-    if (joystick_position == JoystickPosition::LEFT) {
+    switch (joystick_position) {
+    case JoystickPosition::LEFT:
       state_has_changed = state_machine.left();
-    } else if (joystick_position == JoystickPosition::RIGHT) {
+      break;
+    case JoystickPosition::RIGHT:
       state_has_changed = state_machine.right();
-    } else if (joystick_position == JoystickPosition::UP) {
+      break;
+    case JoystickPosition::UP:
       state_has_changed = state_machine.up();
-    } else if (joystick_position == JoystickPosition::DOWN) {
+      break;
+    case JoystickPosition::DOWN:
       state_has_changed = state_machine.down();
-    } else if (joystick_state == ButtonState::PUSH) {
-      state_has_changed = state_machine.select();
-    } else if (joystick_state == ButtonState::DOUBLE) {
-      state_has_changed = state_machine.back();
-    } else if (trigger_state == ButtonState::PUSH) {
-      state_has_changed = state_machine.activate();
+      break;
+    default:
+      break;
+    }
+
+    if (!state_has_changed) {
+      if (joystick_state == ButtonState::PUSH) {
+        state_has_changed = state_machine.back();
+      } else if (joystick_state == ButtonState::DOUBLE) {
+        state_has_changed = state_machine.back();
+      } else if (trigger_state == ButtonState::PUSH) {
+        state_has_changed = state_machine.activate();
+      }
     }
   }
 

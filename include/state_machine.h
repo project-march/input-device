@@ -30,6 +30,8 @@ private:
   void constructWalkMenu(State* from);
   void constructSideStepMenu(State* from);
   void constructStepMenu(State* from);
+  void constructSofaMenu(State* from);
+  void constructStairsMenu(State* from);
 
   bool hasState() const;
   bool setCurrentState(const State* new_state);
