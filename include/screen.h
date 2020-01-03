@@ -1,32 +1,29 @@
-/* * * * * * * * * * * * * * * * * * * * * *  * * * * * * * * * * * * * * * * *
-* * * * *\
+/*
  *  Library implementing the software interface for a 4D Systems uOLED-160G2
-microOLED  *
- *      GOLDELOX Display. *
- *  Hardware consists of a screen with a set of ten pins on the back. *
- *      Pins "+5V" and "GND" should be connected to their respective voltages. *
- *      Pin "RES" should be connected to a digital output pin. *
- *      Pins "RX" and "TX" should be connected to the pins of a UART peripheral
-*
- *          interface. Note that the "RX" pin of the screen should be connected
-to the  *
- *          "TX" pin of the UART interface, and vice versa. *
- *      The other pins should be unconnected. *
- *          ┌────────────────────┐ *
- *          │         3.3V ──O O─┼── RES *
- *          │          GND ──O O─┼── GND *
- *          │          IO1 ──O O─┼── RX *
- *          │          IO2 ──O O─┼── TX *
- *          │       5V OUT ──O O─┼── +5V *
- *          │                    │ *
- *          │                    │ *
- *          │                    │ *
- *          └────────────────────┘ *
- * *
- * Created by P. Verton and M. van der Marel for Project MARCH *
- * Date: 27-MAR-2018 *
-\* * * * * * * * * * * * * * * * * * * * * *  * * * * * * * * * * * * * * * * *
-* * * * */
+ *  microOLED GOLDELOX Display.
+ *
+ *  Hardware consists of a screen with a set of ten pins on the back.
+ *
+ *      * Pins "+5V" and "GND" should be connected to their respective voltages.
+ *      * Pin "RES" should be connected to a digital output pin.
+ *      * Pins "RX" and "TX" should be connected to the pins of a UART peripheral
+ *        interface. Note that the "RX" pin of the screen should be connected
+ *        to the "TX" pin of the UART interface, and vice versa.
+ *      * The other pins should be unconnected.
+ *          ┌────────────────────┐
+ *          │         3.3V ──O O─┼── RES
+ *          │          GND ──O O─┼── GND
+ *          │          IO1 ──O O─┼── RX
+ *          │          IO2 ──O O─┼── TX
+ *          │       5V OUT ──O O─┼── +5V
+ *          │                    │
+ *          │                    │
+ *          │                    │
+ *          └────────────────────┘
+ *
+ * Created by P. Verton and M. van der Marel for Project MARCH
+ * Date: 27-MAR-2018
+ */
 #ifndef SCREEN_H
 #define SCREEN_H
 #include "sd_sector_addresses.h"
@@ -57,14 +54,14 @@ private:
   const uint8_t rst_;
   const uint32_t baud_;
 
-  // In microseconds. Needed for functioning, can still be optimized
-  const useconds_t wait_time_ms_ = 500000;
+  // Microseconds. Needed for functioning, can still be optimized
+  const useconds_t wait_time_ = 500000;
 
   // Milliseconds, when the screen should start scrolling
-  const word screen_saver_timeout_ms_ = 10000;
+  const word screen_saver_timeout_ = 10000;
   // Must be value in 0-255 (fastest-slowest)
   const word screen_saver_scroll_speed_ = 0;
-  // Sets the time out limit for screen serial commands to 2 seconds.
+  // Milliseconds. Sets the time out limit for screen serial commands to 2 seconds.
   const unsigned long time_limit_ = 2000;
 };
 

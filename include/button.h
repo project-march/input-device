@@ -16,9 +16,9 @@ private:
   ButtonState last_position_ = ButtonState::NEUTRAL;
   unsigned long last_print_time_ = 0;
 
-  // us. May introduce unwanted behaviour if changed
+  // Microseconds. May introduce unwanted behaviour if changed
   const useconds_t bounce_time_ = 20000;
-  // ms. Determines how often 'push' is returned if the button is held
+  // Milliseconds. Determines how often 'push' is returned if the button is held
   const unsigned long hold_time_ = 1000;
 };
 

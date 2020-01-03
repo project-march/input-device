@@ -10,8 +10,6 @@ Joystick::Joystick(uint8_t left_pin, uint8_t right_pin, uint8_t up_pin, uint8_t 
   pinMode(press_pin, INPUT_PULLUP);
 }
 
-// Returns either "NEUTRAL", "[DIRECTION]" or "HOLDING"
-// It is advised to treat "HOLDING" the same as "NEUTRAL" outside this function
 JoystickPosition Joystick::getPosition()
 {
   JoystickPosition position;
@@ -77,7 +75,6 @@ JoystickPosition Joystick::getPosition()
   return position;
 }
 
-// Returns either "NEUTRAL", "PUSH" or "DOUBLE"
 ButtonState Joystick::getState()
 {
   ButtonState state;

@@ -17,7 +17,7 @@ void Screen::init()
   this->serial_->begin(this->baud_);
 
   // Set screen saver (SS) timeout and scroll speed
-  this->screen_->SSTimeout(this->screen_saver_timeout_ms_);
+  this->screen_->SSTimeout(this->screen_saver_timeout_);
   this->screen_->SSSpeed(this->screen_saver_scroll_speed_);
 
   this->screen_->TimeLimit4D = this->time_limit_;
@@ -38,7 +38,7 @@ void Screen::init()
 void Screen::clear()
 {
   this->screen_->gfx_Cls();
-  usleep(this->wait_time_ms_);
+  usleep(this->wait_time_);
 }
 
 void Screen::reset()
@@ -46,7 +46,7 @@ void Screen::reset()
   digitalWrite(this->rst_, 1);
   usleep(100000);
   digitalWrite(this->rst_, 0);
-  usleep(this->wait_time_ms_);
+  usleep(this->wait_time_);
   digitalWrite(this->rst_, 1);
 
   // Let the display start up

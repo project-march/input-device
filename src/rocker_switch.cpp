@@ -6,9 +6,6 @@ RockerSwitch::RockerSwitch(uint8_t up_pin, uint8_t down_pin) : up_pin_(up_pin), 
   pinMode(down_pin, INPUT_PULLUP);
 }
 
-// Returns either "NEUTRAL", "UP", "HOLDING UP", "DOWN" or "HOLDING DOWN"
-// It is advised to treat "HOLDING X" the same as "NEUTRAL" outside this
-// function
 RockerSwitchState RockerSwitch::getState()
 {
   RockerSwitchState state;

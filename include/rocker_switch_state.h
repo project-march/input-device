@@ -3,11 +3,13 @@
 
 enum class RockerSwitchState
 {
-  UP,
-  HOLDING_UP,
-  DOWN,
-  HOLDING_DOWN,
   NEUTRAL,
+  // It is advised to treat HOLDING X the same as NEUTRAL
+  // outside this function.
+  HOLDING_UP,
+  HOLDING_DOWN,
+  UP,
+  DOWN,
 };
 
 #endif  // ROCKER_SWITCH_STATE_H

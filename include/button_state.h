@@ -4,6 +4,8 @@
 enum class ButtonState
 {
   NEUTRAL,
+  // It is advised to treat HOLDING the same as NEUTRAL
+  // as it is only used internally.
   HOLDING,
   PUSH,
   DOUBLE,

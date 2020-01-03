@@ -30,15 +30,19 @@ private:
   unsigned long last_push_release_time_ = 0;
   unsigned long last_double_click_time_ = 0;
 
-  // us. May introduce unwanted behaviour if changed
+  // Microseconds. May introduce unwanted behaviour if changed
   const useconds_t bounce_time_ = 5000;
 
-  // ms. Determines how often up or down
+  // Milliseconds. Determines how often up or down
   // are returned if the joystick is held.
   const unsigned long hold_time_ = 1000;
 
-  const unsigned long double_click_time_ = 300;          // ms.
-  const unsigned long double_click_timeout_time_ = 500;  // ms
+  // Milliseconds. The duration before a second press is registered
+  // as a double click.
+  const unsigned long double_click_time_ = 300;
+  // Milliseconds. Timeout after a double click was registered
+  // before other commands can be registered.
+  const unsigned long double_click_timeout_time_ = 500;
 };
 
 #endif  // JOYSTICK_H

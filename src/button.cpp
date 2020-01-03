@@ -5,8 +5,6 @@ Button::Button(uint8_t pin) : input_pin_(pin)
   pinMode(pin, INPUT_PULLUP);
 }
 
-// Returns either "NEUTRAL", "PUSH" or "HOLDING"
-// It is advised to treat "HOLDING" the same as "NEUTRAL" outside this function
 ButtonState Button::getState()
 {
   ButtonState state;
