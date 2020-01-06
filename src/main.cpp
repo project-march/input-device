@@ -115,8 +115,7 @@ void sendAliveMessage()
 
 void drawCurrentImage()
 {
-  SectorAddress address;
-  state_machine.getCurrentImage(address);
+  const SectorAddress& address = state_machine.getCurrentImage();
   screen.draw_image(address);
 }
 

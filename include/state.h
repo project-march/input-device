@@ -20,9 +20,9 @@ public:
     return this->gait_;
   }
 
-  void getImage(SectorAddress& image_address) const
+  SectorAddress getImage() const
   {
-    image_address = this->address_;
+    return this->address_;
   };
 
   const State* left() const

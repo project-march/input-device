@@ -14,11 +14,9 @@ void test_get_gait_name()
 void test_get_image()
 {
   StateMachine state_machine;
-  SectorAddress expected({ 2, 3 });
-  SectorAddress address = expected;
-  state_machine.getCurrentImage(address);
-  TEST_ASSERT_EQUAL(expected.hi, address.hi);
-  TEST_ASSERT_EQUAL(expected.lo, address.lo);
+  SectorAddress address = state_machine.getCurrentImage();
+  TEST_ASSERT_EQUAL(0, address.hi);
+  TEST_ASSERT_EQUAL(0, address.lo);
 }
 
 void test_state_machine_default_no_transitions()

@@ -16,8 +16,7 @@ void test_state_get_address()
   SectorAddress expected = { 7, 8 };
   State state(expected);
 
-  SectorAddress address;
-  state.getImage(address);
+  SectorAddress address = state.getImage();
   TEST_ASSERT_EQUAL(expected.hi, address.hi);
   TEST_ASSERT_EQUAL(expected.lo, address.lo);
 }

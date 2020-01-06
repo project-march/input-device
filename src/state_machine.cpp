@@ -150,12 +150,13 @@ std::string StateMachine::getCurrentGaitName() const
   return std::string();
 }
 
-void StateMachine::getCurrentImage(SectorAddress& address) const
+SectorAddress StateMachine::getCurrentImage() const
 {
   if (this->hasState())
   {
-    this->current_state_->getImage(address);
+    return this->current_state_->getImage();
   }
+  return SectorAddress{ 0, 0 };
 }
 
 size_t StateMachine::size() const

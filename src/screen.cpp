@@ -31,7 +31,6 @@ void Screen::init()
   this->screen_->gfx_ScreenMode(LANDSCAPE);
 
   this->clear();
-
 }
 
 void Screen::clear()
@@ -52,7 +51,7 @@ void Screen::reset()
   sleep(3);
 }
 
-void Screen::draw_image(SectorAddress address)
+void Screen::draw_image(const SectorAddress& address)
 {
   this->screen_->media_SetSector(address.hi, address.lo);
   this->screen_->media_Image(0, 0);

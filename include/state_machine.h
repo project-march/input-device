@@ -14,7 +14,7 @@ public:
 
   std::string getCurrentGaitName() const;
 
-  void getCurrentImage(SectorAddress& address) const;
+  SectorAddress getCurrentImage() const;
 
   size_t size() const;
 

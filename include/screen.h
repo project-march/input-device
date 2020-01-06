@@ -39,7 +39,7 @@ public:
 
   void init();
   void clear();
-  void draw_image(SectorAddress address);
+  void draw_image(const SectorAddress& address);
 
 private:
   void reset();
