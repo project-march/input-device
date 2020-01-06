@@ -160,8 +160,8 @@ void loop()
 {
   // Get button states
   // RockerSwitchState rocker_switch_state = rocker.getState();
-  JoystickPosition joystick_position = joystick.getPosition();
-  ButtonState joystick_state = joystick.getState();
+  JoystickState joystick_state = joystick.getState();
+  ButtonState joystick_button_state = joystick.getButtonState();
   ButtonState trigger_state = trigger.getState();
 
   // When button is pressed, vibrate
@@ -191,18 +191,18 @@ void loop()
   }
   else
   {
-    switch (joystick_position)
+    switch (joystick_state)
     {
-      case JoystickPosition::LEFT:
+      case JoystickState::LEFT:
         state_has_changed = state_machine.left();
         break;
-      case JoystickPosition::RIGHT:
+      case JoystickState::RIGHT:
         state_has_changed = state_machine.right();
         break;
-      case JoystickPosition::UP:
+      case JoystickState::UP:
         state_has_changed = state_machine.up();
         break;
-      case JoystickPosition::DOWN:
+      case JoystickState::DOWN:
         state_has_changed = state_machine.down();
         break;
       default:
@@ -211,11 +211,11 @@ void loop()
 
     if (!state_has_changed)
     {
-      if (joystick_state == ButtonState::PUSH)
+      if (joystick_button_state == ButtonState::PUSH)
       {
         state_has_changed = state_machine.select();
       }
-      else if (joystick_state == ButtonState::DOUBLE)
+      else if (joystick_button_state == ButtonState::DOUBLE)
       {
         state_has_changed = state_machine.back();
       }

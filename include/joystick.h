@@ -1,7 +1,7 @@
 #ifndef JOYSTICK_H
 #define JOYSTICK_H
 #include "button_state.h"
-#include "joystick_position.h"
+#include "joystick_state.h"
 
 #include <Arduino.h>
 
@@ -10,8 +10,8 @@ class Joystick
 public:
   Joystick(uint8_t left_pin, uint8_t right_pin, uint8_t up_pin, uint8_t down_pin, uint8_t press_pin);
 
-  JoystickPosition getPosition();
-  ButtonState getState();
+  JoystickState getState();
+  ButtonState getButtonState();
 
 private:
   const uint8_t left_pin_;
@@ -20,7 +20,7 @@ private:
   const uint8_t down_pin_;
   const uint8_t press_pin_;
 
-  JoystickPosition last_position_ = JoystickPosition::NEUTRAL;
+  JoystickState last_position_ = JoystickState::NEUTRAL;
   ButtonState last_push_position_ = ButtonState::NEUTRAL;
   unsigned long last_print_time_ = 0;
   unsigned long last_push_print_time_ = 0;

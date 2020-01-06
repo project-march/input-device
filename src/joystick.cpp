@@ -10,72 +10,72 @@ Joystick::Joystick(uint8_t left_pin, uint8_t right_pin, uint8_t up_pin, uint8_t 
   pinMode(press_pin, INPUT_PULLUP);
 }
 
-JoystickPosition Joystick::getPosition()
+JoystickState Joystick::getState()
 {
-  JoystickPosition position;
+  JoystickState position;
   if (digitalRead(this->left_pin_) == LOW)
   {
-    if (this->last_position_ != JoystickPosition::LEFT || (millis() - this->last_print_time_) > this->hold_time_)
+    if (this->last_position_ != JoystickState::LEFT || (millis() - this->last_print_time_) > this->hold_time_)
     {
-      position = JoystickPosition::LEFT;
+      position = JoystickState::LEFT;
       this->last_print_time_ = millis();
-      this->last_position_ = JoystickPosition::LEFT;
+      this->last_position_ = JoystickState::LEFT;
     }
     else
     {
-      position = JoystickPosition::HOLDING;
+      position = JoystickState::HOLDING;
     }
   }
   else if (digitalRead(this->right_pin_) == LOW)
   {
-    if (this->last_position_ != JoystickPosition::RIGHT || (millis() - this->last_print_time_) > this->hold_time_)
+    if (this->last_position_ != JoystickState::RIGHT || (millis() - this->last_print_time_) > this->hold_time_)
     {
-      position = JoystickPosition::RIGHT;
+      position = JoystickState::RIGHT;
       this->last_print_time_ = millis();
-      this->last_position_ = JoystickPosition::RIGHT;
+      this->last_position_ = JoystickState::RIGHT;
     }
     else
     {
-      position = JoystickPosition::HOLDING;
+      position = JoystickState::HOLDING;
     }
   }
   else if (digitalRead(this->up_pin_) == LOW)
   {
-    if (this->last_position_ != JoystickPosition::UP || (millis() - this->last_print_time_) > this->hold_time_)
+    if (this->last_position_ != JoystickState::UP || (millis() - this->last_print_time_) > this->hold_time_)
     {
-      position = JoystickPosition::UP;
+      position = JoystickState::UP;
       this->last_print_time_ = millis();
-      this->last_position_ = JoystickPosition::UP;
+      this->last_position_ = JoystickState::UP;
     }
     else
     {
-      position = JoystickPosition::HOLDING;
+      position = JoystickState::HOLDING;
     }
   }
   else if (digitalRead(this->down_pin_) == LOW)
   {
-    if (this->last_position_ != JoystickPosition::DOWN || (millis() - this->last_print_time_) > this->hold_time_)
+    if (this->last_position_ != JoystickState::DOWN || (millis() - this->last_print_time_) > this->hold_time_)
     {
-      position = JoystickPosition::DOWN;
+      position = JoystickState::DOWN;
       this->last_print_time_ = millis();
-      this->last_position_ = JoystickPosition::DOWN;
+      this->last_position_ = JoystickState::DOWN;
     }
     else
     {
-      position = JoystickPosition::HOLDING;
+      position = JoystickState::HOLDING;
     }
   }
   else
   {
-    position = JoystickPosition::NEUTRAL;
-    this->last_position_ = JoystickPosition::NEUTRAL;
+    position = JoystickState::NEUTRAL;
+    this->last_position_ = JoystickState::NEUTRAL;
   }
   // To prevent multiple prints per action due to bouncing
   usleep(this->bounce_time_);
   return position;
 }
 
-ButtonState Joystick::getState()
+ButtonState Joystick::getButtonState()
 {
   ButtonState state;
   if (this->recent_double_click_)
