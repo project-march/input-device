@@ -1,9 +1,14 @@
 os: linux
 language: python
 
+addons:
+  apt:
+    packages:
+      - clang-format
+
 notifications:
   slack:
-    secure: DX4zerMP4tLgR8rMBnY36YhrdtULunl+aROFq7dWy0vXvxiegWfvGY0eWU7K36kcVToPV1LJ9ilFGxfOi5VELkFQHsxYCRaBddSgQ4pAxppygVPhlmOUdpkZsGxrJU27ajcy6OY/pwEFBsABIXitoEC2U0yDzx3J9bWjzz+QH14MLfH07zeYuuAfhloZ8IZk6TbSVeg8X/jhc1QUZhn7QgN+hvXo1MMSaq99TXXK7jO7soq5oRbTSOkohSiVm7XgbjL9haoWXQSBJlb82qu94wFlBBZlZ05oEVGzith36d4gVPJ5wbmoRQy5X/shGBBNGiyv8JRQ6Z18zgdsra1sWPNI7Yv5o91sMySx/g+OOqyJqQKq5y5ohb1Y4hI24zy9Xj8Bjac9wt9O4wvgn5+dlz2qgIkXbJeSodEB4OE0lBEeiQACkYpHz9UbxZrcaBtrq9tEHSrl7lwj/AgRckaIIr+6BURvQ21RIqXhajKiaSO05KqL0spyM8pVvNHn+0W1oznVuEMZOywy7bZ83JiodKVZPwJQWPetOAet8r4PnkulUSseJ8ckVpoz5Kfs/IrSAKMSlOeD19AgLm7Q/ejpoimfTJUJsDRgP7asRVuqgzl7ruBuQOwbaWg3FRgaW7WJ66LPmdNwI5bokThaMaE3oB17l2Y+Kt93CAxUDAKSStI=
+    secure: agpTHpiGJVNU8EtJV+nbiM8LYp7RkXPMpvrpa7yjlNKep4i0jQscFpOyylh+7Toekfh1F7ZMGhyBQfWsgzSKK4OtKgUY36jV3NJ04d1Jjf4CaypUsXe9eQ7KNIHLI+zPgwan+yf1iL6daF8uvRNT8SHCxTdRfVcwWaViQuh6/JbusxpSSojaT/BinCF/lItHC2+ixO1cQ7iFbBsaRyrEI76IUeaoMAUogqoNx+KdAYORMTcFI1i+6bw5TzsWY8Md8Kxn1YhvyeJv87LJjRhLyXLqzhp4XFjPUY0Vb9/iSihX7UfFoAPTPqmrlaATW6TEu0uo5fVJY6MWifAlcsuNGqL//saVqPHTiOqyEg1LcEUtdmR5+ljyMaSirV+pJA/vBNo61bjQeFzBf4d/kXiej0UQfLG1DFjUlYij++t6kr+EklYkwNYbfOQ75cLXrneG+nxjwg8KID2AVkjshLdjOfHFlGuzDTliId4lYU5FMdBl/dVS2u5qvVo8kaaTvvoAWjzp9KfdWHB1BmpAX06PblLWHnXuhJujBEyeT/9+D9eGmCmvYAsfLpky2hxWOHTkTbKGS9K60c2pHIhhzMRiOMZAVmbG7A2+7XdoaeBJ9cEHET09Ep2WY76jX5hTDbbA3xLZJB8e8O6TdCxXxp9xQvoPpmRK3rjsiun3thlFDBI=
   email: false
 
 cache:
@@ -13,8 +18,10 @@ cache:
 install:
   - pip install -U platformio
   - platformio update
+  - platformio lib install
 
 script:
   - platformio run
-  - platformio check --environment debug
-# - platformio test
+  - platformio test --environment native
+  - platformio check --fail-on-defect high
+  - wget -qO- https://raw.githubusercontent.com/Sarcasm/run-clang-format/master/run-clang-format.py | python - -r src include test

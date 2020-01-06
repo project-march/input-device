@@ -22,6 +22,8 @@ namespace march_shared_resources
       _version_type version;
       typedef const char* _description_type;
       _description_type description;
+      typedef const char* _gait_type_type;
+      _gait_type_type gait_type;
       uint32_t setpoints_length;
       typedef march_shared_resources::Setpoint _setpoints_type;
       _setpoints_type st_setpoints;
@@ -39,6 +41,7 @@ namespace march_shared_resources
       name(""),
       version(""),
       description(""),
+      gait_type(""),
       setpoints_length(0), setpoints(NULL),
       trajectory(),
       duration(),
@@ -64,6 +67,11 @@ namespace march_shared_resources
       offset += 4;
       memcpy(outbuffer + offset, this->description, length_description);
       offset += length_description;
+      uint32_t length_gait_type = strlen(this->gait_type);
+      varToArr(outbuffer + offset, length_gait_type);
+      offset += 4;
+      memcpy(outbuffer + offset, this->gait_type, length_gait_type);
+      offset += length_gait_type;
       *(outbuffer + offset + 0) = (this->setpoints_length >> (8 * 0)) & 0xFF;
       *(outbuffer + offset + 1) = (this->setpoints_length >> (8 * 1)) & 0xFF;
       *(outbuffer + offset + 2) = (this->setpoints_length >> (8 * 2)) & 0xFF;
@@ -124,6 +132,15 @@ namespace march_shared_resources
       inbuffer[offset+length_description-1]=0;
       this->description = (char *)(inbuffer + offset-1);
       offset += length_description;
+      uint32_t length_gait_type;
+      arrToVar(length_gait_type, (inbuffer + offset));
+      offset += 4;
+      for(unsigned int k= offset; k< offset+length_gait_type; ++k){
+          inbuffer[k-1]=inbuffer[k];
+      }
+      inbuffer[offset+length_gait_type-1]=0;
+      this->gait_type = (char *)(inbuffer + offset-1);
+      offset += length_gait_type;
       uint32_t setpoints_lengthT = ((uint32_t) (*(inbuffer + offset))); 
       setpoints_lengthT |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1); 
       setpoints_lengthT |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2); 
@@ -163,7 +180,7 @@ namespace march_shared_resources
     }
 
     const char * getType(){ return "march_shared_resources/Subgait"; };
-    const char * getMD5(){ return "56dd95f06d51574a3fc7a0eac6b1b780"; };
+    const char * getMD5(){ return "7ce6c0af68699674ac863f06f39674ac"; };
 
   };
 

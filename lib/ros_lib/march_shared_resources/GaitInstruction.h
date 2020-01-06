@@ -15,11 +15,10 @@ namespace march_shared_resources
     public:
       typedef std_msgs::Header _header_type;
       _header_type header;
-      typedef int16_t _type_type;
+      typedef int8_t _type_type;
       _type_type type;
       typedef const char* _gait_name_type;
       _gait_name_type gait_name;
-      enum { INPUT_DEVICE_LOST =  -1 };
       enum { STOP =  0 };
       enum { GAIT =  1 };
       enum { PAUSE =  2 };
@@ -37,12 +36,11 @@ namespace march_shared_resources
       int offset = 0;
       offset += this->header.serialize(outbuffer + offset);
       union {
-        int16_t real;
-        uint16_t base;
+        int8_t real;
+        uint8_t base;
       } u_type;
       u_type.real = this->type;
       *(outbuffer + offset + 0) = (u_type.base >> (8 * 0)) & 0xFF;
-      *(outbuffer + offset + 1) = (u_type.base >> (8 * 1)) & 0xFF;
       offset += sizeof(this->type);
       uint32_t length_gait_name = strlen(this->gait_name);
       varToArr(outbuffer + offset, length_gait_name);
@@ -57,12 +55,11 @@ namespace march_shared_resources
       int offset = 0;
       offset += this->header.deserialize(inbuffer + offset);
       union {
-        int16_t real;
-        uint16_t base;
+        int8_t real;
+        uint8_t base;
       } u_type;
       u_type.base = 0;
-      u_type.base |= ((uint16_t) (*(inbuffer + offset + 0))) << (8 * 0);
-      u_type.base |= ((uint16_t) (*(inbuffer + offset + 1))) << (8 * 1);
+      u_type.base |= ((uint8_t) (*(inbuffer + offset + 0))) << (8 * 0);
       this->type = u_type.real;
       offset += sizeof(this->type);
       uint32_t length_gait_name;
@@ -78,7 +75,7 @@ namespace march_shared_resources
     }
 
     const char * getType(){ return "march_shared_resources/GaitInstruction"; };
-    const char * getMD5(){ return "33baee28fc7d9ee7dee1e42d340e1783"; };
+    const char * getMD5(){ return "33391f0a380b417c7e824a1f2d772540"; };
 
   };
 
