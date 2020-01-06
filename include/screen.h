@@ -49,7 +49,6 @@ private:
 
   Goldelox_Serial_4DLib* screen_;
   SoftwareSerial* serial_;
-  unsigned long last_draw_time_ = 0;
 
   const uint8_t rst_;
   const uint32_t baud_;

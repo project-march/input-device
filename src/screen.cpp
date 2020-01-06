@@ -32,7 +32,6 @@ void Screen::init()
 
   this->clear();
 
-  this->last_draw_time_ = millis();
 }
 
 void Screen::clear()
@@ -57,7 +56,6 @@ void Screen::draw_image(SectorAddress address)
 {
   this->screen_->media_SetSector(address.hi, address.lo);
   this->screen_->media_Image(0, 0);
-  this->last_draw_time_ = millis();
 }
 
 void Screen::printVersion()
