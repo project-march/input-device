@@ -36,7 +36,7 @@ void setup()
   screen.init();
 }
 
-void loop(void)
+void loop()
 {
   // Draw different images from the uSD card in a loop
   screen.draw_image(STAIRS);
