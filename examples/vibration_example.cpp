@@ -1,11 +1,12 @@
+#include <Adafruit_DRV2605.h>
 #include <Arduino.h>
-#include "Adafruit_DRV2605.h"
 
 Adafruit_DRV2605 driver;
 
-uint8_t effect; // Select the desired effect, for now test effect "Buzz 100%"
+uint8_t effect;  // Select the desired effect, for now test effect "Buzz 100%"
 
-void setup() {
+void setup()
+{
   Serial.begin(9600);
 
   // Setup I2C protocol
@@ -21,7 +22,8 @@ void setup() {
   effect = 47;
 }
 
-void loop() {
+void loop()
+{
   // Set the effect to be played
   // Waveforms can be combined, to create new wavefroms, see driver datasheet
   driver.setWaveform(0, effect);  // Setup the waveform(s)
@@ -31,5 +33,4 @@ void loop() {
   driver.go();
 
   sleep(1);
-
 }
