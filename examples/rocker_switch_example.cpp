@@ -11,7 +11,6 @@ RockerSwitch rocker(ROCKER_UP, ROCKER_DOWN);
 void setup()
 {
   Serial.begin(9600);
-  Serial.println("Started Serial communication");
 }
 
 void loop()
