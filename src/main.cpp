@@ -18,15 +18,10 @@
 namespace pins
 {
 const uint8_t TRIGGER = 26;
-
-const uint8_t ROCKER_UP = 2;
-const uint8_t ROCKER_DOWN = 5;
-
-const uint8_t JOYSTICK_LEFT = 23;
-const uint8_t JOYSTICK_RIGHT = 14;
-const uint8_t JOYSTICK_UP = 12;
-const uint8_t JOYSTICK_DOWN = 19;
-const uint8_t JOYSTICK_PUSH = 18;
+const uint8_t RE_A = 23;
+const uint8_t RE_B = 14;
+const uint8_t RE_PUSH = 18;
+const uint8_t PUSH = 1;
 const uint8_t UART_TX = 32;  // Software serial
 const uint8_t UART_RX = 34;  // Software serial
 const uint8_t RST = 13;      // Reset
@@ -45,9 +40,8 @@ const uint64_t BAUD_SERIAL = 57600;
 //#define USE_WIRELESS  // comment this to use wired connection.
 
 Button trigger(pins::TRIGGER);
-RockerSwitch rocker(pins::ROCKER_UP, pins::ROCKER_DOWN);
-Joystick joystick(pins::JOYSTICK_LEFT, pins::JOYSTICK_RIGHT, pins::JOYSTICK_UP, pins::JOYSTICK_DOWN,
-                  pins::JOYSTICK_PUSH);
+Button push(pins::PUSH);
+RotaryEncoder rotaryEncoder(pins::RE_A, pins::RE_B, pins::RE_PUSH);
 
 SoftwareSerial screen_serial(pins::UART_RX, pins::UART_TX);
 Goldelox_Serial_4DLib screen_goldelox(&screen_serial);
