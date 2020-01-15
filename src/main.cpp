@@ -1,6 +1,7 @@
 #include "button.h"
 #include "joystick.h"
 #include "rocker_switch.h"
+#include "rotary_encoder.h"
 #include "screen.h"
 #include "state_machine.h"
 #include "wireless_connection.h"
@@ -142,7 +143,7 @@ void setup()
 
   // Reset the joystick right pin, this needed after the ROS node init pin 14 is
   // apparently used by ROS.
-  pinMode(pins::JOYSTICK_RIGHT, INPUT_PULLUP);
+  // pinMode(pins::JOYSTICK_RIGHT, INPUT_PULLUP);
 
   state_machine.construct();
 
@@ -154,8 +155,8 @@ void loop()
 {
   // Get button states
   // RockerSwitchState rocker_switch_state = rocker.getState();
-  JoystickState joystick_state = joystick.getState();
-  ButtonState joystick_button_state = joystick.getButtonState();
+  RotaryEncoderRotation  rotary_encoder_rotation = rotaryEncoder.getRotation();
+  ButtonState rotary_encoder_button_state = rotaryEncoder.getButtonState();
   ButtonState trigger_state = trigger.getState();
 
   // When button is pressed, vibrate
@@ -185,19 +186,13 @@ void loop()
   }
   else
   {
-    switch (joystick_state)
+    switch (rotary_encoder_rotation)
     {
-      case JoystickState::LEFT:
+      case RotaryEncoderRotation::COUNTER_CLOCKWISE:
         state_has_changed = state_machine.left();
         break;
-      case JoystickState::RIGHT:
+      case RotaryEncoderRotation::CLOCKWISE:
         state_has_changed = state_machine.right();
-        break;
-      case JoystickState::UP:
-        state_has_changed = state_machine.up();
-        break;
-      case JoystickState::DOWN:
-        state_has_changed = state_machine.down();
         break;
       default:
         break;
@@ -205,11 +200,11 @@ void loop()
 
     if (!state_has_changed)
     {
-      if (joystick_button_state == ButtonState::PUSH)
+      if (rotary_encoder_button_state == ButtonState::PUSH)
       {
         state_has_changed = state_machine.select();
       }
-      else if (joystick_button_state == ButtonState::DOUBLE)
+      else if (rotary_encoder_button_state == ButtonState::DOUBLE)
       {
         state_has_changed = state_machine.back();
       }
