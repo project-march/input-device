@@ -1,0 +1,11 @@
+#ifndef ROTARY_ENCODER_ROTATION_H
+#define ROTARY_ENCODER_ROTATION_H
+
+enum class RotaryEncoderRotation
+{
+  CLOCKWISE,
+  COUNTER_CLOCKWISE,
+  NEUTRAL,
+};
+
+#endif  //  ROTARY_ENCODER_H
