@@ -1,4 +1,5 @@
 #include "button.h"
+#include "double_click_button.h"
 #include "joystick.h"
 #include "rocker_switch.h"
 #include "rotary_encoder.h"
@@ -19,10 +20,10 @@
 namespace pins
 {
 const uint8_t TRIGGER = 26;
-const uint8_t RE_A = 23;
+const uint8_t RE_A = 12;
 const uint8_t RE_B = 14;
 const uint8_t RE_PUSH = 18;
-const uint8_t PUSH = 1;
+const uint8_t PUSH = 5;
 const uint8_t UART_TX = 32;  // Software serial
 const uint8_t UART_RX = 34;  // Software serial
 const uint8_t RST = 13;      // Reset
@@ -41,7 +42,7 @@ const uint64_t BAUD_SERIAL = 57600;
 //#define USE_WIRELESS  // comment this to use wired connection.
 
 Button trigger(pins::TRIGGER);
-Button push(pins::PUSH);
+DoubleClickButton push(pins::PUSH);
 RotaryEncoder rotaryEncoder(pins::RE_A, pins::RE_B, pins::RE_PUSH);
 
 SoftwareSerial screen_serial(pins::UART_RX, pins::UART_TX);
@@ -153,11 +154,13 @@ void setup()
 
 void loop()
 {
+  nh.logwarn("loop");
   // Get button states
   // RockerSwitchState rocker_switch_state = rocker.getState();
   RotaryEncoderRotation  rotary_encoder_rotation = rotaryEncoder.getRotation();
   ButtonState rotary_encoder_button_state = rotaryEncoder.getButtonState();
   ButtonState trigger_state = trigger.getState();
+  ButtonState push_button_state = push.getState();
 
   // When button is pressed, vibrate
   if (trigger_state == ButtonState::PUSH)
@@ -186,16 +189,27 @@ void loop()
   }
   else
   {
+    if(push_button_state == ButtonState::PUSH)
+    {
+      state_has_changed = state_machine.up();
+    }
+    else if(push_button_state == ButtonState::DOUBLE)
+    {
+      state_has_changed = state_machine.down();
+    }
+    else
+    {    
     switch (rotary_encoder_rotation)
     {
-      case RotaryEncoderRotation::COUNTER_CLOCKWISE:
-        state_has_changed = state_machine.left();
-        break;
-      case RotaryEncoderRotation::CLOCKWISE:
-        state_has_changed = state_machine.right();
-        break;
-      default:
-        break;
+        case RotaryEncoderRotation::COUNTER_CLOCKWISE:
+          state_has_changed = state_machine.left();
+          break;
+        case RotaryEncoderRotation::CLOCKWISE:
+          state_has_changed = state_machine.right();
+          break;
+        default:
+          break;
+      }
     }
 
     if (!state_has_changed)
