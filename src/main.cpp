@@ -43,7 +43,8 @@ const uint64_t BAUD_SERIAL = 57600;
 
 Button trigger(pins::TRIGGER);
 DoubleClickButton push(pins::PUSH);
-RotaryEncoder rotaryEncoder(pins::RE_A, pins::RE_B, pins::RE_PUSH);
+RotaryEncoder rotaryEncoder(pins::RE_A, pins::RE_B);
+DoubleClickButton rotaryEncoderPush(pins::RE_PUSH);
 
 SoftwareSerial screen_serial(pins::UART_RX, pins::UART_TX);
 Goldelox_Serial_4DLib screen_goldelox(&screen_serial);
@@ -158,9 +159,9 @@ void loop()
   // Get button states
   // RockerSwitchState rocker_switch_state = rocker.getState();
   RotaryEncoderRotation  rotary_encoder_rotation = rotaryEncoder.getRotation();
-  ButtonState rotary_encoder_button_state = rotaryEncoder.getButtonState();
   ButtonState trigger_state = trigger.getState();
   ButtonState push_button_state = push.getState();
+  ButtonState rotary_encoder_button_state = rotaryEncoderPush.getState();
 
   // When button is pressed, vibrate
   if (trigger_state == ButtonState::PUSH)
@@ -201,10 +202,10 @@ void loop()
     {    
     switch (rotary_encoder_rotation)
     {
-        case RotaryEncoderRotation::COUNTER_CLOCKWISE:
+        case RotaryEncoderRotation::DECREMENT:
           state_has_changed = state_machine.left();
           break;
-        case RotaryEncoderRotation::CLOCKWISE:
+        case RotaryEncoderRotation::INCREMENT:
           state_has_changed = state_machine.right();
           break;
         default:

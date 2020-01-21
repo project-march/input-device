@@ -3,8 +3,8 @@
 
 enum class RotaryEncoderRotation
 {
-  CLOCKWISE,
-  COUNTER_CLOCKWISE,
+  INCREMENT,
+  DECREMENT,
   NEUTRAL,
 };
 
