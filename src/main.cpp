@@ -20,8 +20,8 @@
 namespace pins
 {
 const uint8_t TRIGGER = 26;
-const uint8_t RE_A = 12;
-const uint8_t RE_B = 14;
+const uint8_t RE_A = 2;
+const uint8_t RE_B = 15;
 const uint8_t RE_PUSH = 18;
 const uint8_t PUSH = 5;
 const uint8_t UART_TX = 32;  // Software serial
@@ -116,6 +116,17 @@ void drawCurrentImage()
   screen.draw_image(address);
 }
 
+bool re_a_changed = false;
+bool re_b_changed = false;
+
+void rotaryEncoderISRpinA(){
+  re_a_changed = true;
+}
+
+void rotaryEncoderISRpinB(){
+  re_b_changed = true;
+}
+
 void setup()
 {
   Serial.begin(BAUD_SERIAL);
@@ -124,8 +135,17 @@ void setup()
   setupWiFi();
 #endif
 
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, HIGH);
+
   pinMode(pins::UART_TX, OUTPUT);
   pinMode(pins::UART_RX, INPUT);
+
+  pinMode(pins::RE_A, INPUT_PULLUP);
+  pinMode(pins::RE_B, INPUT_PULLUP);
+
+  attachInterrupt(digitalPinToInterrupt(pins::RE_A), rotaryEncoderISRpinA, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(pins::RE_B), rotaryEncoderISRpinB, CHANGE);
 
   // initialize screen by resetting, initing uSD card, clearing screen
   screen.init();
@@ -155,10 +175,9 @@ void setup()
 
 void loop()
 {
-  nh.logwarn("loop");
   // Get button states
   // RockerSwitchState rocker_switch_state = rocker.getState();
-  RotaryEncoderRotation  rotary_encoder_rotation = rotaryEncoder.getRotation();
+  RotaryEncoderRotation  rotary_encoder_rotation = rotaryEncoder.getRotation(&re_a_changed, &re_b_changed);
   ButtonState trigger_state = trigger.getState();
   ButtonState push_button_state = push.getState();
   ButtonState rotary_encoder_button_state = rotaryEncoderPush.getState();
@@ -203,9 +222,11 @@ void loop()
     switch (rotary_encoder_rotation)
     {
         case RotaryEncoderRotation::DECREMENT:
+          digitalWrite(LED_BUILTIN, LOW);
           state_has_changed = state_machine.left();
           break;
         case RotaryEncoderRotation::INCREMENT:
+          digitalWrite(LED_BUILTIN, HIGH);
           state_has_changed = state_machine.right();
           break;
         default:
