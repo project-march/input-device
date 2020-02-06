@@ -8,7 +8,6 @@
 #include "march_shared_resources/Setpoint.h"
 #include "trajectory_msgs/JointTrajectory.h"
 #include "ros/duration.h"
-#include "march_shared_resources/Sound.h"
 
 namespace march_shared_resources
 {
@@ -33,7 +32,7 @@ namespace march_shared_resources
       typedef ros::Duration _duration_type;
       _duration_type duration;
       uint32_t sounds_length;
-      typedef march_shared_resources::Sound _sounds_type;
+      typedef char* _sounds_type;
       _sounds_type st_sounds;
       _sounds_type * sounds;
 
@@ -97,7 +96,11 @@ namespace march_shared_resources
       *(outbuffer + offset + 3) = (this->sounds_length >> (8 * 3)) & 0xFF;
       offset += sizeof(this->sounds_length);
       for( uint32_t i = 0; i < sounds_length; i++){
-      offset += this->sounds[i].serialize(outbuffer + offset);
+      uint32_t length_soundsi = strlen(this->sounds[i]);
+      varToArr(outbuffer + offset, length_soundsi);
+      offset += 4;
+      memcpy(outbuffer + offset, this->sounds[i], length_soundsi);
+      offset += length_soundsi;
       }
       return offset;
     }
@@ -170,17 +173,25 @@ namespace march_shared_resources
       sounds_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->sounds_length);
       if(sounds_lengthT > sounds_length)
-        this->sounds = (march_shared_resources::Sound*)realloc(this->sounds, sounds_lengthT * sizeof(march_shared_resources::Sound));
+        this->sounds = (char**)realloc(this->sounds, sounds_lengthT * sizeof(char*));
       sounds_length = sounds_lengthT;
       for( uint32_t i = 0; i < sounds_length; i++){
-      offset += this->st_sounds.deserialize(inbuffer + offset);
-        memcpy( &(this->sounds[i]), &(this->st_sounds), sizeof(march_shared_resources::Sound));
+      uint32_t length_st_sounds;
+      arrToVar(length_st_sounds, (inbuffer + offset));
+      offset += 4;
+      for(unsigned int k= offset; k< offset+length_st_sounds; ++k){
+          inbuffer[k-1]=inbuffer[k];
+      }
+      inbuffer[offset+length_st_sounds-1]=0;
+      this->st_sounds = (char *)(inbuffer + offset-1);
+      offset += length_st_sounds;
+        memcpy( &(this->sounds[i]), &(this->st_sounds), sizeof(char*));
       }
      return offset;
     }
 
     const char * getType(){ return "march_shared_resources/Subgait"; };
-    const char * getMD5(){ return "7ce6c0af68699674ac863f06f39674ac"; };
+    const char * getMD5(){ return "ddf34d2f35048d108042f0cf4303dde5"; };
 
   };
 

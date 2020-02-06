@@ -3,6 +3,6 @@
 
 #define ORGANIZATION "Project\n\rMarch"
 #define PROJECT_NAME "input-device"
-#define VERSION "v2.0.0-beta.1"
+#define VERSION "v2.0.0-beta.2"
 
 #endif  // VERSION_H

@@ -48,7 +48,7 @@ namespace march_shared_resources
     }
 
     const char * getType(){ return "march_shared_resources/GaitAction"; };
-    const char * getMD5(){ return "cefddf7f6db8e5953001d960f0a2e7ac"; };
+    const char * getMD5(){ return "07f5ae1dc17f9138b251fe67b0edca5f"; };
 
   };
 

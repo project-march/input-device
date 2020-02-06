@@ -23,6 +23,8 @@ namespace march_shared_resources
       enum { GAIT =  1 };
       enum { PAUSE =  2 };
       enum { CONTINUE =  3 };
+      enum { INCREMENT_STEP_SIZE =  4 };
+      enum { DECREMENT_STEP_SIZE =  5 };
 
     GaitInstruction():
       header(),
@@ -75,7 +77,7 @@ namespace march_shared_resources
     }
 
     const char * getType(){ return "march_shared_resources/GaitInstruction"; };
-    const char * getMD5(){ return "33391f0a380b417c7e824a1f2d772540"; };
+    const char * getMD5(){ return "f655c02301e6cc940112aec0256d56ae"; };
 
   };
 
