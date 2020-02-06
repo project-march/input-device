@@ -33,13 +33,13 @@ public:
   {
     return this->right_;
   }
-  const State* up() const
+  const State* shortcutPush() const
   {
-    return this->up_;
+    return this->shortcutPush_;
   }
-  const State* down() const
+  const State* shortcutDoublePush() const
   {
-    return this->down_;
+    return this->shortcutDoublePush_;
   }
 
   const State* back() const
@@ -69,29 +69,15 @@ public:
     return *this;
   }
 
-  State& withUp(State* up)
+  State& shortcutPushTo(const State* shortcutPush)
   {
-    this->up_ = up;
-    up->down_ = this;
+    this->shortcutPush_ = shortcutPush;
     return *this;
   }
 
-  State& upTo(const State* up)
+  State& shortcutDoublePushTo(const State* shortcutDoublePush)
   {
-    this->up_ = up;
-    return *this;
-  }
-
-  State& withDown(State* down)
-  {
-    this->down_ = down;
-    down->up_ = this;
-    return *this;
-  }
-
-  State& downTo(const State* down)
-  {
-    this->down_ = down;
+    this->shortcutDoublePush_ = shortcutDoublePush;
     return *this;
   }
 
@@ -127,8 +113,8 @@ protected:
 
   const State* left_ = this;
   const State* right_ = this;
-  const State* up_ = this;
-  const State* down_ = this;
+  const State* shortcutPush_ = this;
+  const State* shortcutDoublePush_ = this;
 
   const State* back_ = this;
   const State* select_ = this;

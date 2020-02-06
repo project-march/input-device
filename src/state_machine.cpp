@@ -27,13 +27,13 @@ void StateMachine::construct()
   this->constructStepMenu(&single_step, &obstacles);
   
   // Menu transitions
-  home_stand_start.withRight(&home_sit_start).withLeft(&turn_off_start).withUp(&walk).withDown(&single_step);
-  home_sit_start.withRight(&stand_up).withUp(&walk).withDown(&single_step);
-  stand_up.withRight(&sit_start).withUp(&walk).withDown(&single_step);
-  sit_start.withRight(&obstacles).withUp(&walk).withDown(&single_step);
-  obstacles.withUp(&walk).withDown(&single_step);
-  walk.backTo(&obstacles);
-  single_step.backTo(&obstacles);
+  home_stand_start.withRight(&home_sit_start).withLeft(&turn_off_start).shortcutPushTo(&walk).shortcutDoublePushTo(&single_step);
+  home_sit_start.withRight(&stand_up).shortcutPushTo(&walk).shortcutDoublePushTo(&single_step);
+  stand_up.withRight(&sit_start).shortcutPushTo(&walk).shortcutDoublePushTo(&single_step);
+  sit_start.withRight(&obstacles).shortcutPushTo(&walk).shortcutDoublePushTo(&single_step);
+  obstacles.shortcutPushTo(&walk).shortcutDoublePushTo(&single_step);
+  walk.backTo(&obstacles).shortcutPushTo(&obstacles).shortcutDoublePushTo(&single_step);
+  single_step.backTo(&obstacles).shortcutDoublePushTo(&obstacles).shortcutPushTo(&walk);
 
   // Set start state
   this->current_state_ = &home_sit_start;
@@ -74,34 +74,35 @@ void StateMachine::constructObstacleMenu(State* from, State* walk, State* single
   State& sofa = this->createState(SOFA);
   State& stairs = this->createState(STAIRS);
 
-  this->constructSofaMenu(&sofa, &stairs);
-  this->constructStairsMenu(&stairs, obstacles);
+  this->constructSofaMenu(&sofa, &stairs, walk, single_step);
+  this->constructStairsMenu(&stairs, obstacles, walk, single_step);
 
-  sofa.backTo(from).withRight(&stairs).upTo(walk).downTo(single_step);
-  stairs.backTo(from).upTo(walk).downTo(single_step);
+  sofa.backTo(from).withRight(&stairs).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  stairs.backTo(from).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+
+  from->withSelect(&sofa);
 }
 
-void StateMachine::constructSofaMenu(State* from, State* next_gait)
+void StateMachine::constructSofaMenu(State* from, State* next_gait, State* walk, State* single_step)
 {
   State& sofa_standup =
       this->createGaitState(SOFA_STANDUP, SOFA_STANDUP_SELECTED, SOFA_STANDUP_ACTIVATED, "gait_sofa_stand", next_gait);
   State& sofa_sit =
       this->createGaitState(SOFA_SIT, SOFA_SIT_SELECTED, SOFA_SIT_ACTIVATED, "gait_sofa_sit", &sofa_standup);
 
-  sofa_sit.backTo(from).withRight(&sofa_standup);
-  sofa_standup.backTo(&sofa_sit).withRight(&sofa_sit);
+  sofa_sit.backTo(from).withRight(&sofa_standup).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  sofa_standup.backTo(&sofa_sit).withRight(&sofa_sit).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
   from->withSelect(&sofa_sit);
 }
 
-void StateMachine::constructStairsMenu(State* from, State* next_gait)
+void StateMachine::constructStairsMenu(State* from, State* next_gait, State* walk, State* single_step)
 {
   State& stairs_down =
       this->createGaitState(STAIRS_DOWN, STAIRS_DOWN_SELECTED, STAIRS_DOWN_ACTIVATED, "gait_stairs_down", next_gait);
   State& stairs_up = this->createGaitState(STAIRS_UP, STAIRS_UP_SELECTED, STAIRS_UP_ACTIVATED, "gait_stairs_up", &stairs_down);
-  
 
-  stairs_up.backTo(from).withRight(&stairs_down);
-  stairs_down.backTo(&stairs_up).withRight(&stairs_up);
+  stairs_up.backTo(from).withRight(&stairs_down).shortcutPushTo(walk).shortcutDoublePushTo(single_step);;
+  stairs_down.backTo(&stairs_up).withRight(&stairs_up).shortcutPushTo(walk).shortcutDoublePushTo(single_step);;
   from->withSelect(&stairs_up);
 }
 
@@ -138,14 +139,14 @@ bool StateMachine::right()
   return this->hasState() && this->setCurrentState(this->current_state_->right());
 }
 
-bool StateMachine::up()
+bool StateMachine::shortcutPush()
 {
-  return this->hasState() && this->setCurrentState(this->current_state_->up());
+  return this->hasState() && this->setCurrentState(this->current_state_->shortcutPush());
 }
 
-bool StateMachine::down()
+bool StateMachine::shortcutDoublePush()
 {
-  return this->hasState() && this->setCurrentState(this->current_state_->down());
+  return this->hasState() && this->setCurrentState(this->current_state_->shortcutDoublePush());
 }
 
 bool StateMachine::back()

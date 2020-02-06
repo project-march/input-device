@@ -23,7 +23,7 @@ const uint8_t TRIGGER = 26;
 const uint8_t RE_A = 15;
 const uint8_t RE_B = 2;
 const uint8_t RE_PUSH = 18;
-const uint8_t PUSH = 5;
+const uint8_t PUSH = 19;
 const uint8_t UART_TX = 32;  // Software serial
 const uint8_t UART_RX = 34;  // Software serial
 const uint8_t RST = 13;      // Reset
@@ -224,28 +224,29 @@ void loop()
   }
   else
   {
-    // if(push_button_state == ButtonState::PUSH)
-    // {
-    //   state_has_changed = state_machine.up();
-    // }
-    // else if(push_button_state == ButtonState::DOUBLE)
-    // {
-    //   state_has_changed = state_machine.down();
-    // }
-    // else
-    // {    
-    switch (rotary_encoder_rotation)
+    if(push_button_state == ButtonState::PUSH)
     {
-        case RotaryEncoderRotation::DECREMENT:
-          digitalWrite(LED_BUILTIN, LOW);
-          state_has_changed = state_machine.left();
-          break;
-        case RotaryEncoderRotation::INCREMENT:
-          digitalWrite(LED_BUILTIN, HIGH);
-          state_has_changed = state_machine.right();
-          break;
-        default:
-          break;
+      state_has_changed = state_machine.shortcutPush();
+    }
+    else if(push_button_state == ButtonState::DOUBLE)
+    {
+      state_has_changed = state_machine.shortcutDoublePush();
+    }
+    else
+    {    
+      switch (rotary_encoder_rotation)
+      {
+          case RotaryEncoderRotation::DECREMENT:
+            digitalWrite(LED_BUILTIN, LOW);
+            state_has_changed = state_machine.left();
+            break;
+          case RotaryEncoderRotation::INCREMENT:
+            digitalWrite(LED_BUILTIN, HIGH);
+            state_has_changed = state_machine.right();
+            break;
+          default:
+            break;
+      }
     }
 
     if (!state_has_changed)
