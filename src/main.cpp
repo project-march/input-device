@@ -20,8 +20,8 @@
 namespace pins
 {
 const uint8_t TRIGGER = 26;
-const uint8_t RE_A = 2;
-const uint8_t RE_B = 15;
+const uint8_t RE_A = 15;
+const uint8_t RE_B = 2;
 const uint8_t RE_PUSH = 18;
 const uint8_t PUSH = 5;
 const uint8_t UART_TX = 32;  // Software serial
@@ -116,15 +116,30 @@ void drawCurrentImage()
   screen.draw_image(address);
 }
 
-bool re_a_changed = false;
-bool re_b_changed = false;
+bool re_a_set = false;
+bool re_b_set = false;
+int increment = 0;
 
 void rotaryEncoderISRpinA(){
-  re_a_changed = true;
+  if(digitalRead(pins::RE_A) == HIGH)
+  {
+    re_a_set = true;
+    if(re_b_set = true)
+    {
+      increment = 1;
+    }
+  }
 }
 
 void rotaryEncoderISRpinB(){
-  re_b_changed = true;
+  if(digitalRead(pins::RE_B) == HIGH)
+  {
+    re_b_set = true;
+    if(re_a_set = true)
+    {
+      increment = -1;
+    }
+  }
 }
 
 void setup()
@@ -177,7 +192,7 @@ void loop()
 {
   // Get button states
   // RockerSwitchState rocker_switch_state = rocker.getState();
-  RotaryEncoderRotation  rotary_encoder_rotation = rotaryEncoder.getRotation(&re_a_changed, &re_b_changed);
+  RotaryEncoderRotation  rotary_encoder_rotation = rotaryEncoder.getRotation(&increment);
   ButtonState trigger_state = trigger.getState();
   ButtonState push_button_state = push.getState();
   ButtonState rotary_encoder_button_state = rotaryEncoderPush.getState();
@@ -209,16 +224,16 @@ void loop()
   }
   else
   {
-    if(push_button_state == ButtonState::PUSH)
-    {
-      state_has_changed = state_machine.up();
-    }
-    else if(push_button_state == ButtonState::DOUBLE)
-    {
-      state_has_changed = state_machine.down();
-    }
-    else
-    {    
+    // if(push_button_state == ButtonState::PUSH)
+    // {
+    //   state_has_changed = state_machine.up();
+    // }
+    // else if(push_button_state == ButtonState::DOUBLE)
+    // {
+    //   state_has_changed = state_machine.down();
+    // }
+    // else
+    // {    
     switch (rotary_encoder_rotation)
     {
         case RotaryEncoderRotation::DECREMENT:
@@ -231,7 +246,6 @@ void loop()
           break;
         default:
           break;
-      }
     }
 
     if (!state_has_changed)

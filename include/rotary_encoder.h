@@ -8,11 +8,13 @@ class RotaryEncoder
 {
 public:
   RotaryEncoder(uint8_t a_pin, uint8_t b_pin);
-  RotaryEncoderRotation getRotation(bool * a_pin_changed, bool * b_pin_changed);
+  RotaryEncoderRotation getRotation(int * increment_ptr);
 
 private:
   const uint8_t a_pin_;
   const uint8_t b_pin_;
+
+  int debounceCounter;
 };
 
 #endif  //  ROTARY_ENCODER_H
