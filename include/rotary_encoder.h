@@ -8,7 +8,7 @@ class RotaryEncoder
 {
 public:
   RotaryEncoder(uint8_t a_pin, uint8_t b_pin);
-  RotaryEncoderRotation getRotation(int * increment_ptr);
+  RotaryEncoderRotation getRotation(int* increment_ptr);
 
 private:
   const uint8_t a_pin_;

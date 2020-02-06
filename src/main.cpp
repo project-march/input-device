@@ -120,22 +120,24 @@ bool re_a_set = false;
 bool re_b_set = false;
 int increment = 0;
 
-void rotaryEncoderISRpinA(){
-  if(digitalRead(pins::RE_A) == HIGH)
+void rotaryEncoderISRpinA()
+{
+  if (digitalRead(pins::RE_A) == HIGH)
   {
     re_a_set = true;
-    if(re_b_set = true)
+    if (re_b_set = true)
     {
       increment = 1;
     }
   }
 }
 
-void rotaryEncoderISRpinB(){
-  if(digitalRead(pins::RE_B) == HIGH)
+void rotaryEncoderISRpinB()
+{
+  if (digitalRead(pins::RE_B) == HIGH)
   {
     re_b_set = true;
-    if(re_a_set = true)
+    if (re_a_set = true)
     {
       increment = -1;
     }
@@ -192,7 +194,7 @@ void loop()
 {
   // Get button states
   // RockerSwitchState rocker_switch_state = rocker.getState();
-  RotaryEncoderRotation  rotary_encoder_rotation = rotaryEncoder.getRotation(&increment);
+  RotaryEncoderRotation rotary_encoder_rotation = rotaryEncoder.getRotation(&increment);
   ButtonState trigger_state = trigger.getState();
   ButtonState push_button_state = push.getState();
   ButtonState rotary_encoder_button_state = rotaryEncoderPush.getState();
@@ -224,28 +226,28 @@ void loop()
   }
   else
   {
-    if(push_button_state == ButtonState::PUSH)
+    if (push_button_state == ButtonState::PUSH)
     {
       state_has_changed = state_machine.shortcutPush();
     }
-    else if(push_button_state == ButtonState::DOUBLE)
+    else if (push_button_state == ButtonState::DOUBLE)
     {
       state_has_changed = state_machine.shortcutDoublePush();
     }
     else
-    {    
+    {
       switch (rotary_encoder_rotation)
       {
-          case RotaryEncoderRotation::DECREMENT:
-            digitalWrite(LED_BUILTIN, LOW);
-            state_has_changed = state_machine.left();
-            break;
-          case RotaryEncoderRotation::INCREMENT:
-            digitalWrite(LED_BUILTIN, HIGH);
-            state_has_changed = state_machine.right();
-            break;
-          default:
-            break;
+        case RotaryEncoderRotation::DECREMENT:
+          digitalWrite(LED_BUILTIN, LOW);
+          state_has_changed = state_machine.left();
+          break;
+        case RotaryEncoderRotation::INCREMENT:
+          digitalWrite(LED_BUILTIN, HIGH);
+          state_has_changed = state_machine.right();
+          break;
+        default:
+          break;
       }
     }
 

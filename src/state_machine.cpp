@@ -25,9 +25,12 @@ void StateMachine::construct()
   this->constructObstacleMenu(&obstacles, &walk, &single_step, &obstacles);
   this->constructWalkMenu(&walk, &obstacles);
   this->constructStepMenu(&single_step, &obstacles);
-  
+
   // Menu transitions
-  home_stand_start.withRight(&home_sit_start).withLeft(&turn_off_start).shortcutPushTo(&walk).shortcutDoublePushTo(&single_step);
+  home_stand_start.withRight(&home_sit_start)
+      .withLeft(&turn_off_start)
+      .shortcutPushTo(&walk)
+      .shortcutDoublePushTo(&single_step);
   home_sit_start.withRight(&stand_up).shortcutPushTo(&walk).shortcutDoublePushTo(&single_step);
   stand_up.withRight(&sit_start).shortcutPushTo(&walk).shortcutDoublePushTo(&single_step);
   sit_start.withRight(&obstacles).shortcutPushTo(&walk).shortcutDoublePushTo(&single_step);
@@ -99,10 +102,13 @@ void StateMachine::constructStairsMenu(State* from, State* next_gait, State* wal
 {
   State& stairs_down =
       this->createGaitState(STAIRS_DOWN, STAIRS_DOWN_SELECTED, STAIRS_DOWN_ACTIVATED, "gait_stairs_down", next_gait);
-  State& stairs_up = this->createGaitState(STAIRS_UP, STAIRS_UP_SELECTED, STAIRS_UP_ACTIVATED, "gait_stairs_up", &stairs_down);
+  State& stairs_up =
+      this->createGaitState(STAIRS_UP, STAIRS_UP_SELECTED, STAIRS_UP_ACTIVATED, "gait_stairs_up", &stairs_down);
 
-  stairs_up.backTo(from).withRight(&stairs_down).shortcutPushTo(walk).shortcutDoublePushTo(single_step);;
-  stairs_down.backTo(&stairs_up).withRight(&stairs_up).shortcutPushTo(walk).shortcutDoublePushTo(single_step);;
+  stairs_up.backTo(from).withRight(&stairs_down).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  ;
+  stairs_down.backTo(&stairs_up).withRight(&stairs_up).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  ;
   from->withSelect(&stairs_up);
 }
 

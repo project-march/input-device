@@ -1,20 +1,20 @@
 #include "rotary_encoder.h"
 
-RotaryEncoder::RotaryEncoder(uint8_t a_pin, uint8_t b_pin)
-  : a_pin_(a_pin), b_pin_(b_pin)
+RotaryEncoder::RotaryEncoder(uint8_t a_pin, uint8_t b_pin) : a_pin_(a_pin), b_pin_(b_pin)
 {
   this->debounceCounter = 0;
 }
 
-RotaryEncoderRotation RotaryEncoder::getRotation(int * increment_ptr)
+RotaryEncoderRotation RotaryEncoder::getRotation(int* increment_ptr)
 {
   RotaryEncoderRotation rotation;
 
-  if(digitalRead(this->a_pin_) && digitalRead(this->a_pin_)){
+  if (digitalRead(this->a_pin_) && digitalRead(this->a_pin_))
+  {
     debounceCounter++;
-    if(debounceCounter > 10)
+    if (debounceCounter > 10)
     {
-      switch(*increment_ptr)
+      switch (*increment_ptr)
       {
         case 1:
           rotation = RotaryEncoderRotation::INCREMENT;
@@ -31,7 +31,7 @@ RotaryEncoderRotation RotaryEncoder::getRotation(int * increment_ptr)
           rotation = RotaryEncoderRotation::NEUTRAL;
           break;
       }
-    }    
+    }
   }
   else
   {
