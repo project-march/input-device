@@ -24,8 +24,8 @@ void test_state_machine_default_no_transitions()
   StateMachine state_machine;
   TEST_ASSERT_FALSE(state_machine.left());
   TEST_ASSERT_FALSE(state_machine.right());
-  TEST_ASSERT_FALSE(state_machine.up());
-  TEST_ASSERT_FALSE(state_machine.down());
+  TEST_ASSERT_FALSE(state_machine.shortcutPush());
+  TEST_ASSERT_FALSE(state_machine.shortcutDoublePush());
   TEST_ASSERT_FALSE(state_machine.back());
   TEST_ASSERT_FALSE(state_machine.select());
   TEST_ASSERT_FALSE(state_machine.activate());
