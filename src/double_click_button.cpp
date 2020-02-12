@@ -1,10 +1,9 @@
 #include "double_click_button.h"
 
-DoubleClickButton::DoubleClickButton(uint8_t pin): input_pin_(pin)
+DoubleClickButton::DoubleClickButton(uint8_t pin) : input_pin_(pin)
 {
   pinMode(pin, INPUT_PULLUP);
 }
-
 
 ButtonState DoubleClickButton::getState()
 {
