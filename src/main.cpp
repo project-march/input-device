@@ -2,7 +2,6 @@
 #include "double_click_button.h"
 #include "joystick.h"
 #include "rocker_switch.h"
-#include "rotary_encoder.h"
 #include "screen.h"
 #include "state_machine.h"
 #include "wireless_connection.h"
@@ -16,6 +15,7 @@
 #include <march_shared_resources/GaitInstructionResponse.h>
 #include <ros.h>
 #include <std_msgs/Time.h>
+#include <RotaryEncoder.h>
 
 namespace pins
 {
@@ -116,32 +116,14 @@ void drawCurrentImage()
   screen.draw_image(address);
 }
 
-bool re_a_set = false;
-bool re_b_set = false;
-int increment = 0;
-
 void rotaryEncoderISRpinA()
 {
-  if (digitalRead(pins::RE_A) == HIGH)
-  {
-    re_a_set = true;
-    if (re_b_set = true)
-    {
-      increment = 1;
-    }
-  }
+  rotaryEncoder.tick();
 }
 
 void rotaryEncoderISRpinB()
 {
-  if (digitalRead(pins::RE_B) == HIGH)
-  {
-    re_b_set = true;
-    if (re_a_set = true)
-    {
-      increment = -1;
-    }
-  }
+  rotaryEncoder.tick();
 }
 
 void setup()
@@ -194,7 +176,7 @@ void loop()
 {
   // Get button states
   // RockerSwitchState rocker_switch_state = rocker.getState();
-  RotaryEncoderRotation rotary_encoder_rotation = rotaryEncoder.getRotation(&increment);
+  RotaryEncoder::Direction rotary_encoder_direction = rotaryEncoder.getDirection();
   ButtonState trigger_state = trigger.getState();
   ButtonState push_button_state = push.getState();
   ButtonState rotary_encoder_button_state = rotaryEncoderPush.getState();
@@ -236,13 +218,13 @@ void loop()
     }
     else
     {
-      switch (rotary_encoder_rotation)
+      switch (rotary_encoder_direction)
       {
-        case RotaryEncoderRotation::DECREMENT:
+        case RotaryEncoder::Direction::COUNTERCLOCKWISE:
           digitalWrite(LED_BUILTIN, LOW);
           state_has_changed = state_machine.left();
           break;
-        case RotaryEncoderRotation::INCREMENT:
+        case RotaryEncoder::Direction::CLOCKWISE:
           digitalWrite(LED_BUILTIN, HIGH);
           state_has_changed = state_machine.right();
           break;
