@@ -26,8 +26,8 @@ void test_state_default_transitions()
   State state({ 0, 0 });
   TEST_ASSERT_EQUAL(&state, state.left());
   TEST_ASSERT_EQUAL(&state, state.right());
-  TEST_ASSERT_EQUAL(&state, state.up());
-  TEST_ASSERT_EQUAL(&state, state.down());
+  TEST_ASSERT_EQUAL(&state, state.shortcutPush());
+  TEST_ASSERT_EQUAL(&state, state.shortcutDoublePush());
   TEST_ASSERT_EQUAL(&state, state.back());
   TEST_ASSERT_EQUAL(&state, state.select());
   TEST_ASSERT_EQUAL(&state, state.activate());
