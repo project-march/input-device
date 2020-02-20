@@ -31,7 +31,7 @@ void StateMachine::construct()
   // Sub-menus
   this->constructObstacleMenu(&obstacles, &walk, &single_step, &obstacles);
   this->constructWalkMenu(&walk, &obstacles, &obstacles);        // eerste obstacles naar walk
-  this->constructStepMenu(&single_step, &obstacles);
+  this->constructStepMenu(&single_step, &obstacles, &obstacles);
 
   // Menu transitions
   home_sit_start.withLeft(&turn_off_start).withRight(&stand_up).shortcutPushTo(&walk).shortcutDoublePushTo(&single_step);
