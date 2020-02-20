@@ -30,7 +30,6 @@ public:
 private:
   void constructObstacleMenu(State* from, State* walk, State* single_step, State* obstacles);
   void constructWalkMenu(State* from, State* prev_gait);
-  // void constructSideStepMenu(State* from);
   void constructStepMenu(State* from, State* prev_gait);
   void constructSofaMenu(State* from, State* next_gait, State* walk, State* single_step);
   void constructStairsMenu(State* from, State* next_gait, State* walk, State* single_step);

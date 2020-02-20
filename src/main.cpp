@@ -163,7 +163,6 @@ void setup()
 
   // Reset the joystick right pin, this needed after the ROS node init pin 14 is
   // apparently used by ROS.
-  // pinMode(pins::JOYSTICK_RIGHT, INPUT_PULLUP);
 
   state_machine.construct();
 
