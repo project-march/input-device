@@ -32,11 +32,9 @@ const uint32_t BAUD_SCREEN = 9600;
 const uint64_t BAUD_SERIAL = 57600;
 
 // Necessary, since the 4dsystems defines these
-// and they clash with our joystick definitions
+// and they clash with our encoder definitions
 #undef LEFT
 #undef RIGHT
-#undef UP
-#undef DOWN
 
 //#define USE_WIRELESS  // comment this to use wired connection.
 
@@ -160,9 +158,6 @@ void setup()
   nh.advertise(gait_instruction_publisher);
   nh.advertise(ping_publisher);
   nh.subscribe(gait_instruction_result_subscriber);
-
-  // Reset the joystick right pin, this needed after the ROS node init pin 14 is
-  // apparently used by ROS.
 
   state_machine.construct();
 
