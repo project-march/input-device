@@ -42,7 +42,8 @@ void StateMachine::construct()
   side_step.withRight(&walk).upTo(&stairs).downTo(&sit);
 
   sit.withRight(&home_sit).upTo(&walk);
-  home_sit.withRight(&home_stand).upTo(&walk);
+  home_sit.withRight(&stand).upTo(&walk);
+  stand.withRight(&home_stand).upTo(&walk);
   home_stand.withRight(&turn_off).upTo(&walk);
   turn_off.withRight(&sit).upTo(&walk);
 
