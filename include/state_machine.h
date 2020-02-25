@@ -20,19 +20,19 @@ public:
 
   bool left();
   bool right();
-  bool up();
-  bool down();
+  bool shortcutPush();
+  bool shortcutDoublePush();
 
   bool back();
   bool select();
   bool activate();
 
 private:
-  void constructWalkMenu(State* from);
-  void constructSideStepMenu(State* from);
-  void constructStepMenu(State* from);
-  void constructSofaMenu(State* from);
-  void constructStairsMenu(State* from);
+  void constructObstacleMenu(State* from, State* walk, State* single_step, State* obstacles);
+  void constructWalkMenu(State* from, State* prev_gait);
+  void constructStepMenu(State* from, State* prev_gait);
+  void constructSofaMenu(State* from, State* next_gait, State* walk, State* single_step);
+  void constructStairsMenu(State* from, State* next_gait, State* walk, State* single_step);
 
   bool hasState() const;
   bool setCurrentState(const State* new_state);

@@ -1,5 +1,5 @@
 #include "button.h"
-#include "joystick.h"
+#include "double_click_button.h"
 #include "rocker_switch.h"
 #include "screen.h"
 #include "state_machine.h"
@@ -14,19 +14,15 @@
 #include <march_shared_resources/GaitInstructionResponse.h>
 #include <ros.h>
 #include <std_msgs/Time.h>
+#include <RotaryEncoder.h>
 
 namespace pins
 {
 const uint8_t TRIGGER = 26;
-
-const uint8_t ROCKER_UP = 2;
-const uint8_t ROCKER_DOWN = 5;
-
-const uint8_t JOYSTICK_LEFT = 23;
-const uint8_t JOYSTICK_RIGHT = 14;
-const uint8_t JOYSTICK_UP = 12;
-const uint8_t JOYSTICK_DOWN = 19;
-const uint8_t JOYSTICK_PUSH = 18;
+const uint8_t RE_A = 15;
+const uint8_t RE_B = 2;
+const uint8_t RE_PUSH = 18;
+const uint8_t PUSH = 19;
 const uint8_t UART_TX = 32;  // Software serial
 const uint8_t UART_RX = 34;  // Software serial
 const uint8_t RST = 13;      // Reset
@@ -36,18 +32,16 @@ const uint32_t BAUD_SCREEN = 9600;
 const uint64_t BAUD_SERIAL = 57600;
 
 // Necessary, since the 4dsystems defines these
-// and they clash with our joystick definitions
+// and they clash with our encoder definitions
 #undef LEFT
 #undef RIGHT
-#undef UP
-#undef DOWN
 
 //#define USE_WIRELESS  // comment this to use wired connection.
 
 Button trigger(pins::TRIGGER);
-RockerSwitch rocker(pins::ROCKER_UP, pins::ROCKER_DOWN);
-Joystick joystick(pins::JOYSTICK_LEFT, pins::JOYSTICK_RIGHT, pins::JOYSTICK_UP, pins::JOYSTICK_DOWN,
-                  pins::JOYSTICK_PUSH);
+DoubleClickButton push(pins::PUSH);
+RotaryEncoder rotaryEncoder(pins::RE_A, pins::RE_B);
+DoubleClickButton rotaryEncoderPush(pins::RE_PUSH);
 
 SoftwareSerial screen_serial(pins::UART_RX, pins::UART_TX);
 Goldelox_Serial_4DLib screen_goldelox(&screen_serial);
@@ -119,6 +113,16 @@ void drawCurrentImage()
   screen.draw_image(address);
 }
 
+void rotaryEncoderISRpinA()
+{
+  rotaryEncoder.tick();
+}
+
+void rotaryEncoderISRpinB()
+{
+  rotaryEncoder.tick();
+}
+
 void setup()
 {
   Serial.begin(BAUD_SERIAL);
@@ -127,8 +131,17 @@ void setup()
   setupWiFi();
 #endif
 
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, HIGH);
+
   pinMode(pins::UART_TX, OUTPUT);
   pinMode(pins::UART_RX, INPUT);
+
+  pinMode(pins::RE_A, INPUT_PULLUP);
+  pinMode(pins::RE_B, INPUT_PULLUP);
+
+  attachInterrupt(digitalPinToInterrupt(pins::RE_A), rotaryEncoderISRpinA, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(pins::RE_B), rotaryEncoderISRpinB, CHANGE);
 
   // initialize screen by resetting, initing uSD card, clearing screen
   screen.init();
@@ -146,10 +159,6 @@ void setup()
   nh.advertise(ping_publisher);
   nh.subscribe(gait_instruction_result_subscriber);
 
-  // Reset the joystick right pin, this needed after the ROS node init pin 14 is
-  // apparently used by ROS.
-  pinMode(pins::JOYSTICK_RIGHT, INPUT_PULLUP);
-
   state_machine.construct();
 
   sleep(2);
@@ -160,9 +169,10 @@ void loop()
 {
   // Get button states
   // RockerSwitchState rocker_switch_state = rocker.getState();
-  JoystickState joystick_state = joystick.getState();
-  ButtonState joystick_button_state = joystick.getButtonState();
+  RotaryEncoder::Direction rotary_encoder_direction = rotaryEncoder.getDirection();
   ButtonState trigger_state = trigger.getState();
+  ButtonState push_button_state = push.getState();
+  ButtonState rotary_encoder_button_state = rotaryEncoderPush.getState();
 
   // When button is pressed, vibrate
   if (trigger_state == ButtonState::PUSH)
@@ -191,31 +201,38 @@ void loop()
   }
   else
   {
-    switch (joystick_state)
+    if (push_button_state == ButtonState::PUSH)
     {
-      case JoystickState::LEFT:
-        state_has_changed = state_machine.left();
-        break;
-      case JoystickState::RIGHT:
-        state_has_changed = state_machine.right();
-        break;
-      case JoystickState::UP:
-        state_has_changed = state_machine.up();
-        break;
-      case JoystickState::DOWN:
-        state_has_changed = state_machine.down();
-        break;
-      default:
-        break;
+      state_has_changed = state_machine.shortcutPush();
+    }
+    else if (push_button_state == ButtonState::DOUBLE)
+    {
+      state_has_changed = state_machine.shortcutDoublePush();
+    }
+    else
+    {
+      switch (rotary_encoder_direction)
+      {
+        case RotaryEncoder::Direction::COUNTERCLOCKWISE:
+          digitalWrite(LED_BUILTIN, LOW);
+          state_has_changed = state_machine.left();
+          break;
+        case RotaryEncoder::Direction::CLOCKWISE:
+          digitalWrite(LED_BUILTIN, HIGH);
+          state_has_changed = state_machine.right();
+          break;
+        default:
+          break;
+      }
     }
 
     if (!state_has_changed)
     {
-      if (joystick_button_state == ButtonState::PUSH)
+      if (rotary_encoder_button_state == ButtonState::PUSH)
       {
         state_has_changed = state_machine.select();
       }
-      else if (joystick_button_state == ButtonState::DOUBLE)
+      else if (rotary_encoder_button_state == ButtonState::DOUBLE)
       {
         state_has_changed = state_machine.back();
       }

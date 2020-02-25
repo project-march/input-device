@@ -1,28 +1,18 @@
-#ifndef JOYSTICK_H
-#define JOYSTICK_H
+#ifndef DOUBLE_CLICK_BUTTON_H
+#define DOUBLE_CLICK_BUTTON_H
 #include "button_state.h"
-#include "joystick_state.h"
 
 #include <Arduino.h>
 
-class Joystick
+class DoubleClickButton
 {
 public:
-  Joystick(uint8_t left_pin, uint8_t right_pin, uint8_t up_pin, uint8_t down_pin, uint8_t press_pin);
-
-  JoystickState getState();
-  ButtonState getButtonState();
+  explicit DoubleClickButton(uint8_t pin);
+  ButtonState getState();
 
 private:
-  const uint8_t left_pin_;
-  const uint8_t right_pin_;
-  const uint8_t up_pin_;
-  const uint8_t down_pin_;
-  const uint8_t press_pin_;
-
-  JoystickState last_position_ = JoystickState::NEUTRAL;
+  const uint8_t input_pin_;
   ButtonState last_push_position_ = ButtonState::NEUTRAL;
-  unsigned long last_print_time_ = 0;
   unsigned long last_push_print_time_ = 0;
   bool recent_initial_click_ = false;
   bool recent_double_click_ = false;
@@ -32,9 +22,7 @@ private:
 
   // Microseconds. May introduce unwanted behaviour if changed
   const useconds_t bounce_time_ = 5000;
-
-  // Milliseconds. Determines how often up or down
-  // are returned if the joystick is held.
+  // Milliseconds. Determines how often 'push' is returned if the button is held
   const unsigned long hold_time_ = 1000;
 
   // Milliseconds. The duration before a second press is registered
@@ -45,4 +33,4 @@ private:
   const unsigned long double_click_timeout_time_ = 500;
 };
 
-#endif  // JOYSTICK_H
+#endif  //  DOUBLE_CLICK_BUTTON_H
