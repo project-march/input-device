@@ -11,9 +11,10 @@ void StateMachine::construct()
   State& single_step = this->createState(SINGLE_STEP);
 
   // Sit menu
-  State& sit = this->createGaitState(SIT, SIT_SELECTED, SIT_ACTIVATED, "gait_sit");
-  State& home_sit = this->createGaitState(HOME_SIT, HOME_SIT_SELECTED, HOME_SIT_ACTIVATED, "home_sit");
-  State& home_stand = this->createGaitState(HOME_STAND, HOME_STAND_SELECTED, HOME_STAND_ACTIVATED, "home_stand");
+  State& stand = this->createGaitState(STAND_UP, STAND_UP_SELECTED, STAND_UP_ACTIVATED, "gait_stand", &walk);
+  State& sit = this->createGaitState(SIT, SIT_SELECTED, SIT_ACTIVATED, "gait_sit", &stand);
+  State& home_sit = this->createGaitState(HOME_SIT, HOME_SIT_SELECTED, HOME_SIT_ACTIVATED, "home_sit", &stand);
+  State& home_stand = this->createGaitState(HOME_STAND, HOME_STAND_SELECTED, HOME_STAND_ACTIVATED, "home_stand", &walk);
   State& turn_off = this->createState(TURN_OFF);
 
   // Obstacle menu
@@ -41,7 +42,8 @@ void StateMachine::construct()
   side_step.withRight(&walk).upTo(&stairs).downTo(&sit);
 
   sit.withRight(&home_sit).upTo(&walk);
-  home_sit.withRight(&home_stand).upTo(&walk);
+  home_sit.withRight(&stand).upTo(&walk);
+  stand.withRight(&home_stand).upTo(&walk);
   home_stand.withRight(&turn_off).upTo(&walk);
   turn_off.withRight(&sit).upTo(&walk);
 
