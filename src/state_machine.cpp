@@ -121,6 +121,15 @@ std::string StateMachine::getCurrentGaitName() const
   return std::string();
 }
 
+std::string StateMachine::getPreviousGaitName() const
+{
+  if (this->hasPreviousState())
+  {
+    return this->previous_state_->getGaitName();
+  }
+  return std::string();
+}
+
 SectorAddress StateMachine::getCurrentImage() const
 {
   if (this->hasState())
@@ -175,10 +184,19 @@ bool StateMachine::hasState() const
   return this->current_state_ != nullptr;
 }
 
+bool StateMachine::hasPreviousState() const
+{
+  return this->previous_state_ != nullptr;
+}
+
 bool StateMachine::setCurrentState(const State* new_state)
 {
   bool has_changed = this->current_state_ != new_state;
-  this->current_state_ = new_state;
+  if(has_changed)
+  {
+    this->previous_state_ = this->current_state_;
+    this->current_state_ = new_state;
+  }
   return has_changed;
 }
 

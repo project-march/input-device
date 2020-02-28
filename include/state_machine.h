@@ -13,6 +13,7 @@ public:
   void construct();
 
   std::string getCurrentGaitName() const;
+  std::string getPreviousGaitName() const;
 
   SectorAddress getCurrentImage() const;
 
@@ -35,6 +36,7 @@ private:
   void constructStairsMenu(State* from, State* next_gait, State* walk, State* single_step);
 
   bool hasState() const;
+  bool hasPreviousState() const;
   bool setCurrentState(const State* new_state);
 
   State& createState(const SectorAddress address, const std::string& gait_name = "");
@@ -48,6 +50,7 @@ private:
   // Otherwise all pointers in states would become invalid :)
   std::list<State> states_;
   const State* current_state_ = nullptr;
+  const State* previous_state_ = nullptr;
 };
 
 #endif  // STATE_MACHINE_H
