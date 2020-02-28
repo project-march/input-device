@@ -38,6 +38,7 @@ private:
   bool hasState() const;
   bool hasPreviousState() const;
   bool setCurrentState(const State* new_state);
+  bool setPreviousState(const State* new_state);
 
   State& createState(const SectorAddress address, const std::string& gait_name = "");
 

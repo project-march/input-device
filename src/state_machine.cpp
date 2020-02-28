@@ -156,12 +156,14 @@ bool StateMachine::right()
 
 bool StateMachine::shortcutPush()
 {
-  return this->hasState() && this->setCurrentState(this->current_state_->shortcutPush());
+  return this->hasState() && this->setPreviousState(this->current_state_->shortcutPush) &&
+         this->setCurrentState(this->current_state_->shortcutPush());
 }
 
 bool StateMachine::shortcutDoublePush()
 {
-  return this->hasState() && this->setCurrentState(this->current_state_->shortcutDoublePush());
+  return this->hasState() && this->setPreviousState(this->current_state_->shortcutDoublePush) &&
+         this->setCurrentState(this->current_state_->shortcutDoublePush());
 }
 
 bool StateMachine::back()
@@ -192,11 +194,14 @@ bool StateMachine::hasPreviousState() const
 bool StateMachine::setCurrentState(const State* new_state)
 {
   bool has_changed = this->current_state_ != new_state;
-  if(has_changed)
-  {
-    this->previous_state_ = this->current_state_;
-    this->current_state_ = new_state;
-  }
+  this->current_state_ = new_state;
+  return has_changed;
+}
+
+bool StateMachine::setPreviousState(const State* new_state)
+{
+  bool has_changed = this->current_state_ != new_state;
+  this->previous_state_ = this->current_state_;
   return has_changed;
 }
 
