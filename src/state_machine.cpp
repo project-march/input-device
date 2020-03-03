@@ -5,10 +5,6 @@
 
 void StateMachine::construct()
 {
-  // Walk menu
-  State& walk = this->createState(WALK);
-  State& single_step = this->createState(SINGLE_STEP);
-
   // Obstacle menu
   State& obstacles = this->createState(STAIRS);
 
@@ -22,93 +18,108 @@ void StateMachine::construct()
   State& sit_start = this->createGaitState(SIT, SIT_SELECTED, SIT_ACTIVATED, "gait_sit", &turn_off_start);
 
   // Sub-menus
-  this->constructObstacleMenu(&obstacles, &walk, &single_step, &obstacles);
-  this->constructWalkMenu(&walk, &obstacles);
-  this->constructStepMenu(&single_step, &obstacles);
+  this->constructObstacleMenu(&obstacles);
+
+  // Determine the last added state before the walk and single step menu are added
+  // This is used in constructing the walk and single step menu
+  std::list<State>::iterator lastState = states_.end();
+
+  this->constructWalkMenu(lastState);
+  this->constructStepMenu(lastState);
 
   // Menu transitions
-  home_stand_start.withRight(&home_sit_start)
-      .withLeft(&turn_off_start)
-      .shortcutPushTo(&walk)
-      .shortcutDoublePushTo(&single_step);
-  home_sit_start.withRight(&stand_up).shortcutPushTo(&walk).shortcutDoublePushTo(&single_step);
-  stand_up.withRight(&sit_start).shortcutPushTo(&walk).shortcutDoublePushTo(&single_step);
-  sit_start.withRight(&obstacles).shortcutPushTo(&walk).shortcutDoublePushTo(&single_step);
-  obstacles.shortcutPushTo(&walk).shortcutDoublePushTo(&single_step);
-  walk.backTo(&obstacles).shortcutPushTo(&obstacles).shortcutDoublePushTo(&single_step);
-  single_step.backTo(&obstacles).shortcutDoublePushTo(&obstacles).shortcutPushTo(&walk);
+  home_stand_start.withRight(&home_sit_start).withLeft(&turn_off_start);
+  home_sit_start.withRight(&stand_up);
+  stand_up.withRight(&sit_start);
+  sit_start.withRight(&obstacles);
 
   // Set start state
   this->current_state_ = &home_sit_start;
 }
 
-void StateMachine::constructWalkMenu(State* from, State* prev_gait)
+void StateMachine::constructWalkMenu(std::list<State>::iterator lastState)
 {
-  State& walk_small =
-      this->createGaitState(WALK_SMALL, WALK_SMALL_SELECTED, WALK_SMALL_ACTIVATED, "gait_walk_small", prev_gait);
-  State& walk_normal =
-      this->createGaitState(WALK_NORMAL, WALK_NORMAL_SELECTED, WALK_NORMAL_ACTIVATED, "gait_walk", prev_gait);
+  State& walk_small = this->createGaitState(WALK_SMALL, WALK_SMALL_SELECTED, WALK_SMALL_ACTIVATED, "gait_walk_small",
+                                            this->previous_state_);
+  State& walk_normal = this->createGaitState(WALK_NORMAL, WALK_NORMAL_SELECTED, WALK_NORMAL_ACTIVATED, "gait_walk",
+                                             this->previous_state_);
   State& walk_large = this->createState(WALK_LARGE);
 
-  walk_small.backTo(from);
-  walk_normal.backTo(from).withLeft(&walk_small);
-  walk_large.backTo(from).withLeft(&walk_normal).withRight(&walk_small);
+  walk_small.backTo(this->previous_state_);
+  walk_normal.backTo(this->previous_state_).withLeft(&walk_small);
+  walk_large.backTo(this->previous_state_).withLeft(&walk_normal).withRight(&walk_small);
 
-  from->withSelect(&walk_normal);
+  std::list<State>::iterator stateIterator;
+  for (stateIterator = states_.begin(); stateIterator != lastState; stateIterator++)
+  {
+    if ((stateIterator->getGaitName()).empty())
+    {
+      stateIterator->shortcutDoublePushTo(&walk_normal);
+    }
+  }
 }
 
-void StateMachine::constructStepMenu(State* from, State* prev_gait)
+void StateMachine::constructStepMenu(std::list<State>::iterator lastState)
 {
-  State& single_step_small = this->createGaitState(SINGLE_STEP_SMALL, SINGLE_STEP_SMALL_SELECTED,
-                                                   SINGLE_STEP_SMALL_ACTIVATED, "gait_single_step_normal", prev_gait);
-  State& single_step_normal = this->createGaitState(SINGLE_STEP_NORMAL, SINGLE_STEP_NORMAL_SELECTED,
-                                                    SINGLE_STEP_NORMAL_ACTIVATED, "gait_single_step_normal", prev_gait);
+  State& single_step_small =
+      this->createGaitState(SINGLE_STEP_SMALL, SINGLE_STEP_SMALL_SELECTED, SINGLE_STEP_SMALL_ACTIVATED,
+                            "gait_single_step_normal", this->previous_state_);
+  State& single_step_normal =
+      this->createGaitState(SINGLE_STEP_NORMAL, SINGLE_STEP_NORMAL_SELECTED, SINGLE_STEP_NORMAL_ACTIVATED,
+                            "gait_single_step_normal", this->previous_state_);
   State& single_step_large = this->createState(SINGLE_STEP_LARGE);
 
-  single_step_small.backTo(from).withRight(&single_step_normal);
-  single_step_normal.backTo(from).withRight(&single_step_large);
-  single_step_large.backTo(from).withRight(&single_step_small);
+  single_step_small.backTo(this->previous_state_).withRight(&single_step_normal);
+  single_step_normal.backTo(this->previous_state_).withRight(&single_step_large);
+  single_step_large.backTo(this->previous_state_).withRight(&single_step_small);
 
-  from->withSelect(&single_step_normal);
+  std::list<State>::iterator stateIterator;
+  for (stateIterator = states_.begin(); stateIterator != lastState; stateIterator++)
+  {
+    if ((stateIterator->getGaitName()).empty())
+    {
+      stateIterator->shortcutPushTo(&single_step_normal);
+    }
+  }
 }
 
-void StateMachine::constructObstacleMenu(State* from, State* walk, State* single_step, State* obstacles)
+void StateMachine::constructObstacleMenu(State* from)
 {
   State& sofa = this->createState(SOFA);
   State& stairs = this->createState(STAIRS);
 
-  this->constructSofaMenu(&sofa, &stairs, walk, single_step);
-  this->constructStairsMenu(&stairs, obstacles, walk, single_step);
+  this->constructSofaMenu(&sofa, &stairs);
+  this->constructStairsMenu(&stairs, from);
 
-  sofa.backTo(from).withRight(&stairs).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
-  stairs.backTo(from).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  sofa.backTo(from).withRight(&stairs);
+  stairs.backTo(from);
 
   from->withSelect(&sofa);
 }
 
-void StateMachine::constructSofaMenu(State* from, State* next_gait, State* walk, State* single_step)
+void StateMachine::constructSofaMenu(State* from, State* next_obstacle)
 {
-  State& sofa_standup =
-      this->createGaitState(SOFA_STANDUP, SOFA_STANDUP_SELECTED, SOFA_STANDUP_ACTIVATED, "gait_sofa_stand", next_gait);
+  State& sofa_standup = this->createGaitState(SOFA_STANDUP, SOFA_STANDUP_SELECTED, SOFA_STANDUP_ACTIVATED,
+                                              "gait_sofa_stand", next_obstacle);
   State& sofa_sit =
       this->createGaitState(SOFA_SIT, SOFA_SIT_SELECTED, SOFA_SIT_ACTIVATED, "gait_sofa_sit", &sofa_standup);
 
-  sofa_sit.backTo(from).withRight(&sofa_standup).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
-  sofa_standup.backTo(&sofa_sit).withRight(&sofa_sit).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  sofa_sit.backTo(from).withRight(&sofa_standup);
+  sofa_standup.backTo(&sofa_sit).withRight(&sofa_sit);
+
   from->withSelect(&sofa_sit);
 }
 
-void StateMachine::constructStairsMenu(State* from, State* next_gait, State* walk, State* single_step)
+void StateMachine::constructStairsMenu(State* from, State* next_obstacle)
 {
-  State& stairs_down =
-      this->createGaitState(STAIRS_DOWN, STAIRS_DOWN_SELECTED, STAIRS_DOWN_ACTIVATED, "gait_stairs_down", next_gait);
+  State& stairs_down = this->createGaitState(STAIRS_DOWN, STAIRS_DOWN_SELECTED, STAIRS_DOWN_ACTIVATED,
+                                             "gait_stairs_down", next_obstacle);
   State& stairs_up =
       this->createGaitState(STAIRS_UP, STAIRS_UP_SELECTED, STAIRS_UP_ACTIVATED, "gait_stairs_up", &stairs_down);
 
-  stairs_up.backTo(from).withRight(&stairs_down).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
-  ;
-  stairs_down.backTo(&stairs_up).withRight(&stairs_up).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
-  ;
+  stairs_up.backTo(from).withRight(&stairs_down);
+  stairs_down.backTo(&stairs_up).withRight(&stairs_up);
+
   from->withSelect(&stairs_up);
 }
 
@@ -156,13 +167,13 @@ bool StateMachine::right()
 
 bool StateMachine::shortcutPush()
 {
-  return this->hasState() && this->setPreviousState(this->current_state_->shortcutPush) &&
+  return this->hasState() && this->setPreviousState(this->current_state_->shortcutPush()) &&
          this->setCurrentState(this->current_state_->shortcutPush());
 }
 
 bool StateMachine::shortcutDoublePush()
 {
-  return this->hasState() && this->setPreviousState(this->current_state_->shortcutDoublePush) &&
+  return this->hasState() && this->setPreviousState(this->current_state_->shortcutDoublePush()) &&
          this->setCurrentState(this->current_state_->shortcutDoublePush());
 }
 

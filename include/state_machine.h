@@ -29,11 +29,11 @@ public:
   bool activate();
 
 private:
-  void constructObstacleMenu(State* from, State* walk, State* single_step, State* obstacles);
-  void constructWalkMenu(State* from, State* prev_gait);
-  void constructStepMenu(State* from, State* prev_gait);
-  void constructSofaMenu(State* from, State* next_gait, State* walk, State* single_step);
-  void constructStairsMenu(State* from, State* next_gait, State* walk, State* single_step);
+  void constructObstacleMenu(State* from);
+  void constructWalkMenu(std::list<State>::iterator lastState);
+  void constructStepMenu(std::list<State>::iterator lastState);
+  void constructSofaMenu(State* from, State* next_obstacle);
+  void constructStairsMenu(State* from, State* next_obstacle);
 
   bool hasState() const;
   bool hasPreviousState() const;
