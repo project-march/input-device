@@ -160,7 +160,7 @@ void StateMachine::constructSlalomMenu(State* from, State* next_gait, State* wal
   State& slalom_walk =
       this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", next_gait);
   
-  slalom_walk.backTo(from).withRight(walk).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  slalom_walk.backTo(from).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
   
   from->withSelect(&slalom_walk);
 }
@@ -171,18 +171,24 @@ void StateMachine::constructRough_TerrainMenu(State* from, State* next_gait, Sta
       this->createGaitState(HIGHSTEP_RT, HIGHSTEP_RT_SELECTED, HIGHSTEP_RT_ACTIVATED, "gait_high_step", next_gait);  // de gait namen checken //
   State& small_step_rt =
       this->createGaitState(SMALLSTEP_RT, SMALLSTEP_RT_SELECTED, SMALLSTEP_RT_ACTIVATED, "gait_small_step", next_gait);
-  State& middle_steps_rt =
-      this->createGaitState(MIDDLESTEP_RT, MIDDLESTEP_RT_SELECTED, MIDDLESTEP_RT_ACTIVATED, "gait_middle_steps", next_gait);    
+  State& middle_step1_rt =
+      this->createGaitState(MIDDLESTEP1_RT, MIDDLESTEP1_RT_SELECTED, MIDDLESTEP1_RT_ACTIVATED, "gait_first_middle_steps", next_gait);    
+  State& middle_step2_rt =
+      this->createGaitState(MIDDLESTEP2_RT, MIDDLESTEP2_RT_SELECTED, MIDDLESTEP2_RT_ACTIVATED, "gait_second_middle_steps", next_gait);  
+   State& middle_step3_rt =
+      this->createGaitState(MIDDLESTEP3_RT, MIDDLESTEP3_RT_SELECTED, MIDDLESTEP3_RT_ACTIVATED, "gait_third_middle_steps", next_gait);  
   State& high_step_rt_second =
       this->createGaitState(HIGHSTEP_RT_second, HIGHSTEP_RT_SELECTED, HIGHSTEP_RT_ACTIVATED, "gait_high_step", next_gait);
   State& small_step_rt_second =
       this->createGaitState(SMALLSTEP_RT_second, SMALLSTEP_RT_SELECTED, SMALLSTEP_RT_ACTIVATED, "gait_small_step", next_gait);
 
   high_step_rt.backTo(from).withRight(&small_step_rt).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
-  small_step_rt.backTo(&high_step_rt).withRight(&middle_steps_rt).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
-  middle_steps_rt.backTo(&small_step_rt).withRight(&high_step_rt_second).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
-  high_step_rt_second.backTo(&middle_steps_rt).withRight(&small_step_rt_second).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
-  small_step_rt_second.backTo(&high_step_rt_second).withRight(walk).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  small_step_rt.backTo(&high_step_rt).withRight(&middle_step1_rt).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  middle_step1_rt.backTo(&small_step_rt).withRight(&middle_step2_rt).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  middle_step2_rt.backTo(&middle_step1_rt).withRight(&middle_step3_rt).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  middle_step3_rt.backTo(&middle_step2_rt).withRight(&high_step_rt_second).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  high_step_rt_second.backTo(&middle_step3_rt).withRight(&small_step_rt_second).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  small_step_rt_second.backTo(&high_step_rt_second).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
 
   
   from->withSelect(&high_step_rt);
@@ -199,27 +205,51 @@ void StateMachine::constructStairsMenu(State* from, State* next_gait, State* wal
 
   stairs_up.backTo(from).withRight(&stairs_walk).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
   stairs_walk.backTo(&stairs_up).withRight(&stairs_down).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
-  stairs_down.backTo(&stairs_walk).withRight(walk).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  stairs_down.backTo(&stairs_walk).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
   
   from->withSelect(&stairs_up);
 }
 
 void StateMachine::constructTilted_PathMenu(State* from, State* next_gait, State* walk, State* single_step)
 {
-  State& tilted_path_up =
+  State& tilted_pathR = this->createState(TILTED_PATH_RECHTS);
+  State& tilted_pathL = this->createState(TILTED_PATH_LINKS);
+
+  tilted_pathL.backTo(from).withRight(&tilted_pathR).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  
+  from->withSelect(&tilted_pathL);
+
+  State& tilted_pathR_up =
       this->createGaitState(TILTED_PATH_UP, TILTED_PATH_UP_SELECTED, TILTED_PATH_UP_ACTIVATED, "gait_tilted_path_up", next_gait);
-  State& tilted_path_walk =
+  State& tilted_pathR_walk =
       this->createGaitState(WALK_TILTED_PATH, WALK_TILTED_PATH_SELECTED, WALK_TILTED_PATH_ACTIVATED, "gait_tilted_path_walk", next_gait);
-  State& tilted_path_down =
+  State& tilted_pathR_down =
+      this->createGaitState(TILTED_PATH_DOWN, TILTED_PATH_DOWN_SELECTED, TILTED_PATH_DOWN_ACTIVATED, "gait_tilted_path_down", walk);
+      
+  tilted_pathR_up.backTo(from).withRight(&tilted_pathR_walk).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  
+  tilted_pathR_walk.backTo(&tilted_pathR_up).withRight(&tilted_pathR_down).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+
+  tilted_pathR_down.backTo(&tilted_pathR_walk).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  
+  from->withSelect(&tilted_pathR);
+     
+  
+
+  State& tilted_pathL_up =
+      this->createGaitState(TILTED_PATH_UP, TILTED_PATH_UP_SELECTED, TILTED_PATH_UP_ACTIVATED, "gait_tilted_path_left_up", next_gait);
+  State& tilted_pathL_walk =
+      this->createGaitState(WALK_TILTED_PATH, WALK_TILTED_PATH_SELECTED, WALK_TILTED_PATH_ACTIVATED, "gait_tilted_path_left_walk", next_gait);
+  State& tilted_pathL_down =
       this->createGaitState(TILTED_PATH_DOWN, TILTED_PATH_DOWN_SELECTED, TILTED_PATH_DOWN_ACTIVATED, "gait_tilted_path_down", walk);
 
-  tilted_path_up.backTo(from).withRight(&tilted_path_walk).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  tilted_pathL_up.backTo(from).withRight(&tilted_pathL_walk).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
   
-  tilted_path_walk.backTo(&tilted_path_up).withRight(&tilted_path_down).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  tilted_pathL_walk.backTo(&tilted_pathL_up).withRight(&tilted_pathL_down).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
 
-  tilted_path_down.backTo(&tilted_path_walk).withRight(walk).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  tilted_pathL_down.backTo(&tilted_pathL_walk).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
   
-  from->withSelect(&tilted_path_up);
+  from->withSelect(&tilted_pathL);
 }
 
 void StateMachine::constructSlopeMenu(State* from, State* next_gait, State* walk, State* single_step)
@@ -237,7 +267,7 @@ void StateMachine::constructSlopeMenu(State* from, State* next_gait, State* walk
   
   slope_walk.backTo(&slope_up).withRight(&slope_down).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
 
-  slope_down.backTo(&slope_walk).withRight(walk).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
+  slope_down.backTo(&slope_walk).shortcutPushTo(walk).shortcutDoublePushTo(single_step);
   
   from->withSelect(&slope_up);
 }

@@ -24,7 +24,7 @@ struct SectorAddress
 /**********
  * Start menu normaal
  **********/
-#define TURNED_ON SectorAddress { 0x0000, 0x2320 }??
+#define TURNED_ON SectorAddress { 0x0000, 0x2320 }
 
 #define TURN_OFF SectorAddress { 0x0000, 0x2DE2 }
 #define TURN_OFF_SELECTED SectorAddress { 0x0000, 0x2E33 }
@@ -50,7 +50,7 @@ struct SectorAddress
 /**********
  * Start menu 2
  **********/
-#define TURNED_ON SectorAddress { 0x0000, 0x2974 }??
+#define TURNED_ON SectorAddress { 0x0000, 0x2974 }
 
 #define TURN2_OFF SectorAddress { 0x0000, 0x32A1 }
 
@@ -137,9 +137,9 @@ struct SectorAddress
 #define SOFA_STANDUP_ACTIVATED SectorAddress { 0x0000, 0x01EF }
 
 
-#define SLALOM SectorAddress { 0x0000, 0x0238 }
+#define SLALOM SectorAddress { 0x0000, 0x3529 }
 
-#define WALK_2O SectorAddress { 0x0000, 0x0289 }
+#define WALK_2O SectorAddress { 0x0000, 0x357A }
 #define WALK_2O_SELECTED SectorAddress { 0x0000, 0x02DA }
 #define WALK_2O_ACTIVATED SectorAddress { 0x0000, 0x032B }
 
@@ -157,8 +157,16 @@ struct SectorAddress
 #define SMALLSTEP_RT_ACTIVATED SectorAddress { 0x0000, 0x0562 }
 
 #define MIDDLESTEP_RT SectorAddress { 0x0000, 0x05B3 }
-#define MIDDLESTEP_RT_SELECTED SectorAddress { 0x0000, 0x0604 }
-#define MIDDLESTEP_RT_ACTIVATED SectorAddress { 0x0000, 0x0655 }
+
+#define MIDDLESTEP1_RT SectorAddress { 0x0000, 0x3946 }
+#define MIDDLESTEP1_RT_SELECTED SectorAddress { 0x0000, 0x3997 }
+#define MIDDLESTEP1_RT_ACTIVATED SectorAddress { 0x0000, 0x39E8 }
+#define MIDDLESTEP2_RT SectorAddress { 0x0000, 0x3A39 }
+#define MIDDLESTEP2_RT_SELECTED SectorAddress { 0x0000, 0x3A8A }
+#define MIDDLESTEP2_RT_ACTIVATED SectorAddress { 0x0000, 0x3ADB }
+#define MIDDLESTEP3_RT SectorAddress { 0x0000, 0x3B2C }
+#define MIDDLESTEP3_RT_SELECTED SectorAddress { 0x0000, 0x3B7D }
+#define MIDDLESTEP3_RT_ACTIVATED SectorAddress { 0x0000, 0x3BCE }
 
 
 #define STAIRS SectorAddress { 0x0000, 0x088C }
@@ -177,6 +185,8 @@ struct SectorAddress
 
 
 #define TILTED_PATH SectorAddress { 0x0000, 0x0BB6 }
+#define TILTED_PATH_RECHTS SectorAddress { 0x0000, 0x38A4 }
+#define TILTED_PATH_LINKS SectorAddress { 0x0000, 0x38F5 }
 
 #define TILTED_PATH_UP SectorAddress { 0x0000, 0x0C07 }
 #define TILTED_PATH_UP_SELECTED SectorAddress { 0x0000, 0x0C58 }
@@ -186,9 +196,9 @@ struct SectorAddress
 #define WALK_TILTED_PATH_SELECTED SectorAddress { 0x0000, 0x0D4B }
 #define WALK_TILTED_PATH_ACTIVATED SectorAddress { 0x0000, 0x0D9C }
 
-#define TILTED_PATH_DOWN SectorAddress { 0x0000, 0x0DED }
-#define TILTED_PATH_DOWN_SELECTED SectorAddress { 0x0000, 0x0E3E }
-#define TILTED_PATH_DOWN_ACTIVATED SectorAddress { 0x0000, 0x0E8F }
+#define TILTED_PATH_DOWN SectorAddress { 0x0000, 0x35CB }
+#define TILTED_PATH_DOWN_SELECTED SectorAddress { 0x0000, 0x361C }
+#define TILTED_PATH_DOWN_ACTIVATED SectorAddress { 0x0000, 0x366D }
 
 
 #define SLOPE SectorAddress { 0x0000, 0x0EE0 }
@@ -229,6 +239,17 @@ struct SectorAddress
 #define SLOPE3 SectorAddress { 0x0000, 0x273D }
 /***** Obstacle menu 3 - blauw zonder stippen *****/
 
+/**********
+* Obstacle menu - met pijlen
+ **********/
+#define SOFA4 SectorAddress { 0x0000, 0x36BE }
+#define SLALOM4 SectorAddress { 0x0000, 0x370F }
+#define ROUGH_TERRAIN4 SectorAddress { 0x0000, 0x3760 }
+#define STAIRS4 SectorAddress { 0x0000, 0x37B1 }
+#define TILTED_PATH4 SectorAddress { 0x0000, 0x3802 }
+#define SLOPE4 SectorAddress { 0x0000, 0x3853 }
+/***** Obstacle menu - met pijlen *****/
+
 #define FAST_WALK { 0x0000, 0x2ED5 }
 #define FAST_WALK_SELECTED { 0x0000, 0x2F26 }
 #define FAST_WALK_ACTIVATED { 0x0000, 0x2F77 }
@@ -244,6 +265,8 @@ struct SectorAddress
 #define STEP_SMALL { 0x0000, 0x3487 }
 #define STEP_MEDIUM { 0x0000, 0x33E5 }
 #define STEP_LARGE { 0x0000, 0x3436 }
+
+
 // clang-format on
 
 #endif  // SD_SECTOR_ADDRESSES_H
