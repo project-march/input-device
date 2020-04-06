@@ -46,8 +46,8 @@ private:
   State& createEscapeState(const SectorAddress address, const std::string& gait_name = "");
 
   State& createEscapeGaitState(const SectorAddress addr, const SectorAddress addr_selected,
-                           const SectorAddress addr_activated, const std::string& gait_name,
-                           const State* result = nullptr);
+                               const SectorAddress addr_activated, const std::string& gait_name,
+                               const State* result = nullptr);
 
   // This must be list, since that does not reallocate
   // Items when it resizes, which a vector does.

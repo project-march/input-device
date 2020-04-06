@@ -39,10 +39,10 @@ void StateMachine::construct()
 
 void StateMachine::constructWalkMenu(std::list<State>::iterator last_state)
 {
-  State& walk_small = this->createEscapeGaitState(WALK_SMALL, WALK_SMALL_SELECTED, WALK_SMALL_ACTIVATED, "gait_walk_small",
-                                            nullptr);
-  State& walk_normal = this->createEscapeGaitState(WALK_NORMAL, WALK_NORMAL_SELECTED, WALK_NORMAL_ACTIVATED, "gait_walk",
-                                             nullptr);
+  State& walk_small =
+      this->createEscapeGaitState(WALK_SMALL, WALK_SMALL_SELECTED, WALK_SMALL_ACTIVATED, "gait_walk_small", nullptr);
+  State& walk_normal =
+      this->createEscapeGaitState(WALK_NORMAL, WALK_NORMAL_SELECTED, WALK_NORMAL_ACTIVATED, "gait_walk", nullptr);
   State& walk_large = this->createEscapeState(WALK_LARGE);
 
   walk_small.withRight(&walk_normal);
@@ -61,12 +61,11 @@ void StateMachine::constructWalkMenu(std::list<State>::iterator last_state)
 
 void StateMachine::constructStepMenu(std::list<State>::iterator last_state)
 {
-  State& single_step_small =
-      this->createEscapeGaitState(SINGLE_STEP_SMALL, SINGLE_STEP_SMALL_SELECTED, SINGLE_STEP_SMALL_ACTIVATED,
-                            "gait_single_step_normal", nullptr);
+  State& single_step_small = this->createEscapeGaitState(
+      SINGLE_STEP_SMALL, SINGLE_STEP_SMALL_SELECTED, SINGLE_STEP_SMALL_ACTIVATED, "gait_single_step_normal", nullptr);
   State& single_step_normal =
       this->createEscapeGaitState(SINGLE_STEP_NORMAL, SINGLE_STEP_NORMAL_SELECTED, SINGLE_STEP_NORMAL_ACTIVATED,
-                            "gait_single_step_normal", nullptr);
+                                  "gait_single_step_normal", nullptr);
   State& single_step_large = this->createEscapeState(SINGLE_STEP_LARGE);
 
   single_step_small.withRight(&single_step_normal);
@@ -126,7 +125,8 @@ void StateMachine::constructStairsMenu(State* from, State* next_obstacle)
 void StateMachine::setEscapeStatesBackTo(const State* previous_state)
 {
   std::list<State>::iterator escape_state_iterator;
-  for (escape_state_iterator = this->escape_states_.begin(); escape_state_iterator != this->escape_states_.end(); escape_state_iterator++)
+  for (escape_state_iterator = this->escape_states_.begin(); escape_state_iterator != this->escape_states_.end();
+       escape_state_iterator++)
   {
     if ((escape_state_iterator->getGaitName()).empty())
     {
@@ -234,13 +234,14 @@ State& StateMachine::createGaitState(const SectorAddress addr, const SectorAddre
 
 State& StateMachine::createEscapeState(const SectorAddress address, const std::string& gait_name)
 {
-  this->escape_states_.emplace_back(address, gait_name);;
+  this->escape_states_.emplace_back(address, gait_name);
+  ;
   return escape_states_.back();
 }
 
 State& StateMachine::createEscapeGaitState(const SectorAddress addr, const SectorAddress addr_selected,
-                                     const SectorAddress addr_activated, const std::string& gait_name,
-                                     const State* result)
+                                           const SectorAddress addr_activated, const std::string& gait_name,
+                                           const State* result)
 {
   State& normal = this->createEscapeState(addr);
   State& selected = this->createState(addr_selected);
