@@ -22,10 +22,10 @@ void StateMachine::construct()
 
   // Determine the last added state before the walk and single step menu are added
   // This is used in constructing the walk and single step menu
-  std::list<State>::iterator lastState = states_.end();
+  std::list<State>::iterator last_state = states_.end();
 
-  this->constructWalkMenu(lastState);
-  this->constructStepMenu(lastState);
+  this->constructWalkMenu(last_state);
+  this->constructStepMenu(last_state);
 
   // Menu transitions
   home_stand_start.withRight(&home_sit_start).withLeft(&turn_off_start);
@@ -37,48 +37,48 @@ void StateMachine::construct()
   this->current_state_ = &home_sit_start;
 }
 
-void StateMachine::constructWalkMenu(std::list<State>::iterator lastState)
+void StateMachine::constructWalkMenu(std::list<State>::iterator last_state)
 {
-  State& walk_small = this->createGaitState(WALK_SMALL, WALK_SMALL_SELECTED, WALK_SMALL_ACTIVATED, "gait_walk_small",
-                                            this->previous_state_);
-  State& walk_normal = this->createGaitState(WALK_NORMAL, WALK_NORMAL_SELECTED, WALK_NORMAL_ACTIVATED, "gait_walk",
-                                             this->previous_state_);
-  State& walk_large = this->createState(WALK_LARGE);
+  State& walk_small = this->createEscapeGaitState(WALK_SMALL, WALK_SMALL_SELECTED, WALK_SMALL_ACTIVATED, "gait_walk_small",
+                                            nullptr);
+  State& walk_normal = this->createEscapeGaitState(WALK_NORMAL, WALK_NORMAL_SELECTED, WALK_NORMAL_ACTIVATED, "gait_walk",
+                                             nullptr);
+  State& walk_large = this->createEscapeState(WALK_LARGE);
 
-  walk_small.backTo(this->previous_state_);
-  walk_normal.backTo(this->previous_state_).withLeft(&walk_small);
-  walk_large.backTo(this->previous_state_).withLeft(&walk_normal).withRight(&walk_small);
+  walk_small.withRight(&walk_normal);
+  walk_normal.withRight(&walk_large);
+  walk_large.withRight(&walk_small);
 
-  std::list<State>::iterator stateIterator;
-  for (stateIterator = states_.begin(); stateIterator != lastState; stateIterator++)
+  std::list<State>::iterator state_iterator;
+  for (state_iterator = this->states_.begin(); state_iterator != last_state; state_iterator++)
   {
-    if ((stateIterator->getGaitName()).empty())
+    if ((state_iterator->getGaitName()).empty())
     {
-      stateIterator->shortcutDoublePushTo(&walk_normal);
+      state_iterator->shortcutDoublePushTo(&walk_normal);
     }
   }
 }
 
-void StateMachine::constructStepMenu(std::list<State>::iterator lastState)
+void StateMachine::constructStepMenu(std::list<State>::iterator last_state)
 {
   State& single_step_small =
-      this->createGaitState(SINGLE_STEP_SMALL, SINGLE_STEP_SMALL_SELECTED, SINGLE_STEP_SMALL_ACTIVATED,
-                            "gait_single_step_normal", this->previous_state_);
+      this->createEscapeGaitState(SINGLE_STEP_SMALL, SINGLE_STEP_SMALL_SELECTED, SINGLE_STEP_SMALL_ACTIVATED,
+                            "gait_single_step_normal", nullptr);
   State& single_step_normal =
-      this->createGaitState(SINGLE_STEP_NORMAL, SINGLE_STEP_NORMAL_SELECTED, SINGLE_STEP_NORMAL_ACTIVATED,
-                            "gait_single_step_normal", this->previous_state_);
-  State& single_step_large = this->createState(SINGLE_STEP_LARGE);
+      this->createEscapeGaitState(SINGLE_STEP_NORMAL, SINGLE_STEP_NORMAL_SELECTED, SINGLE_STEP_NORMAL_ACTIVATED,
+                            "gait_single_step_normal", nullptr);
+  State& single_step_large = this->createEscapeState(SINGLE_STEP_LARGE);
 
-  single_step_small.backTo(this->previous_state_).withRight(&single_step_normal);
-  single_step_normal.backTo(this->previous_state_).withRight(&single_step_large);
-  single_step_large.backTo(this->previous_state_).withRight(&single_step_small);
+  single_step_small.withRight(&single_step_normal);
+  single_step_normal.withRight(&single_step_large);
+  single_step_large.withRight(&single_step_small);
 
-  std::list<State>::iterator stateIterator;
-  for (stateIterator = states_.begin(); stateIterator != lastState; stateIterator++)
+  std::list<State>::iterator state_iterator;
+  for (state_iterator = states_.begin(); state_iterator != last_state; state_iterator++)
   {
-    if ((stateIterator->getGaitName()).empty())
+    if ((state_iterator->getGaitName()).empty())
     {
-      stateIterator->shortcutPushTo(&single_step_normal);
+      state_iterator->shortcutPushTo(&single_step_normal);
     }
   }
 }
@@ -123,20 +123,27 @@ void StateMachine::constructStairsMenu(State* from, State* next_obstacle)
   from->withSelect(&stairs_up);
 }
 
+void StateMachine::setEscapeStatesBackTo(const State* previous_state)
+{
+  std::list<State>::iterator escape_state_iterator;
+  for (escape_state_iterator = this->escape_states_.begin(); escape_state_iterator != this->escape_states_.end(); escape_state_iterator++)
+  {
+    if ((escape_state_iterator->getGaitName()).empty())
+    {
+      escape_state_iterator->backTo(previous_state);
+    }
+    else
+    {
+      escape_state_iterator->withActivate(previous_state);
+    }
+  }
+}
+
 std::string StateMachine::getCurrentGaitName() const
 {
   if (this->hasState())
   {
     return this->current_state_->getGaitName();
-  }
-  return std::string();
-}
-
-std::string StateMachine::getPreviousGaitName() const
-{
-  if (this->hasPreviousState())
-  {
-    return this->previous_state_->getGaitName();
   }
   return std::string();
 }
@@ -167,14 +174,14 @@ bool StateMachine::right()
 
 bool StateMachine::shortcutPush()
 {
-  return this->hasState() && this->setPreviousState(this->current_state_->shortcutPush()) &&
-         this->setCurrentState(this->current_state_->shortcutPush());
+  this->setEscapeStatesBackTo(this->current_state_);
+  return this->hasState() && this->setCurrentState(this->current_state_->shortcutPush());
 }
 
 bool StateMachine::shortcutDoublePush()
 {
-  return this->hasState() && this->setPreviousState(this->current_state_->shortcutDoublePush()) &&
-         this->setCurrentState(this->current_state_->shortcutDoublePush());
+  this->setEscapeStatesBackTo(this->current_state_);
+  return this->hasState() && this->setCurrentState(this->current_state_->shortcutDoublePush());
 }
 
 bool StateMachine::back()
@@ -197,22 +204,10 @@ bool StateMachine::hasState() const
   return this->current_state_ != nullptr;
 }
 
-bool StateMachine::hasPreviousState() const
-{
-  return this->previous_state_ != nullptr;
-}
-
 bool StateMachine::setCurrentState(const State* new_state)
 {
   bool has_changed = this->current_state_ != new_state;
   this->current_state_ = new_state;
-  return has_changed;
-}
-
-bool StateMachine::setPreviousState(const State* new_state)
-{
-  bool has_changed = this->current_state_ != new_state;
-  this->previous_state_ = this->current_state_;
   return has_changed;
 }
 
@@ -229,6 +224,27 @@ State& StateMachine::createGaitState(const SectorAddress addr, const SectorAddre
   State& normal = this->createState(addr);
   State& selected = this->createState(addr_selected);
   State& activated = this->createState(addr_activated, gait_name);
+
+  normal.withSelect(&selected);
+  selected.withActivate(&activated);
+  activated.withActivate(result == nullptr ? &normal : result);
+
+  return normal;
+}
+
+State& StateMachine::createEscapeState(const SectorAddress address, const std::string& gait_name)
+{
+  this->escape_states_.emplace_back(address, gait_name);;
+  return escape_states_.back();
+}
+
+State& StateMachine::createEscapeGaitState(const SectorAddress addr, const SectorAddress addr_selected,
+                                     const SectorAddress addr_activated, const std::string& gait_name,
+                                     const State* result)
+{
+  State& normal = this->createEscapeState(addr);
+  State& selected = this->createState(addr_selected);
+  State& activated = this->createEscapeState(addr_activated, gait_name);
 
   normal.withSelect(&selected);
   selected.withActivate(&activated);
