@@ -27,9 +27,11 @@ public:
   bool activate();
 
 private:
+  using state_iterator = std::list<State>::iterator;
+
   void constructObstacleMenu(State* from);
-  void constructWalkMenu(std::list<State>::iterator lastState);
-  void constructStepMenu(std::list<State>::iterator lastState);
+  void constructWalkMenu(state_iterator lastState);
+  void constructStepMenu(state_iterator lastState);
   void constructSofaMenu(State* from, State* next_obstacle);
   void constructStairsMenu(State* from, State* next_obstacle);
   void setEscapeStatesBackTo(const State* previous_state);
