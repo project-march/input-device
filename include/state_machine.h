@@ -13,7 +13,6 @@ public:
   void construct();
 
   std::string getCurrentGaitName() const;
-
   SectorAddress getCurrentImage() const;
 
   size_t size() const;
@@ -28,18 +27,21 @@ public:
   bool activate();
 
 private:
-  void constructObstacleMenu(State* from, State* walk, State* single_step, State* obstacles);
-  void constructWalkMenu(State* from, State* prev_gait, State* obstacles);
+  using state_iterator = std::list<State>::iterator;
+
+  void constructObstacleMenu(State* from);
+  void constructWalkMenu(state_iterator lastState, State* obstacles);
+  void constructStepMenu(state_iterator lastState, State* obstacles);
+  void constructSofaMenu(State* from, State* next_obstacle);
   // void constructWalkSizeMenu(State* from, State* prev_gait);
-  void constructStepMenu(State* from, State* prev_gait, State* obstacles);
   // void constructStepSizeMenu(State* from, State* prev_gait);
   // void constructSideStepMenu(State* from);
-  void constructSofaMenu(State* from, State* next_gait, State* walk, State* single_step);
-  void constructSlalomMenu(State* from, State* next_gait, State* walk, State* single_step);
-  void constructRough_TerrainMenu(State* from, State* next_gait, State* walk, State* single_step);
-  void constructStairsMenu(State* from, State* next_gait, State* walk, State* single_step);
-  void constructTilted_PathMenu(State* from, State* next_gait, State* walk, State* single_step);
-  void constructSlopeMenu(State* from, State* next_gait, State* walk, State* single_step);
+  void constructSlalomMenu(State* from, State* next_obstacle);
+  void constructRoughTerrainMenu(State* from, State* next_obstacle);
+  void constructStairsMenu(State* from, State* next_obstacle);
+  void constructTiltedPathMenu(State* from, State* next_obstacle);
+  void constructSlopeMenu(State* from, State* next_obstacle);
+  void setEscapeStatesBackTo(const State* previous_state);
 
   bool hasState() const;
   bool setCurrentState(const State* new_state);
@@ -50,10 +52,17 @@ private:
                          const SectorAddress addr_activated, const std::string& gait_name,
                          const State* result = nullptr);
 
+  State& createEscapeState(const SectorAddress address, const std::string& gait_name = "");
+
+  State& createEscapeGaitState(const SectorAddress addr, const SectorAddress addr_selected,
+                               const SectorAddress addr_activated, const std::string& gait_name,
+                               const State* result = nullptr);
+
   // This must be list, since that does not reallocate
   // Items when it resizes, which a vector does.
   // Otherwise all pointers in states would become invalid :)
   std::list<State> states_;
+  std::list<State> escape_states_;
   const State* current_state_ = nullptr;
 };
 
