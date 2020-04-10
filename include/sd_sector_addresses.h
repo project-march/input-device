@@ -156,15 +156,16 @@ struct SectorAddress
 #define SMALLSTEP_RT_SELECTED SectorAddress { 0x0000, 0x0511 }
 #define SMALLSTEP_RT_ACTIVATED SectorAddress { 0x0000, 0x0562 }
 
-#define MIDDLESTEP_RT SectorAddress { 0x0000, 0x05B3 }
-
+//#define MIDDLESTEP_RT SectorAddress { 0x0000, 0x05B3 }
 #define MIDDLESTEP1_RT SectorAddress { 0x0000, 0x3946 }
-#define MIDDLESTEP1_RT_SELECTED SectorAddress { 0x0000, 0x3997 }
-#define MIDDLESTEP1_RT_ACTIVATED SectorAddress { 0x0000, 0x39E8 }
-#define MIDDLESTEP2_RT SectorAddress { 0x0000, 0x3A39 }
-#define MIDDLESTEP2_RT_SELECTED SectorAddress { 0x0000, 0x3A8A }
-#define MIDDLESTEP2_RT_ACTIVATED SectorAddress { 0x0000, 0x3ADB }
-#define MIDDLESTEP3_RT SectorAddress { 0x0000, 0x3B2C }
+#define MIDDLESTEP1_RT_SELECTED SectorAddress { 0x0000, 0x3A39 }
+#define MIDDLESTEP1_RT_ACTIVATED SectorAddress { 0x0000, 0x3A8A }
+
+#define MIDDLESTEP2_RT SectorAddress { 0x0000, 0x3997 }
+#define MIDDLESTEP2_RT_SELECTED SectorAddress { 0x0000, 0x3ADB }
+#define MIDDLESTEP2_RT_ACTIVATED SectorAddress { 0x0000, 0x3B2C }
+
+#define MIDDLESTEP3_RT SectorAddress { 0x0000, 0x39E8 }
 #define MIDDLESTEP3_RT_SELECTED SectorAddress { 0x0000, 0x3B7D }
 #define MIDDLESTEP3_RT_ACTIVATED SectorAddress { 0x0000, 0x3BCE }
 
