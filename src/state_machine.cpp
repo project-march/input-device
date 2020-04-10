@@ -135,21 +135,36 @@ void StateMachine::constructObstacleMenu(State* from)
   State& tilted_path = this->createState(TILTED_PATH);
   State& slope = this->createState(SLOPE);
 
-  this->constructSofaMenu(&sofa, &slalom);  // overal walk als next gait?
-  this->constructSlalomMenu(&slalom, &rough_terrain);
-  this->constructRoughTerrainMenu(&rough_terrain, &stairs);
-  this->constructStairsMenu(&stairs, &tilted_path);
-  this->constructTiltedPathMenu(&tilted_path, &slope);
+  State& start_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", &sofa);
+  State& sofa_slalom_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", &slalom);
+  State& slalom_roughterrain_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", &rough_terrain);
+  State& roughterrain_stairs_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", &stairs);
+  State& stairs_tiltedpath_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", &tilted_path);
+  State& tiltedpath_slope_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", &slope);
+  State& end_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", from);
+
+  this->constructSofaMenu(&sofa, &sofa_slalom_walk);  // overal walk als next gait?
+  this->constructSlalomMenu(&slalom, &slalom_roughterrain_walk);
+  this->constructRoughTerrainMenu(&rough_terrain, &roughterrain_stairs_walk);
+  this->constructStairsMenu(&stairs, &stairs_tiltedpath_walk);
+  this->constructTiltedPathMenu(&tilted_path, &tiltedpath_slope_walk);
   this->constructSlopeMenu(&slope, from);
 
-  sofa.backTo(from).withRight(&slalom);
-  slalom.backTo(from).withRight(&rough_terrain);
-  rough_terrain.backTo(from).withRight(&stairs);
-  stairs.backTo(from).withRight(&tilted_path);
-  tilted_path.backTo(from).withRight(&slope);
-  slope.backTo(from).withRight(&sofa);
+  start_walk.backTo(from).withRight(&sofa);
+  sofa.backTo(from).withRight(&sofa_slalom_walk);
+  sofa_slalom_walk.backTo(from).withRight(&slalom);
+  slalom.backTo(from).withRight(&slalom_roughterrain_walk);
+  slalom_roughterrain_walk.backTo(from).withRight(&rough_terrain);
+  rough_terrain.backTo(from).withRight(&roughterrain_stairs_walk);
+  roughterrain_stairs_walk.backTo(from).withRight(&stairs);
+  stairs.backTo(from).withRight(&stairs_tiltedpath_walk);
+  stairs_tiltedpath_walk.backTo(from).withRight(&tilted_path);
+  tilted_path.backTo(from).withRight(&tiltedpath_slope_walk);
+  tiltedpath_slope_walk.backTo(from).withRight(&slope);
+  slope.backTo(from).withRight(&end_walk);
+  end_walk.backTo(from);
 
-  from->withSelect(&sofa);
+  from->withSelect(&start_walk);
 }
 
 void StateMachine::constructSofaMenu(State* from, State* next_obstacle)
@@ -212,8 +227,8 @@ void StateMachine::constructStairsMenu(State* from, State* next_obstacle)
       this->createGaitState(STAIRS_UP, STAIRS_UP_SELECTED, STAIRS_UP_ACTIVATED, "gait_stairs_up", &stairs_walk);
 
   stairs_up.backTo(from).withRight(&stairs_walk);
-  stairs_walk.backTo(&stairs_up).withRight(&stairs_down);
-  stairs_down.backTo(&stairs_walk);
+  stairs_walk.backTo(from).withRight(&stairs_down);
+  stairs_down.backTo(from).withRight(&stairs_up);
 
   from->withSelect(&stairs_up);
 }
@@ -263,8 +278,8 @@ void StateMachine::constructSlopeMenu(State* from, State* next_obstacle)
       this->createGaitState(SLOPE_UP, SLOPE_UP_SELECTED, SLOPE_UP_ACTIVATED, "gait_slope_up", &slope_walk);
 
   slope_up.backTo(from).withRight(&slope_walk);
-  slope_walk.backTo(&slope_up).withRight(&slope_down);
-  slope_down.backTo(&slope_walk);
+  slope_walk.backTo(from).withRight(&slope_down);
+  slope_down.backTo(from).withRight(&slope_up);
 
   from->withSelect(&slope_up);
 }
