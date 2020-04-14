@@ -137,10 +137,14 @@ void StateMachine::constructObstacleMenu(State* from)
 
   State& start_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", &sofa);
   State& sofa_slalom_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", &slalom);
-  State& slalom_roughterrain_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", &rough_terrain);
-  State& roughterrain_stairs_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", &stairs);
-  State& stairs_tiltedpath_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", &tilted_path);
-  State& tiltedpath_slope_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", &slope);
+  State& slalom_roughterrain_walk =
+      this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", &rough_terrain);
+  State& roughterrain_stairs_walk =
+      this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", &stairs);
+  State& stairs_tiltedpath_walk =
+      this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", &tilted_path);
+  State& tiltedpath_slope_walk =
+      this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", &slope);
   State& end_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", from);
 
   this->constructSofaMenu(&sofa, &sofa_slalom_walk);  // overal walk als next gait?
@@ -334,28 +338,51 @@ bool StateMachine::right()
 
 bool StateMachine::shortcutPush()
 {
-  this->setEscapeStatesBackTo(this->current_state_);
+  if (!inEscapeMenu_)
+  {
+    this->previous_state_ = this->current_state_;
+    this->setEscapeStatesBackTo(this->previous_state_);
+    this->inEscapeMenu_ = true;
+  }
+
   return this->hasState() && this->setCurrentState(this->current_state_->shortcutPush());
 }
 
 bool StateMachine::shortcutDoublePush()
 {
-  this->setEscapeStatesBackTo(this->current_state_);
+  if (!inEscapeMenu_)
+  {
+    this->previous_state_ = this->current_state_;
+    this->setEscapeStatesBackTo(this->previous_state_);
+    this->inEscapeMenu_ = true;
+  }
   return this->hasState() && this->setCurrentState(this->current_state_->shortcutDoublePush());
 }
 
 bool StateMachine::back()
 {
+  if (inEscapeMenu_ && this->current_state_->back() == this->previous_state_)
+  {
+    this->inEscapeMenu_ = false;
+  }
   return this->hasState() && this->setCurrentState(this->current_state_->back());
 }
 
 bool StateMachine::select()
 {
+  if (inEscapeMenu_ && this->current_state_->select() == this->current_state_->select()->activate())
+  {
+    this->inEscapeMenu_ = false;
+  }
   return this->hasState() && this->setCurrentState(this->current_state_->select());
 }
 
 bool StateMachine::activate()
 {
+  if (inEscapeMenu_ && this->current_state_->activate()->activate() == this->previous_state_)
+  {
+    this->inEscapeMenu_ = false;
+  }
   return this->hasState() && this->setCurrentState(this->current_state_->activate());
 }
 

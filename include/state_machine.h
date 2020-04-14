@@ -64,6 +64,9 @@ private:
   std::list<State> states_;
   std::list<State> escape_states_;
   const State* current_state_ = nullptr;
+  const State* previous_state_ = nullptr;
+
+  bool inEscapeMenu_ = false;
 };
 
 #endif  // STATE_MACHINE_H
