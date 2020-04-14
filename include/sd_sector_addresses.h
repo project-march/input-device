@@ -50,7 +50,7 @@ struct SectorAddress
 /**********
  * Start menu 2
  **********/
-#define TURNED_ON SectorAddress { 0x0000, 0x2974 }
+#define TURNED2_ON SectorAddress { 0x0000, 0x2974 }
 
 #define TURN2_OFF SectorAddress { 0x0000, 0x32A1 }
 
