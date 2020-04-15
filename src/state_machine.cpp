@@ -338,6 +338,8 @@ bool StateMachine::right()
 
 bool StateMachine::shortcutPush()
 {
+  bool has_state = this->hasState();
+
   if (!inEscapeMenu_)
   {
     this->previous_state_ = this->current_state_;
@@ -345,45 +347,50 @@ bool StateMachine::shortcutPush()
     this->inEscapeMenu_ = true;
   }
 
-  return this->hasState() && this->setCurrentState(this->current_state_->shortcutPush());
+  return has_state && this->setCurrentState(this->current_state_->shortcutPush());
 }
 
 bool StateMachine::shortcutDoublePush()
 {
+  bool has_state = this->hasState();
+
   if (!inEscapeMenu_)
   {
     this->previous_state_ = this->current_state_;
     this->setEscapeStatesBackTo(this->previous_state_);
     this->inEscapeMenu_ = true;
   }
-  return this->hasState() && this->setCurrentState(this->current_state_->shortcutDoublePush());
+  return has_state && this->setCurrentState(this->current_state_->shortcutDoublePush());
 }
 
 bool StateMachine::back()
 {
+  bool has_state = this->hasState();
   if (inEscapeMenu_ && this->current_state_->back() == this->previous_state_)
   {
     this->inEscapeMenu_ = false;
   }
-  return this->hasState() && this->setCurrentState(this->current_state_->back());
+  return has_state && this->setCurrentState(this->current_state_->back());
 }
 
 bool StateMachine::select()
 {
+  bool has_state = this->hasState();
   if (inEscapeMenu_ && this->current_state_->select() == this->current_state_->select()->activate())
   {
     this->inEscapeMenu_ = false;
   }
-  return this->hasState() && this->setCurrentState(this->current_state_->select());
+  return has_state && this->setCurrentState(this->current_state_->select());
 }
 
 bool StateMachine::activate()
 {
+  bool has_state = this->hasState();
   if (inEscapeMenu_ && this->current_state_->activate()->activate() == this->previous_state_)
   {
     this->inEscapeMenu_ = false;
   }
-  return this->hasState() && this->setCurrentState(this->current_state_->activate());
+  return has_state && this->setCurrentState(this->current_state_->activate());
 }
 
 bool StateMachine::hasState() const
