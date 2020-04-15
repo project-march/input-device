@@ -7,21 +7,11 @@ void StateMachine::construct()
 {
   // Obstacle menu
   State& obstacles = this->createState(OBSTACLE_MENU);
-  // Obstacle menu 2
-  // State& obstacles = this->createState(OBSTACLE2_MENU);
 
-  // Start menu normal
-  // na opstarten TURNED_ON
+  // Start menu
   State& stand_up = this->createGaitState(STAND_UP, STAND_UP_SELECTED, STAND_UP_ACTIVATED, "gait_stand", &obstacles);
   State& home_sit_start = this->createGaitState(HOME_SIT, HOME_SIT_SELECTED, HOME_SIT_ACTIVATED, "home_sit", &stand_up);
   State& turn_off_start = this->createState(TURN_OFF);
-
-  // start menu - 2
-  // State& stand_up = this->createGaitState(STAND2_UP, STAND2_UP_SELECTED, STAND_UP_ACTIVATED, "gait_stand",
-  // &obstacles);
-  // State& home_sit_start =
-  //   this->createGaitState(HOME_SIT2, HOME_SIT2_SELECTED, HOME_SIT2_ACTIVATED, "home_sit", &stand_up);
-  // State& turn_off_start = this->createState(TURN2_OFF);
 
   // Sub-menus
   this->constructObstacleMenu(&obstacles);
@@ -66,22 +56,6 @@ void StateMachine::constructWalkMenu(state_iterator list_end, State* obstacles)
   }
 }
 
-// void StateMachine::constructWalkSizeMenu(State* from, State* prev_gait)
-// {// moet met rocker
-//   State& walk_small =
-//       this->createGaitState(WALK_SMALL, WALK_SELECTED, WALK_ACTIVATED, "gait_walk_small", prev_gait);
-//   State& walk_normal =
-//       this->createGaitState(WALK_MEDIUM, WALK_SELECTED, WALK_ACTIVATED, "gait_walk_normal", prev_gait);
-//   State& walk_large =
-//       this->createGaitState(WALK_LARGE, WALK_SELECTED, WALK_ACTIVATED, "gait_walk_large", prev_gait);
-
-//   walk_small.backTo(from);
-//   walk_normal.backTo(from).withLeft(&walk_small);
-//   walk_large.backTo(from).withLeft(&walk_normal).withRight(&walk_small);
-
-//   from->withSelect(&walk_normal);
-// }
-
 void StateMachine::constructStepMenu(state_iterator list_end, State* obstacles)
 {
   State& single_step =
@@ -107,23 +81,6 @@ void StateMachine::constructStepMenu(state_iterator list_end, State* obstacles)
   }
 }
 
-// void StateMachine::constructStepSizeMenu(State* from, State* prev_gait)
-// { //ook met rocker?
-//   State& single_step_small = this->createGaitState(STEP_SMALL, SINGLE_STEP_SELECTED,
-//                                                    SINGLE_STEP_ACTIVATED, "gait_single_step_normal", prev_gait); //
-//                                                    prev_gait?
-//   State& single_step_normal = this->createGaitState(STEP_MEDIUM, SINGLE_STEP_SELECTED,
-//                                                     SINGLE_STEP_ACTIVATED, "gait_single_step_normal", prev_gait);
-//   State& single_step_large = this->createGaitState(STEP_LARGE, SINGLE_STEP_SELECTED,
-//                                                     SINGLE_STEP_ACTIVATED, "gait_single_step_normal", prev_gait);
-
-//   single_step_small.backTo(from).withRight(&single_step_normal);
-//   single_step_normal.backTo(from).withRight(&single_step_large);
-//   single_step_large.backTo(from).withRight(&single_step_small);
-
-//   from->withSelect(&single_step_normal); // nog veranderen in rocker
-// }
-
 void StateMachine::constructObstacleMenu(State* from)
 {
   State& sofa = this->createState(SOFA);
@@ -145,7 +102,7 @@ void StateMachine::constructObstacleMenu(State* from)
       this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", &slope);
   State& end_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", from);
 
-  this->constructSofaMenu(&sofa, &sofa_slalom_walk);  // overal walk als next gait?
+  this->constructSofaMenu(&sofa, &sofa_slalom_walk);
   this->constructSlalomMenu(&slalom, &slalom_roughterrain_walk);
   this->constructRoughTerrainMenu(&rough_terrain, &roughterrain_stairs_walk);
   this->constructStairsMenu(&stairs, &stairs_tiltedpath_walk);
@@ -179,7 +136,6 @@ void StateMachine::constructSofaMenu(State* from, State* next_obstacle)
   sofa_sit.backTo(from).withRight(&sofa_standup);
   sofa_standup.backTo(from).withRight(&sofa_sit);
   from->withSelect(&sofa_sit);
-  // hoe automatisch walk hierna krijgen?//
 }
 
 void StateMachine::constructSlalomMenu(State* from, State* next_obstacle)
@@ -272,8 +228,8 @@ void StateMachine::constructTiltedPathMenu(State* from, State* next_obstacle)
 
 void StateMachine::constructSlopeMenu(State* from, State* next_obstacle)
 {
-  State& slope_down = this->createGaitState(SLOPE_DOWN, SLOPE_DOWN_SELECTED, SLOPE_DOWN_ACTIVATED, "gait_slope_down",
-                                            next_obstacle);  //
+  State& slope_down =
+      this->createGaitState(SLOPE_DOWN, SLOPE_DOWN_SELECTED, SLOPE_DOWN_ACTIVATED, "gait_slope_down", next_obstacle);
   State& slope_walk =
       this->createGaitState(WALK_SLOPE, WALK_SLOPE_SELECTED, WALK_SLOPE_ACTIVATED, "gait_walk", &slope_down);
   State& slope_up =
