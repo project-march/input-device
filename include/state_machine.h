@@ -30,12 +30,9 @@ private:
   using state_iterator = std::list<State>::iterator;
 
   void constructObstacleMenu(State* from);
-  void constructWalkMenu(state_iterator lastState, State* obstacles);
-  void constructStepMenu(state_iterator lastState, State* obstacles);
+  void constructWalkMenu(state_iterator list_end, State* obstacles);
+  void constructStepMenu(state_iterator list_end, State* obstacles);
   void constructSofaMenu(State* from, State* next_obstacle);
-  // void constructWalkSizeMenu(State* from, State* prev_gait);
-  // void constructStepSizeMenu(State* from, State* prev_gait);
-  // void constructSideStepMenu(State* from);
   void constructSlalomMenu(State* from, State* next_obstacle);
   void constructRoughTerrainMenu(State* from, State* next_obstacle);
   void constructStairsMenu(State* from, State* next_obstacle);
@@ -66,7 +63,7 @@ private:
   const State* current_state_ = nullptr;
   const State* previous_state_ = nullptr;
 
-  bool inEscapeMenu_ = false;
+  bool in_escape_menu_ = false;
 };
 
 #endif  // STATE_MACHINE_H

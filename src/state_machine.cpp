@@ -162,7 +162,7 @@ void StateMachine::constructRoughTerrainMenu(State* from, State* next_obstacle)
   State& small_step_rt = this->createGaitState(SMALLSTEP_RT, SMALLSTEP_RT_SELECTED, SMALLSTEP_RT_ACTIVATED,
                                                "gait_small_step", &middle_step1_rt);
   State& high_step_rt = this->createGaitState(HIGHSTEP_RT, HIGHSTEP_RT_SELECTED, HIGHSTEP_RT_ACTIVATED,
-                                              "gait_high_step", &small_step_rt);  // de gait namen checken //
+                                              "gait_high_step", &small_step_rt);
 
   high_step_rt.backTo(from).withRight(&small_step_rt);
   small_step_rt.backTo(from).withRight(&middle_step1_rt);
@@ -292,11 +292,11 @@ bool StateMachine::right()
 
 bool StateMachine::shortcutPush()
 {
-  if (!inEscapeMenu_)
+  if (!this->in_escape_menu_)
   {
     this->previous_state_ = this->current_state_;
     this->setEscapeStatesBackTo(this->previous_state_);
-    this->inEscapeMenu_ = true;
+    this->in_escape_menu_ = true;
   }
 
   return this->hasState() && this->setCurrentState(this->current_state_->shortcutPush());
@@ -304,38 +304,38 @@ bool StateMachine::shortcutPush()
 
 bool StateMachine::shortcutDoublePush()
 {
-  if (!inEscapeMenu_)
+  if (!this->in_escape_menu_)
   {
     this->previous_state_ = this->current_state_;
     this->setEscapeStatesBackTo(this->previous_state_);
-    this->inEscapeMenu_ = true;
+    this->in_escape_menu_ = true;
   }
   return this->hasState() && this->setCurrentState(this->current_state_->shortcutDoublePush());
 }
 
 bool StateMachine::back()
 {
-  if (inEscapeMenu_ && this->current_state_->back() == this->previous_state_)
+  if (this->in_escape_menu_ && this->current_state_->back() == this->previous_state_)
   {
-    this->inEscapeMenu_ = false;
+    this->in_escape_menu_ = false;
   }
   return this->hasState() && this->setCurrentState(this->current_state_->back());
 }
 
 bool StateMachine::select()
 {
-  if (inEscapeMenu_ && this->current_state_->select() == this->current_state_->select()->activate())
+  if (this->in_escape_menu_ && this->current_state_->select() == this->current_state_->select()->activate())
   {
-    this->inEscapeMenu_ = false;
+    this->in_escape_menu_ = false;
   }
   return this->hasState() && this->setCurrentState(this->current_state_->select());
 }
 
 bool StateMachine::activate()
 {
-  if (inEscapeMenu_ && this->current_state_->activate()->activate() == this->previous_state_)
+  if (this->in_escape_menu_ && this->current_state_->activate()->activate() == this->previous_state_)
   {
-    this->inEscapeMenu_ = false;
+    this->in_escape_menu_ = false;
   }
   return this->hasState() && this->setCurrentState(this->current_state_->activate());
 }

@@ -22,7 +22,7 @@ struct SectorAddress
 // clang-format off
 
 /**********
- * Start menu normaal
+ * Start menu normal
  **********/
 #define TURNED_ON SectorAddress { 0x0000, 0x2320 }
 
@@ -219,7 +219,7 @@ struct SectorAddress
 
 
 /**********
- * Obstacle menu 2 - blauw met stippen
+ * Obstacle menu 2 - blue with dots
  **********/
 #define SOFA2 SectorAddress { 0x0000, 0x2BFC }
 #define SLALOM2 SectorAddress { 0x0000, 0x2C4D }
@@ -227,10 +227,10 @@ struct SectorAddress
 #define STAIRS2 SectorAddress { 0x0000, 0x2CEF }
 #define TILTED_PATH2 SectorAddress { 0x0000, 0x2D40 }
 #define SLOPE2 SectorAddress { 0x0000, 0x2D91 }
-/***** Obstacle menu 2 - blauw met stippen *****/
+/***** Obstacle menu 2 - blue with dots *****/
 
 /**********
- * Obstacle menu 3 - blauw zonder stippen
+ * Obstacle menu 3 - blue without dots
  **********/
 #define SOFA3 SectorAddress { 0x0000, 0x25A8 }
 #define SLALOM3 SectorAddress { 0x0000, 0x25F9 }
@@ -238,10 +238,10 @@ struct SectorAddress
 #define STAIRS3 SectorAddress { 0x0000, 0x269B }
 #define TILTED_PATH3 SectorAddress { 0x0000, 0x26EC }
 #define SLOPE3 SectorAddress { 0x0000, 0x273D }
-/***** Obstacle menu 3 - blauw zonder stippen *****/
+/***** Obstacle menu 3 - blue without dots *****/
 
 /**********
-* Obstacle menu - met pijlen
+* Obstacle menu - with arrows
  **********/
 #define SOFA4 SectorAddress { 0x0000, 0x36BE }
 #define SLALOM4 SectorAddress { 0x0000, 0x370F }
@@ -249,7 +249,7 @@ struct SectorAddress
 #define STAIRS4 SectorAddress { 0x0000, 0x37B1 }
 #define TILTED_PATH4 SectorAddress { 0x0000, 0x3802 }
 #define SLOPE4 SectorAddress { 0x0000, 0x3853 }
-/***** Obstacle menu - met pijlen *****/
+/***** Obstacle menu - with arrows *****/
 
 #define FAST_WALK { 0x0000, 0x2ED5 }
 #define FAST_WALK_SELECTED { 0x0000, 0x2F26 }
