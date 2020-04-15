@@ -171,7 +171,7 @@ void setup()
 void loop()
 {
   // Get button states
-  // RockerSwitchState rocker_switch_state = rocker.getState();
+  RockerSwitchState rocker_switch_state = rocker.getState();
   RotaryEncoder::Direction rotary_encoder_direction = rotaryEncoder.getDirection();
   ButtonState trigger_state = trigger.getState();
   ButtonState push_button_state = push.getState();
