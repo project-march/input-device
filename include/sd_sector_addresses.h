@@ -267,7 +267,6 @@ struct SectorAddress
 #define STEP_MEDIUM { 0x0000, 0x33E5 }
 #define STEP_LARGE { 0x0000, 0x3436 }
 
-
 // clang-format on
 
 #endif  // SD_SECTOR_ADDRESSES_H
