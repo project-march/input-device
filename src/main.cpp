@@ -20,7 +20,7 @@ namespace pins
 {
 const uint8_t TRIGGER = 26;
 const uint8_t RE_A = 23;
-const uint8_t RE_B = 14;
+const uint8_t RE_B = 12;
 const uint8_t RE_PUSH = 18;
 const uint8_t PUSH = 19;
 const uint8_t UART_TX = 32;  // Software serial
