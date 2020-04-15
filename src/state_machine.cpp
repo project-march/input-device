@@ -161,8 +161,8 @@ void StateMachine::constructRoughTerrainMenu(State* from, State* next_obstacle)
                                                  "gait_first_middle_steps", &middle_step2_rt);
   State& small_step_rt = this->createGaitState(SMALLSTEP_RT, SMALLSTEP_RT_SELECTED, SMALLSTEP_RT_ACTIVATED,
                                                "gait_small_step", &middle_step1_rt);
-  State& high_step_rt = this->createGaitState(HIGHSTEP_RT, HIGHSTEP_RT_SELECTED, HIGHSTEP_RT_ACTIVATED,
-                                              "gait_high_step", &small_step_rt);
+  State& high_step_rt =
+      this->createGaitState(HIGHSTEP_RT, HIGHSTEP_RT_SELECTED, HIGHSTEP_RT_ACTIVATED, "gait_high_step", &small_step_rt);
 
   high_step_rt.backTo(from).withRight(&small_step_rt);
   small_step_rt.backTo(from).withRight(&middle_step1_rt);
