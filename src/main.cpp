@@ -19,10 +19,12 @@
 namespace pins
 {
 const uint8_t TRIGGER = 26;
-const uint8_t RE_A = 15;
-const uint8_t RE_B = 2;
+const uint8_t RE_A = 23;
+const uint8_t RE_B = 12;
 const uint8_t RE_PUSH = 18;
 const uint8_t PUSH = 19;
+const uint8_t ROCKER_UP = 2;
+const uint8_t ROCKER_DOWN = 5;
 const uint8_t UART_TX = 32;  // Software serial
 const uint8_t UART_RX = 34;  // Software serial
 const uint8_t RST = 13;      // Reset
@@ -42,6 +44,7 @@ Button trigger(pins::TRIGGER);
 DoubleClickButton push(pins::PUSH);
 RotaryEncoder rotaryEncoder(pins::RE_A, pins::RE_B);
 DoubleClickButton rotaryEncoderPush(pins::RE_PUSH);
+RockerSwitch rocker(pins::ROCKER_UP, pins::ROCKER_DOWN);
 
 SoftwareSerial screen_serial(pins::UART_RX, pins::UART_TX);
 Goldelox_Serial_4DLib screen_goldelox(&screen_serial);
