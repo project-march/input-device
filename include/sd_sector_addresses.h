@@ -22,7 +22,7 @@ struct SectorAddress
 // clang-format off
 
 /**********
- * Start menu normal
+ * Start menu arrows at the top
  **********/
 #define TURNED_ON SectorAddress { 0x0000, 0x2320 }
 
@@ -48,7 +48,7 @@ struct SectorAddress
 #define SINGLE_STEP_ACTIVATED SectorAddress { 0x0000, 0x1FF6 }
 
 /**********
- * Start menu 2
+ * Start menu squares at the top
  **********/
 #define TURNED2_ON SectorAddress { 0x0000, 0x2974 }
 
@@ -74,7 +74,7 @@ struct SectorAddress
 #define WALK_HOME_SELECTED SectorAddress { 0x0000, 0x218B }
 #define WALK_HOME_ACTIVATED SectorAddress { 0x0000, 0x21DC }
 
-#define HOME_WALKMENU SectorAddress { 0x0000, 0x222D }
+#define HOME_WALKMENU SectorAddress { 0x0000, 0x31AE }
 #define HOME_WALKMENU_SELECTED SectorAddress { 0x0000, 0x227E }
 #define HOME_WALKMENU_ACTIVATED SectorAddress { 0x0000, 0x22CF }
 
@@ -104,8 +104,6 @@ struct SectorAddress
 #define SIT_4_WALKMENU_SELECTED SectorAddress { 0x0000, 0x1900 }
 #define SIT_4_WALKMENU_ACTIVATED SectorAddress { 0x0000, 0x1951 }
 
-#define HOME_WAlKMENU SectorAddress { 0x0000, 0x31AE }
-
 /**********
  * Single step menu + home stand + sit + home
  **********/
@@ -120,8 +118,6 @@ struct SectorAddress
 #define SIT_4_SSMENU SectorAddress { 0x0000, 0x315D }
 #define SIT_4_SSMENU_SELECTED SectorAddress { 0x0000, 0x1900 }
 #define SIT_4_SSMENU_ACTIVATED SectorAddress { 0x0000, 0x1951 }
-
-#define HOME_WAlKMENU SectorAddress { 0x0000, 0x31AE }
 
 /**********
  * Obstacle menu - normal
@@ -156,7 +152,6 @@ struct SectorAddress
 #define SMALLSTEP_RT_SELECTED SectorAddress { 0x0000, 0x0511 }
 #define SMALLSTEP_RT_ACTIVATED SectorAddress { 0x0000, 0x0562 }
 
-//#define MIDDLESTEP_RT SectorAddress { 0x0000, 0x05B3 }
 #define MIDDLESTEP1_RT SectorAddress { 0x0000, 0x3946 }
 #define MIDDLESTEP1_RT_SELECTED SectorAddress { 0x0000, 0x3A39 }
 #define MIDDLESTEP1_RT_ACTIVATED SectorAddress { 0x0000, 0x3A8A }
