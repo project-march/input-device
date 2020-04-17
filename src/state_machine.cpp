@@ -39,7 +39,7 @@ void StateMachine::constructWalkMenu(state_iterator list_end, State* obstacles)
                                                        HOMESTAND_4_WALKMENU_ACTIVATED, "gait_home_stand", nullptr);
   State& sit_walk = this->createEscapeGaitState(SIT_4_WALKMENU, SIT_4_WALKMENU_SELECTED, SIT_4_WALKMENU_ACTIVATED,
                                                 "gait_sit", nullptr);
-  State& home = this->createEscapeState(HOME_WAlKMENU);
+  State& home = this->createEscapeState(HOME_WALKMENU);
 
   walk_escape.withRight(&home_stand_walk);
   home_stand_walk.withRight(&sit_walk);
@@ -64,7 +64,7 @@ void StateMachine::constructStepMenu(state_iterator list_end, State* obstacles)
                                                      HOMESTAND_4_SSMENU_ACTIVATED, "gait_home_stand", nullptr);
   State& sit_ss =
       this->createEscapeGaitState(SIT_4_SSMENU, SIT_4_SSMENU_SELECTED, SIT_4_SSMENU_ACTIVATED, "gait_sit", nullptr);
-  State& home = this->createEscapeState(HOME_WAlKMENU);
+  State& home = this->createEscapeState(HOME_WALKMENU);
 
   single_step.withRight(&home_stand_ss);
   home_stand_ss.withRight(&sit_ss);
