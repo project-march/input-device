@@ -217,11 +217,11 @@ void loop()
     {
       sendStopMessage();
     }
-    else if(rocker_switch_state == RockerSwitchState::UP)
+    else if (rocker_switch_state == RockerSwitchState::UP)
     {
       sendIncrementStepSizeMessage();
     }
-    else if(rocker_switch_state == RockerSwitchState::DOWN)
+    else if (rocker_switch_state == RockerSwitchState::DOWN)
     {
       sendDecrementStepSizeMessage();
     }
