@@ -6,12 +6,12 @@
 void StateMachine::construct()
 {
   // Obstacle menu
-  State& obstacles = this->createState(OBSTACLE_MENU);
+  State& obstacles = this->createState(OBSTACLE2_MENU);
 
   // Start menu
-  State& stand_up = this->createGaitState(STAND_UP, STAND_UP_SELECTED, STAND_UP_ACTIVATED, "gait_stand", &obstacles);
-  State& home_sit_start = this->createGaitState(HOME_SIT, HOME_SIT_SELECTED, HOME_SIT_ACTIVATED, "home_sit", &stand_up);
-  State& turn_off_start = this->createState(TURN_OFF);
+  State& stand_up = this->createGaitState(STAND2_UP, STAND2_UP_SELECTED, STAND2_UP_ACTIVATED, "gait_stand", &obstacles);
+  State& home_sit_start = this->createGaitState(HOME_SIT2, HOME_SIT2_SELECTED, HOME_SIT2_ACTIVATED, "home_sit", &stand_up);
+  State& turn_off_start = this->createState(TURN2_OFF);
 
   // Sub-menus
   this->constructObstacleMenu(&obstacles);
@@ -44,7 +44,7 @@ void StateMachine::constructWalkMenu(state_iterator list_end, State* obstacles)
   walk_escape.withRight(&home_stand_walk);
   home_stand_walk.withRight(&sit_walk);
   sit_walk.withRight(&home);
-  home.withSelect(obstacles);
+  home.selectTo(obstacles);
 
   state_iterator states_iterator;
   for (states_iterator = this->states_.begin(); states_iterator != list_end; states_iterator++)
@@ -69,7 +69,7 @@ void StateMachine::constructStepMenu(state_iterator list_end, State* obstacles)
   single_step.withRight(&home_stand_ss);
   home_stand_ss.withRight(&sit_ss);
   sit_ss.withRight(&home);
-  home.withSelect(obstacles);
+  home.selectTo(obstacles);
 
   state_iterator states_iterator;
   for (states_iterator = states_.begin(); states_iterator != list_end; states_iterator++)
@@ -83,12 +83,12 @@ void StateMachine::constructStepMenu(state_iterator list_end, State* obstacles)
 
 void StateMachine::constructObstacleMenu(State* from)
 {
-  State& sofa = this->createState(SOFA);
-  State& slalom = this->createState(SLALOM);
-  State& rough_terrain = this->createState(ROUGH_TERRAIN);
-  State& stairs = this->createState(STAIRS);
-  State& tilted_path = this->createState(TILTED_PATH);
-  State& slope = this->createState(SLOPE);
+  State& sofa = this->createState(SOFA2);
+  State& slalom = this->createState(SLALOM2);
+  State& rough_terrain = this->createState(ROUGH_TERRAIN2);
+  State& stairs = this->createState(STAIRS2);
+  State& tilted_path = this->createState(TILTED_PATH2);
+  State& slope = this->createState(SLOPE2);
 
   State& start_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", &sofa);
   State& sofa_slalom_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", &slalom);

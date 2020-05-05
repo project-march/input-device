@@ -101,6 +101,12 @@ public:
     return *this;
   }
 
+  State& selectTo(const State* select)
+  {
+    this->select_ = select;
+    return *this;
+  }
+
   State& withActivate(const State* activate)
   {
     this->activate_ = activate;
