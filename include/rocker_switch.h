@@ -15,14 +15,14 @@ private:
   const uint8_t up_pin_;
   const uint8_t down_pin_;
   RockerSwitchState last_position_ = RockerSwitchState::NEUTRAL;
-  unsigned long last_print_time_ = 0;
+  uint64_t last_print_time_ = 0;
 
   // Microseconds. May introduce unwanted behaviour if changed
   const useconds_t bounce_time_ = 20000;
 
   // Milliseconds. Determines how often up or down are returned if the rocker
   // switch is held up or down.
-  const unsigned long hold_time_ = 1000;
+  const uint64_t hold_time_ = 1000;
 };
 
 #endif  // ROCKER_SWITCH_H

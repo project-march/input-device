@@ -29,7 +29,7 @@ void setupWiFi()
 class WiFiHardware
 {
 public:
-  WiFiHardware(){};
+  WiFiHardware() = default;
 
   void init()
   {
@@ -54,7 +54,7 @@ public:
   }
 
   // returns milliseconds since start of program
-  unsigned long time()
+  uint64_t time()
   {
     return millis();
   }

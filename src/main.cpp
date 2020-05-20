@@ -8,13 +8,14 @@
 #include <Adafruit_DRV2605.h>
 #include <Arduino.h>
 #include <Goldelox_Serial_4DLib.h>
+#include <RotaryEncoder.h>
 #include <SoftwareSerial.h>
 #include <WiFi.h>
-#include <march_shared_resources/GaitInstruction.h>
-#include <march_shared_resources/GaitInstructionResponse.h>
 #include <ros.h>
 #include <std_msgs/Time.h>
-#include <RotaryEncoder.h>
+
+#include <march_shared_resources/GaitInstruction.h>
+#include <march_shared_resources/GaitInstructionResponse.h>
 
 namespace pins
 {
