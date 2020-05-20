@@ -59,8 +59,8 @@ void StateMachine::constructWalkMenu(state_iterator list_end, State* obstacles)
 
 void StateMachine::constructStepMenu(state_iterator list_end, State* obstacles)
 {
-  State& single_step =
-      this->createEscapeGaitState(SINGLE_STEP_4, SINGLE_STEP_4_SELECTED, SINGLE_STEP_4_ACTIVATED, "gait_walk", nullptr);
+  State& single_step = this->createEscapeGaitState(SINGLE_STEP_4, SINGLE_STEP_4_SELECTED, SINGLE_STEP_4_ACTIVATED,
+                                                   "gait_single_step", nullptr);
   State& home_stand_ss = this->createEscapeGaitState(HOMESTAND_4_SSMENU, HOMESTAND_4_SSMENU_SELECTED,
                                                      HOMESTAND_4_SSMENU_ACTIVATED, "gait_home_stand", nullptr);
   State& sit_ss =
@@ -232,6 +232,8 @@ void StateMachine::constructSlopeMenu(State* from, State* next_obstacle)
 {
   State& walk_in_between =
       this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", next_obstacle);
+  State& single_step = this->createGaitState(SINGLE_STEP_4, SINGLE_STEP_4_SELECTED, SINGLE_STEP_4_ACTIVATED,
+                                             "gait_single_step", &walk_in_between);
   State& slope_down =
       this->createGaitState(SLOPE_DOWN, SLOPE_DOWN_SELECTED, SLOPE_DOWN_ACTIVATED, "gait_slope_down", &walk_in_between);
   State& slope_walk =
@@ -241,7 +243,9 @@ void StateMachine::constructSlopeMenu(State* from, State* next_obstacle)
 
   slope_up.backTo(from).withRight(&slope_walk);
   slope_walk.backTo(from).withRight(&slope_down);
-  slope_down.backTo(from);
+  slope_down.backTo(from).withRight(&single_step);
+  single_step.backTo(from);
+
   walk_in_between.backTo(from);
 
   from->withSelect(&slope_up);
