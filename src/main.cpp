@@ -8,13 +8,14 @@
 #include <Adafruit_DRV2605.h>
 #include <Arduino.h>
 #include <Goldelox_Serial_4DLib.h>
+#include <RotaryEncoder.h>
 #include <SoftwareSerial.h>
 #include <WiFi.h>
-#include <march_shared_resources/GaitInstruction.h>
-#include <march_shared_resources/GaitInstructionResponse.h>
 #include <ros.h>
 #include <std_msgs/Time.h>
-#include <RotaryEncoder.h>
+
+#include <march_shared_resources/GaitInstruction.h>
+#include <march_shared_resources/GaitInstructionResponse.h>
 
 namespace pins
 {
@@ -37,6 +38,8 @@ const uint64_t BAUD_SERIAL = 57600;
 // and they clash with our encoder definitions
 #undef LEFT
 #undef RIGHT
+#undef UP
+#undef DOWN
 
 //#define USE_WIRELESS  // comment this to use wired connection.
 
@@ -95,6 +98,20 @@ void sendGaitMessage(const std::string& name)
     received_gait_instruction_response = true;
 #endif
   }
+}
+
+void sendIncrementStepSizeMessage()
+{
+  gait_instruction_msg.type = march_shared_resources::GaitInstruction::INCREMENT_STEP_SIZE;
+  gait_instruction_msg.gait_name = "";
+  gait_instruction_publisher.publish(&gait_instruction_msg);
+}
+
+void sendDecrementStepSizeMessage()
+{
+  gait_instruction_msg.type = march_shared_resources::GaitInstruction::DECREMENT_STEP_SIZE;
+  gait_instruction_msg.gait_name = "";
+  gait_instruction_publisher.publish(&gait_instruction_msg);
 }
 
 void sendStopMessage()
@@ -171,7 +188,7 @@ void setup()
 void loop()
 {
   // Get button states
-  // RockerSwitchState rocker_switch_state = rocker.getState();
+  RockerSwitchState rocker_switch_state = rocker.getState();
   RotaryEncoder::Direction rotary_encoder_direction = rotaryEncoder.getDirection();
   ButtonState trigger_state = trigger.getState();
   ButtonState push_button_state = push.getState();
@@ -200,6 +217,14 @@ void loop()
     if (trigger_state == ButtonState::PUSH)
     {
       sendStopMessage();
+    }
+    else if (rocker_switch_state == RockerSwitchState::UP)
+    {
+      sendIncrementStepSizeMessage();
+    }
+    else if (rocker_switch_state == RockerSwitchState::DOWN)
+    {
+      sendDecrementStepSizeMessage();
     }
   }
   else

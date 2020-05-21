@@ -48,7 +48,7 @@ void StateMachine::constructWalkMenu(state_iterator list_end, State* obstacles)
   home.selectTo(obstacles);
 
   state_iterator states_iterator;
-  for (states_iterator = this->states_.begin(); states_iterator != list_end; states_iterator++)
+  for (states_iterator = this->states_.begin(); states_iterator != list_end; ++states_iterator)
   {
     if (states_iterator->getGaitName().empty())
     {
@@ -73,7 +73,7 @@ void StateMachine::constructStepMenu(state_iterator list_end, State* obstacles)
   home.selectTo(obstacles);
 
   state_iterator states_iterator;
-  for (states_iterator = states_.begin(); states_iterator != list_end; states_iterator++)
+  for (states_iterator = states_.begin(); states_iterator != list_end; ++states_iterator)
   {
     if (states_iterator->getGaitName().empty())
     {

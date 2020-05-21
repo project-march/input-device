@@ -11,7 +11,7 @@ public:
   {
   }
 
-  State(SectorAddress address) : State(address, "")
+  explicit State(SectorAddress address) : State(address, "")
   {
   }
 
@@ -113,7 +113,7 @@ public:
     return *this;
   }
 
-protected:
+private:
   const std::string gait_;
   const SectorAddress address_;
 
