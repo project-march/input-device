@@ -105,7 +105,7 @@ void StateMachine::constructObstacleMenu(State* from)
   tilted_path.backTo(from).withRight(&slope);
   slope.backTo(from).withRight(&sofa);
 
-  from->withSelect(&slalom);
+  from->withSelect(&sofa);
 }
 
 void StateMachine::constructSofaMenu(State* from, State* next_obstacle)
