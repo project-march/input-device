@@ -12,8 +12,8 @@
 #include <SoftwareSerial.h>
 #include <WiFi.h>
 #include <ros.h>
-#include <std_msgs/Time.h>
 
+#include <march_shared_resources/Alive.h>
 #include <march_shared_resources/GaitInstruction.h>
 #include <march_shared_resources/GaitInstructionResponse.h>
 
@@ -81,9 +81,9 @@ ros::Subscriber<march_shared_resources::GaitInstructionResponse>
     gait_instruction_result_subscriber("/march/input_device/instruction_response", &gaitInstructionResponseCallback);
 
 march_shared_resources::GaitInstruction gait_instruction_msg;
-std_msgs::Time time_msg;
+march_shared_resources::Alive alive_msg;
 ros::Publisher gait_instruction_publisher("/march/input_device/instruction", &gait_instruction_msg);
-ros::Publisher ping_publisher("/march/input_device/alive", &time_msg);
+ros::Publisher ping_publisher("/march/input_device/alive", &alive_msg);
 
 void sendGaitMessage(const std::string& name)
 {
@@ -123,8 +123,8 @@ void sendStopMessage()
 
 void sendAliveMessage()
 {
-  time_msg.data = nh.now();
-  ping_publisher.publish(&time_msg);
+  alive_msg.stamp = nh.now();
+  ping_publisher.publish(&alive_msg);
 }
 
 void drawCurrentImage()
@@ -178,6 +178,8 @@ void setup()
   nh.advertise(gait_instruction_publisher);
   nh.advertise(ping_publisher);
   nh.subscribe(gait_instruction_result_subscriber);
+
+  alive_msg.id = "crutch";
 
   state_machine.construct();
 
