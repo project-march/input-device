@@ -48,7 +48,7 @@ namespace march_shared_resources
     }
 
     const char * getType(){ return "march_shared_resources/GaitNameActionGoal"; };
-    const char * getMD5(){ return "0608001a75969b5f789ca36c4a8c7c0c"; };
+    const char * getMD5(){ return "c3fcbf5324c7c2a9996a8ed899520f78"; };
 
   };
 

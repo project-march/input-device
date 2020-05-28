@@ -19,6 +19,9 @@ namespace march_shared_resources
       _type_type type;
       typedef const char* _gait_name_type;
       _gait_name_type gait_name;
+      typedef const char* _id_type;
+      _id_type id;
+      enum { UNKNOWN =  -1 };
       enum { STOP =  0 };
       enum { GAIT =  1 };
       enum { PAUSE =  2 };
@@ -29,7 +32,8 @@ namespace march_shared_resources
     GaitInstruction():
       header(),
       type(0),
-      gait_name("")
+      gait_name(""),
+      id("")
     {
     }
 
@@ -49,6 +53,11 @@ namespace march_shared_resources
       offset += 4;
       memcpy(outbuffer + offset, this->gait_name, length_gait_name);
       offset += length_gait_name;
+      uint32_t length_id = strlen(this->id);
+      varToArr(outbuffer + offset, length_id);
+      offset += 4;
+      memcpy(outbuffer + offset, this->id, length_id);
+      offset += length_id;
       return offset;
     }
 
@@ -73,11 +82,20 @@ namespace march_shared_resources
       inbuffer[offset+length_gait_name-1]=0;
       this->gait_name = (char *)(inbuffer + offset-1);
       offset += length_gait_name;
+      uint32_t length_id;
+      arrToVar(length_id, (inbuffer + offset));
+      offset += 4;
+      for(unsigned int k= offset; k< offset+length_id; ++k){
+          inbuffer[k-1]=inbuffer[k];
+      }
+      inbuffer[offset+length_id-1]=0;
+      this->id = (char *)(inbuffer + offset-1);
+      offset += length_id;
      return offset;
     }
 
     const char * getType(){ return "march_shared_resources/GaitInstruction"; };
-    const char * getMD5(){ return "f655c02301e6cc940112aec0256d56ae"; };
+    const char * getMD5(){ return "5f6950a3a79440fadfc00e50e0e09c76"; };
 
   };
 

@@ -1,5 +1,5 @@
-#ifndef _ROS_march_shared_resources_ImcErrorState_h
-#define _ROS_march_shared_resources_ImcErrorState_h
+#ifndef _ROS_march_shared_resources_ImcState_h
+#define _ROS_march_shared_resources_ImcState_h
 
 #include <stdint.h>
 #include <string.h>
@@ -10,7 +10,7 @@
 namespace march_shared_resources
 {
 
-  class ImcErrorState : public ros::Msg
+  class ImcState : public ros::Msg
   {
     public:
       typedef std_msgs::Header _header_type;
@@ -47,16 +47,32 @@ namespace march_shared_resources
       typedef float _motor_current_type;
       _motor_current_type st_motor_current;
       _motor_current_type * motor_current;
+      uint32_t imc_voltage_length;
+      typedef float _imc_voltage_type;
+      _imc_voltage_type st_imc_voltage;
+      _imc_voltage_type * imc_voltage;
       uint32_t motor_voltage_length;
       typedef float _motor_voltage_type;
       _motor_voltage_type st_motor_voltage;
       _motor_voltage_type * motor_voltage;
+      uint32_t absolute_encoder_value_length;
+      typedef int32_t _absolute_encoder_value_type;
+      _absolute_encoder_value_type st_absolute_encoder_value;
+      _absolute_encoder_value_type * absolute_encoder_value;
       uint32_t incremental_encoder_value_length;
-      typedef float _incremental_encoder_value_type;
+      typedef int32_t _incremental_encoder_value_type;
       _incremental_encoder_value_type st_incremental_encoder_value;
       _incremental_encoder_value_type * incremental_encoder_value;
+      uint32_t absolute_velocity_length;
+      typedef float _absolute_velocity_type;
+      _absolute_velocity_type st_absolute_velocity;
+      _absolute_velocity_type * absolute_velocity;
+      uint32_t incremental_velocity_length;
+      typedef float _incremental_velocity_type;
+      _incremental_velocity_type st_incremental_velocity;
+      _incremental_velocity_type * incremental_velocity;
 
-    ImcErrorState():
+    ImcState():
       header(),
       joint_names_length(0), joint_names(NULL),
       status_word_length(0), status_word(NULL),
@@ -66,8 +82,12 @@ namespace march_shared_resources
       detailed_error_description_length(0), detailed_error_description(NULL),
       motion_error_description_length(0), motion_error_description(NULL),
       motor_current_length(0), motor_current(NULL),
+      imc_voltage_length(0), imc_voltage(NULL),
       motor_voltage_length(0), motor_voltage(NULL),
-      incremental_encoder_value_length(0), incremental_encoder_value(NULL)
+      absolute_encoder_value_length(0), absolute_encoder_value(NULL),
+      incremental_encoder_value_length(0), incremental_encoder_value(NULL),
+      absolute_velocity_length(0), absolute_velocity(NULL),
+      incremental_velocity_length(0), incremental_velocity(NULL)
     {
     }
 
@@ -176,6 +196,23 @@ namespace march_shared_resources
       *(outbuffer + offset + 3) = (u_motor_currenti.base >> (8 * 3)) & 0xFF;
       offset += sizeof(this->motor_current[i]);
       }
+      *(outbuffer + offset + 0) = (this->imc_voltage_length >> (8 * 0)) & 0xFF;
+      *(outbuffer + offset + 1) = (this->imc_voltage_length >> (8 * 1)) & 0xFF;
+      *(outbuffer + offset + 2) = (this->imc_voltage_length >> (8 * 2)) & 0xFF;
+      *(outbuffer + offset + 3) = (this->imc_voltage_length >> (8 * 3)) & 0xFF;
+      offset += sizeof(this->imc_voltage_length);
+      for( uint32_t i = 0; i < imc_voltage_length; i++){
+      union {
+        float real;
+        uint32_t base;
+      } u_imc_voltagei;
+      u_imc_voltagei.real = this->imc_voltage[i];
+      *(outbuffer + offset + 0) = (u_imc_voltagei.base >> (8 * 0)) & 0xFF;
+      *(outbuffer + offset + 1) = (u_imc_voltagei.base >> (8 * 1)) & 0xFF;
+      *(outbuffer + offset + 2) = (u_imc_voltagei.base >> (8 * 2)) & 0xFF;
+      *(outbuffer + offset + 3) = (u_imc_voltagei.base >> (8 * 3)) & 0xFF;
+      offset += sizeof(this->imc_voltage[i]);
+      }
       *(outbuffer + offset + 0) = (this->motor_voltage_length >> (8 * 0)) & 0xFF;
       *(outbuffer + offset + 1) = (this->motor_voltage_length >> (8 * 1)) & 0xFF;
       *(outbuffer + offset + 2) = (this->motor_voltage_length >> (8 * 2)) & 0xFF;
@@ -193,6 +230,23 @@ namespace march_shared_resources
       *(outbuffer + offset + 3) = (u_motor_voltagei.base >> (8 * 3)) & 0xFF;
       offset += sizeof(this->motor_voltage[i]);
       }
+      *(outbuffer + offset + 0) = (this->absolute_encoder_value_length >> (8 * 0)) & 0xFF;
+      *(outbuffer + offset + 1) = (this->absolute_encoder_value_length >> (8 * 1)) & 0xFF;
+      *(outbuffer + offset + 2) = (this->absolute_encoder_value_length >> (8 * 2)) & 0xFF;
+      *(outbuffer + offset + 3) = (this->absolute_encoder_value_length >> (8 * 3)) & 0xFF;
+      offset += sizeof(this->absolute_encoder_value_length);
+      for( uint32_t i = 0; i < absolute_encoder_value_length; i++){
+      union {
+        int32_t real;
+        uint32_t base;
+      } u_absolute_encoder_valuei;
+      u_absolute_encoder_valuei.real = this->absolute_encoder_value[i];
+      *(outbuffer + offset + 0) = (u_absolute_encoder_valuei.base >> (8 * 0)) & 0xFF;
+      *(outbuffer + offset + 1) = (u_absolute_encoder_valuei.base >> (8 * 1)) & 0xFF;
+      *(outbuffer + offset + 2) = (u_absolute_encoder_valuei.base >> (8 * 2)) & 0xFF;
+      *(outbuffer + offset + 3) = (u_absolute_encoder_valuei.base >> (8 * 3)) & 0xFF;
+      offset += sizeof(this->absolute_encoder_value[i]);
+      }
       *(outbuffer + offset + 0) = (this->incremental_encoder_value_length >> (8 * 0)) & 0xFF;
       *(outbuffer + offset + 1) = (this->incremental_encoder_value_length >> (8 * 1)) & 0xFF;
       *(outbuffer + offset + 2) = (this->incremental_encoder_value_length >> (8 * 2)) & 0xFF;
@@ -200,7 +254,7 @@ namespace march_shared_resources
       offset += sizeof(this->incremental_encoder_value_length);
       for( uint32_t i = 0; i < incremental_encoder_value_length; i++){
       union {
-        float real;
+        int32_t real;
         uint32_t base;
       } u_incremental_encoder_valuei;
       u_incremental_encoder_valuei.real = this->incremental_encoder_value[i];
@@ -209,6 +263,40 @@ namespace march_shared_resources
       *(outbuffer + offset + 2) = (u_incremental_encoder_valuei.base >> (8 * 2)) & 0xFF;
       *(outbuffer + offset + 3) = (u_incremental_encoder_valuei.base >> (8 * 3)) & 0xFF;
       offset += sizeof(this->incremental_encoder_value[i]);
+      }
+      *(outbuffer + offset + 0) = (this->absolute_velocity_length >> (8 * 0)) & 0xFF;
+      *(outbuffer + offset + 1) = (this->absolute_velocity_length >> (8 * 1)) & 0xFF;
+      *(outbuffer + offset + 2) = (this->absolute_velocity_length >> (8 * 2)) & 0xFF;
+      *(outbuffer + offset + 3) = (this->absolute_velocity_length >> (8 * 3)) & 0xFF;
+      offset += sizeof(this->absolute_velocity_length);
+      for( uint32_t i = 0; i < absolute_velocity_length; i++){
+      union {
+        float real;
+        uint32_t base;
+      } u_absolute_velocityi;
+      u_absolute_velocityi.real = this->absolute_velocity[i];
+      *(outbuffer + offset + 0) = (u_absolute_velocityi.base >> (8 * 0)) & 0xFF;
+      *(outbuffer + offset + 1) = (u_absolute_velocityi.base >> (8 * 1)) & 0xFF;
+      *(outbuffer + offset + 2) = (u_absolute_velocityi.base >> (8 * 2)) & 0xFF;
+      *(outbuffer + offset + 3) = (u_absolute_velocityi.base >> (8 * 3)) & 0xFF;
+      offset += sizeof(this->absolute_velocity[i]);
+      }
+      *(outbuffer + offset + 0) = (this->incremental_velocity_length >> (8 * 0)) & 0xFF;
+      *(outbuffer + offset + 1) = (this->incremental_velocity_length >> (8 * 1)) & 0xFF;
+      *(outbuffer + offset + 2) = (this->incremental_velocity_length >> (8 * 2)) & 0xFF;
+      *(outbuffer + offset + 3) = (this->incremental_velocity_length >> (8 * 3)) & 0xFF;
+      offset += sizeof(this->incremental_velocity_length);
+      for( uint32_t i = 0; i < incremental_velocity_length; i++){
+      union {
+        float real;
+        uint32_t base;
+      } u_incremental_velocityi;
+      u_incremental_velocityi.real = this->incremental_velocity[i];
+      *(outbuffer + offset + 0) = (u_incremental_velocityi.base >> (8 * 0)) & 0xFF;
+      *(outbuffer + offset + 1) = (u_incremental_velocityi.base >> (8 * 1)) & 0xFF;
+      *(outbuffer + offset + 2) = (u_incremental_velocityi.base >> (8 * 2)) & 0xFF;
+      *(outbuffer + offset + 3) = (u_incremental_velocityi.base >> (8 * 3)) & 0xFF;
+      offset += sizeof(this->incremental_velocity[i]);
       }
       return offset;
     }
@@ -379,6 +467,28 @@ namespace march_shared_resources
       offset += sizeof(this->st_motor_current);
         memcpy( &(this->motor_current[i]), &(this->st_motor_current), sizeof(float));
       }
+      uint32_t imc_voltage_lengthT = ((uint32_t) (*(inbuffer + offset))); 
+      imc_voltage_lengthT |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1); 
+      imc_voltage_lengthT |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2); 
+      imc_voltage_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
+      offset += sizeof(this->imc_voltage_length);
+      if(imc_voltage_lengthT > imc_voltage_length)
+        this->imc_voltage = (float*)realloc(this->imc_voltage, imc_voltage_lengthT * sizeof(float));
+      imc_voltage_length = imc_voltage_lengthT;
+      for( uint32_t i = 0; i < imc_voltage_length; i++){
+      union {
+        float real;
+        uint32_t base;
+      } u_st_imc_voltage;
+      u_st_imc_voltage.base = 0;
+      u_st_imc_voltage.base |= ((uint32_t) (*(inbuffer + offset + 0))) << (8 * 0);
+      u_st_imc_voltage.base |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1);
+      u_st_imc_voltage.base |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2);
+      u_st_imc_voltage.base |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3);
+      this->st_imc_voltage = u_st_imc_voltage.real;
+      offset += sizeof(this->st_imc_voltage);
+        memcpy( &(this->imc_voltage[i]), &(this->st_imc_voltage), sizeof(float));
+      }
       uint32_t motor_voltage_lengthT = ((uint32_t) (*(inbuffer + offset))); 
       motor_voltage_lengthT |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1); 
       motor_voltage_lengthT |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2); 
@@ -401,17 +511,39 @@ namespace march_shared_resources
       offset += sizeof(this->st_motor_voltage);
         memcpy( &(this->motor_voltage[i]), &(this->st_motor_voltage), sizeof(float));
       }
+      uint32_t absolute_encoder_value_lengthT = ((uint32_t) (*(inbuffer + offset))); 
+      absolute_encoder_value_lengthT |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1); 
+      absolute_encoder_value_lengthT |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2); 
+      absolute_encoder_value_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
+      offset += sizeof(this->absolute_encoder_value_length);
+      if(absolute_encoder_value_lengthT > absolute_encoder_value_length)
+        this->absolute_encoder_value = (int32_t*)realloc(this->absolute_encoder_value, absolute_encoder_value_lengthT * sizeof(int32_t));
+      absolute_encoder_value_length = absolute_encoder_value_lengthT;
+      for( uint32_t i = 0; i < absolute_encoder_value_length; i++){
+      union {
+        int32_t real;
+        uint32_t base;
+      } u_st_absolute_encoder_value;
+      u_st_absolute_encoder_value.base = 0;
+      u_st_absolute_encoder_value.base |= ((uint32_t) (*(inbuffer + offset + 0))) << (8 * 0);
+      u_st_absolute_encoder_value.base |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1);
+      u_st_absolute_encoder_value.base |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2);
+      u_st_absolute_encoder_value.base |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3);
+      this->st_absolute_encoder_value = u_st_absolute_encoder_value.real;
+      offset += sizeof(this->st_absolute_encoder_value);
+        memcpy( &(this->absolute_encoder_value[i]), &(this->st_absolute_encoder_value), sizeof(int32_t));
+      }
       uint32_t incremental_encoder_value_lengthT = ((uint32_t) (*(inbuffer + offset))); 
       incremental_encoder_value_lengthT |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1); 
       incremental_encoder_value_lengthT |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2); 
       incremental_encoder_value_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
       offset += sizeof(this->incremental_encoder_value_length);
       if(incremental_encoder_value_lengthT > incremental_encoder_value_length)
-        this->incremental_encoder_value = (float*)realloc(this->incremental_encoder_value, incremental_encoder_value_lengthT * sizeof(float));
+        this->incremental_encoder_value = (int32_t*)realloc(this->incremental_encoder_value, incremental_encoder_value_lengthT * sizeof(int32_t));
       incremental_encoder_value_length = incremental_encoder_value_lengthT;
       for( uint32_t i = 0; i < incremental_encoder_value_length; i++){
       union {
-        float real;
+        int32_t real;
         uint32_t base;
       } u_st_incremental_encoder_value;
       u_st_incremental_encoder_value.base = 0;
@@ -421,13 +553,57 @@ namespace march_shared_resources
       u_st_incremental_encoder_value.base |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3);
       this->st_incremental_encoder_value = u_st_incremental_encoder_value.real;
       offset += sizeof(this->st_incremental_encoder_value);
-        memcpy( &(this->incremental_encoder_value[i]), &(this->st_incremental_encoder_value), sizeof(float));
+        memcpy( &(this->incremental_encoder_value[i]), &(this->st_incremental_encoder_value), sizeof(int32_t));
+      }
+      uint32_t absolute_velocity_lengthT = ((uint32_t) (*(inbuffer + offset))); 
+      absolute_velocity_lengthT |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1); 
+      absolute_velocity_lengthT |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2); 
+      absolute_velocity_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
+      offset += sizeof(this->absolute_velocity_length);
+      if(absolute_velocity_lengthT > absolute_velocity_length)
+        this->absolute_velocity = (float*)realloc(this->absolute_velocity, absolute_velocity_lengthT * sizeof(float));
+      absolute_velocity_length = absolute_velocity_lengthT;
+      for( uint32_t i = 0; i < absolute_velocity_length; i++){
+      union {
+        float real;
+        uint32_t base;
+      } u_st_absolute_velocity;
+      u_st_absolute_velocity.base = 0;
+      u_st_absolute_velocity.base |= ((uint32_t) (*(inbuffer + offset + 0))) << (8 * 0);
+      u_st_absolute_velocity.base |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1);
+      u_st_absolute_velocity.base |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2);
+      u_st_absolute_velocity.base |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3);
+      this->st_absolute_velocity = u_st_absolute_velocity.real;
+      offset += sizeof(this->st_absolute_velocity);
+        memcpy( &(this->absolute_velocity[i]), &(this->st_absolute_velocity), sizeof(float));
+      }
+      uint32_t incremental_velocity_lengthT = ((uint32_t) (*(inbuffer + offset))); 
+      incremental_velocity_lengthT |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1); 
+      incremental_velocity_lengthT |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2); 
+      incremental_velocity_lengthT |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3); 
+      offset += sizeof(this->incremental_velocity_length);
+      if(incremental_velocity_lengthT > incremental_velocity_length)
+        this->incremental_velocity = (float*)realloc(this->incremental_velocity, incremental_velocity_lengthT * sizeof(float));
+      incremental_velocity_length = incremental_velocity_lengthT;
+      for( uint32_t i = 0; i < incremental_velocity_length; i++){
+      union {
+        float real;
+        uint32_t base;
+      } u_st_incremental_velocity;
+      u_st_incremental_velocity.base = 0;
+      u_st_incremental_velocity.base |= ((uint32_t) (*(inbuffer + offset + 0))) << (8 * 0);
+      u_st_incremental_velocity.base |= ((uint32_t) (*(inbuffer + offset + 1))) << (8 * 1);
+      u_st_incremental_velocity.base |= ((uint32_t) (*(inbuffer + offset + 2))) << (8 * 2);
+      u_st_incremental_velocity.base |= ((uint32_t) (*(inbuffer + offset + 3))) << (8 * 3);
+      this->st_incremental_velocity = u_st_incremental_velocity.real;
+      offset += sizeof(this->st_incremental_velocity);
+        memcpy( &(this->incremental_velocity[i]), &(this->st_incremental_velocity), sizeof(float));
       }
      return offset;
     }
 
-    const char * getType(){ return "march_shared_resources/ImcErrorState"; };
-    const char * getMD5(){ return "257334b3b47fe1b244b79e0baa52a1b9"; };
+    const char * getType(){ return "march_shared_resources/ImcState"; };
+    const char * getMD5(){ return "ed4be4b991ee6e262d33c8b84a0ed150"; };
 
   };
 
