@@ -180,6 +180,7 @@ void setup()
   nh.subscribe(gait_instruction_result_subscriber);
 
   alive_msg.id = "crutch";
+  gait_instruction_msg.id = alive_msg.id;
 
   state_machine.construct();
 
