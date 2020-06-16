@@ -1,5 +1,6 @@
 #include "button.h"
 #include "double_click_button.h"
+#include "pressure_sensor.h"
 #include "rocker_switch.h"
 #include "screen.h"
 #include "state_machine.h"
@@ -26,6 +27,8 @@ const uint8_t RE_PUSH = 19;
 const uint8_t PUSH = 18;
 const uint8_t ROCKER_UP = 2;
 const uint8_t ROCKER_DOWN = 5;
+const uint8_t PRESSURE_SENSOR_A = 33;
+const uint8_t PRESSURE_SENSOR_B = 35;
 const uint8_t UART_TX = 32;  // Software serial
 const uint8_t UART_RX = 34;  // Software serial
 const uint8_t RST = 13;      // Reset
@@ -48,6 +51,8 @@ DoubleClickButton push(pins::PUSH);
 RotaryEncoder rotaryEncoder(pins::RE_A, pins::RE_B);
 DoubleClickButton rotaryEncoderPush(pins::RE_PUSH);
 RockerSwitch rocker(pins::ROCKER_UP, pins::ROCKER_DOWN);
+
+PressureSensor pressureSensor(pins::PRESSURE_SENSOR_A, pins::PRESSURE_SENSOR_B);
 
 SoftwareSerial screen_serial(pins::UART_RX, pins::UART_TX);
 Goldelox_Serial_4DLib screen_goldelox(&screen_serial);
@@ -196,6 +201,8 @@ void loop()
   ButtonState trigger_state = trigger.getState();
   ButtonState push_button_state = push.getState();
   ButtonState rotary_encoder_button_state = rotaryEncoderPush.getState();
+
+  float pressure_voltage_value = pressureSensor.read();
 
   // When button is pressed, vibrate
   if (trigger_state == ButtonState::PUSH)
