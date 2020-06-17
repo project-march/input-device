@@ -17,6 +17,7 @@
 #include <march_shared_resources/Alive.h>
 #include <march_shared_resources/GaitInstruction.h>
 #include <march_shared_resources/GaitInstructionResponse.h>
+#include <std_msgs/Float32.h>
 
 namespace pins
 {
@@ -27,8 +28,8 @@ const uint8_t RE_PUSH = 19;
 const uint8_t PUSH = 18;
 const uint8_t ROCKER_UP = 2;
 const uint8_t ROCKER_DOWN = 5;
-const uint8_t PRESSURE_SENSOR_A = 33;
-const uint8_t PRESSURE_SENSOR_B = 35;
+const uint8_t PRESSURE_SENSOR_A = 36;
+const uint8_t PRESSURE_SENSOR_B = 39;
 const uint8_t UART_TX = 32;  // Software serial
 const uint8_t UART_RX = 34;  // Software serial
 const uint8_t RST = 13;      // Reset
@@ -89,6 +90,9 @@ march_shared_resources::GaitInstruction gait_instruction_msg;
 march_shared_resources::Alive alive_msg;
 ros::Publisher gait_instruction_publisher("/march/input_device/instruction", &gait_instruction_msg);
 ros::Publisher ping_publisher("/march/input_device/alive", &alive_msg);
+
+std_msgs::Float32 pressure_msg;
+ros::Publisher pressure_publisher("march/pressure", &pressure_msg);
 
 void sendGaitMessage(const std::string& name)
 {
@@ -202,7 +206,8 @@ void loop()
   ButtonState push_button_state = push.getState();
   ButtonState rotary_encoder_button_state = rotaryEncoderPush.getState();
 
-  float pressure_voltage_value = pressureSensor.read();
+  pressure_msg.data = pressureSensor.read();
+  pressure_publisher.publish(&pressure_msg);
 
   // When button is pressed, vibrate
   if (trigger_state == ButtonState::PUSH)
