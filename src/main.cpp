@@ -186,6 +186,7 @@ void setup()
   nh.initNode();
   nh.advertise(gait_instruction_publisher);
   nh.advertise(ping_publisher);
+  nh.advertise(pressure_publisher);
   nh.subscribe(gait_instruction_result_subscriber);
 
   alive_msg.id = "crutch";
