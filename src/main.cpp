@@ -67,11 +67,12 @@ ros::NodeHandle nh;
 #endif
 
 bool received_gait_instruction_response = false;
+bool is_transitioning = false;
 bool gait_rejected = false;
 bool gait_message_send = false;
 void gaitInstructionResponseCallback(const march_shared_resources::GaitInstructionResponse& msg)
 {
-  if (msg.result == msg.GAIT_FINISHED || msg.result == msg.GAIT_REJECTED)
+  if ((msg.result == msg.GAIT_FINISHED || msg.result == msg.GAIT_REJECTED) && !is_transitioning)
   {
     received_gait_instruction_response = true;
   }
@@ -89,6 +90,7 @@ void sendGaitMessage(const std::string& name)
 {
   if (!name.empty() && !gait_message_send)
   {
+    is_transitioning = false;
     gait_instruction_msg.type = march_shared_resources::GaitInstruction::GAIT;
     gait_instruction_msg.gait_name = name.c_str();
     gait_instruction_publisher.publish(&gait_instruction_msg);
@@ -102,6 +104,7 @@ void sendGaitMessage(const std::string& name)
 
 void sendIncrementStepSizeMessage()
 {
+  is_transitioning = true;
   gait_instruction_msg.type = march_shared_resources::GaitInstruction::INCREMENT_STEP_SIZE;
   gait_instruction_msg.gait_name = "";
   gait_instruction_publisher.publish(&gait_instruction_msg);
@@ -109,6 +112,7 @@ void sendIncrementStepSizeMessage()
 
 void sendDecrementStepSizeMessage()
 {
+  is_transitioning = true;
   gait_instruction_msg.type = march_shared_resources::GaitInstruction::DECREMENT_STEP_SIZE;
   gait_instruction_msg.gait_name = "";
   gait_instruction_publisher.publish(&gait_instruction_msg);
@@ -116,6 +120,7 @@ void sendDecrementStepSizeMessage()
 
 void sendStopMessage()
 {
+  is_transitioning = false;
   gait_instruction_msg.type = march_shared_resources::GaitInstruction::STOP;
   gait_instruction_msg.gait_name = "";
   gait_instruction_publisher.publish(&gait_instruction_msg);
