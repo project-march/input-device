@@ -156,9 +156,6 @@ void setup()
   setupWiFi();
 #endif
 
-  pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, HIGH);
-
   pinMode(pins::UART_TX, OUTPUT);
   pinMode(pins::UART_RX, INPUT);
 
@@ -250,11 +247,9 @@ void loop()
       switch (rotary_encoder_direction)
       {
         case RotaryEncoder::Direction::COUNTERCLOCKWISE:
-          digitalWrite(LED_BUILTIN, LOW);
           state_has_changed = state_machine.left();
           break;
         case RotaryEncoder::Direction::CLOCKWISE:
-          digitalWrite(LED_BUILTIN, HIGH);
           state_has_changed = state_machine.right();
           break;
         default:
