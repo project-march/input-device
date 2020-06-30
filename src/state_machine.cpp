@@ -35,8 +35,7 @@ void StateMachine::construct()
 void StateMachine::constructWalkMenu(state_iterator list_end, State* obstacles)
 {
   State& home = this->createEscapeState(HOME_WALKMENU);
-  State& walk_escape =
-      this->createEscapeGaitState(WALK_4, WALK_4_SELECTED, WALK_4_ACTIVATED, "gait_walk", nullptr);
+  State& walk_escape = this->createEscapeGaitState(WALK_4, WALK_4_SELECTED, WALK_4_ACTIVATED, "gait_walk", nullptr);
   State& single_step = this->createEscapeGaitState(SINGLE_STEP_4, SINGLE_STEP_4_SELECTED, SINGLE_STEP_4_ACTIVATED,
                                                    "gait_single_step_normal", nullptr);
   State& home_stand_walk = this->createEscapeGaitState(HOMESTAND_4_WALKMENU, HOMESTAND_4_WALKMENU_SELECTED,
@@ -188,70 +187,28 @@ void StateMachine::constructTiltedPathMenu(State* from, State* next_obstacle)
 
   State& tilted_pathL_down = this->createGaitState(LEFT_LASTSTEP_TP, LEFT_LAST_TP_SELECTED, LEFT_LAST_TP_ACTIVATED,
                                                    "gait_tilted_path_left_straight_end", &walk_in_between);
-  State& tilted_pathL_steps_sixth =
-      this->createGaitState(LEFT_SIXTHSTEP_TP, LEFT_STEP_TP_SELECTED, LEFT_STEP_TP_ACTIVATED,
-                            "gait_tilted_path_left_single_step", &tilted_pathL_down);
-  State& tilted_pathL_steps_fifth =
-      this->createGaitState(LEFT_FIFTHSTEP_TP, LEFT_STEP_TP_SELECTED, LEFT_STEP_TP_ACTIVATED,
-                            "gait_tilted_path_left_single_step", &tilted_pathL_steps_sixth);
-  State& tilted_pathL_steps_fourth =
-      this->createGaitState(LEFT_FOURTHSTEP_TP, LEFT_STEP_TP_SELECTED, LEFT_STEP_TP_ACTIVATED,
-                            "gait_tilted_path_left_single_step", &tilted_pathL_steps_fifth);
-  State& tilted_pathL_steps_third =
-      this->createGaitState(LEFT_THIRDSTEP_TP, LEFT_STEP_TP_SELECTED, LEFT_STEP_TP_ACTIVATED,
-                            "gait_tilted_path_left_single_step", &tilted_pathL_steps_fourth);
-  State& tilted_pathL_steps_second =
-      this->createGaitState(LEFT_SECONDSTEP_TP, LEFT_STEP_TP_SELECTED, LEFT_STEP_TP_ACTIVATED,
-                            "gait_tilted_path_left_single_step", &tilted_pathL_steps_third);
-  State& tilted_pathL_steps_first =
-      this->createGaitState(LEFT_FIRSTSTEP_TP, LEFT_STEP_TP_SELECTED, LEFT_STEP_TP_ACTIVATED,
-                            "gait_tilted_path_left_single_step", &tilted_pathL_steps_second);
+  State& tilted_pathL_steps = this->createGaitState(LEFT_FIRSTSTEP_TP, LEFT_STEP_TP_SELECTED, LEFT_STEP_TP_ACTIVATED,
+                                                    "gait_tilted_path_left_single_step", nullptr);
 
   State& tilted_pathL_up = this->createGaitState(LEFT_STEPUP_TP, LEFT_UP_TP_SELECTED, LEFT_UP_TP_ACTIVATED,
-                                                 "gait_tilted_path_left_straight_start", &tilted_pathL_steps_first);
+                                                 "gait_tilted_path_left_straight_start", &tilted_pathL_steps);
 
   State& tilted_pathR_down = this->createGaitState(RIGHT_LASTSTEP_TP, RIGHT_LAST_TP_SELECTED, RIGHT_LAST_TP_ACTIVATED,
                                                    "gait_tilted_path_right_straight_end", &walk_in_between);
-  State& tilted_pathR_steps_sixth =
-      this->createGaitState(RIGHT_SIXTHSTEP_TP, RIGHT_STEP_TP_SELECTED, RIGHT_STEP_TP_ACTIVATED,
-                            "gait_tilted_path_left_single_step", &tilted_pathR_down);
-  State& tilted_pathR_steps_fifth =
-      this->createGaitState(RIGHT_FIFTHSTEP_TP, RIGHT_STEP_TP_SELECTED, RIGHT_STEP_TP_ACTIVATED,
-                            "gait_tilted_path_left_single_step", &tilted_pathR_steps_sixth);
-  State& tilted_pathR_steps_fourth =
-      this->createGaitState(RIGHT_FOURTHSTEP_TP, RIGHT_STEP_TP_SELECTED, RIGHT_STEP_TP_ACTIVATED,
-                            "gait_tilted_path_left_single_step", &tilted_pathR_steps_fifth);
-  State& tilted_pathR_steps_third =
-      this->createGaitState(RIGHT_THIRDSTEP_TP, RIGHT_STEP_TP_SELECTED, RIGHT_STEP_TP_ACTIVATED,
-                            "gait_tilted_path_left_single_step", &tilted_pathR_steps_fourth);
-  State& tilted_pathR_steps_second =
-      this->createGaitState(RIGHT_SECONDSTEP_TP, RIGHT_STEP_TP_SELECTED, RIGHT_STEP_TP_ACTIVATED,
-                            "gait_tilted_path_left_single_step", &tilted_pathR_steps_third);
-  State& tilted_pathR_steps_first =
-      this->createGaitState(RIGHT_FIRSTSTEP_TP, RIGHT_STEP_TP_SELECTED, RIGHT_STEP_TP_ACTIVATED,
-                            "gait_tilted_path_right_single_step", &tilted_pathR_steps_second);
+  State& tilted_pathR_steps = this->createGaitState(RIGHT_FIRSTSTEP_TP, RIGHT_STEP_TP_SELECTED, RIGHT_STEP_TP_ACTIVATED,
+                                                    "gait_tilted_path_right_single_step", nullptr);
   State& tilted_pathR_up = this->createGaitState(RIGHT_STEPUP_TP, RIGHT_UP_TP_SELECTED, RIGHT_UP_TP_ACTIVATED,
-                                                 "gait_tilted_path_right_straight_start", &tilted_pathR_steps_first);
+                                                 "gait_tilted_path_right_straight_start", &tilted_pathR_steps);
 
   tilted_pathL.withSelect(&tilted_pathL_up).backTo(from).withRight(&tilted_pathR);
   tilted_pathR.withSelect(&tilted_pathR_up).backTo(from);
 
-  tilted_pathL_up.backTo(&tilted_pathL).withRight(&tilted_pathL_steps_first);
-  tilted_pathL_steps_first.backTo(&tilted_pathL).withRight(&tilted_pathL_steps_second);
-  tilted_pathL_steps_second.backTo(&tilted_pathL).withRight(&tilted_pathL_steps_third);
-  tilted_pathL_steps_third.backTo(&tilted_pathL).withRight(&tilted_pathL_steps_fourth);
-  tilted_pathL_steps_fourth.backTo(&tilted_pathL).withRight(&tilted_pathL_steps_fifth);
-  tilted_pathL_steps_fifth.backTo(&tilted_pathL).withRight(&tilted_pathL_steps_sixth);
-  tilted_pathL_steps_sixth.backTo(&tilted_pathL).withRight(&tilted_pathL_down);
+  tilted_pathL_up.backTo(&tilted_pathL).withRight(&tilted_pathL_steps);
+  tilted_pathL_steps.backTo(&tilted_pathL).withRight(&tilted_pathL_down);
   tilted_pathL_down.backTo(&tilted_pathL);
 
-  tilted_pathR_up.backTo(&tilted_pathR).withRight(&tilted_pathR_steps_first);
-  tilted_pathR_steps_first.backTo(&tilted_pathR).withRight(&tilted_pathR_steps_second);
-  tilted_pathR_steps_second.backTo(&tilted_pathR).withRight(&tilted_pathR_steps_third);
-  tilted_pathR_steps_third.backTo(&tilted_pathR).withRight(&tilted_pathR_steps_fourth);
-  tilted_pathR_steps_fourth.backTo(&tilted_pathR).withRight(&tilted_pathR_steps_fifth);
-  tilted_pathR_steps_fifth.backTo(&tilted_pathR).withRight(&tilted_pathR_steps_sixth);
-  tilted_pathR_steps_sixth.backTo(&tilted_pathR).withRight(&tilted_pathR_down);
+  tilted_pathR_up.backTo(&tilted_pathR).withRight(&tilted_pathR_steps);
+  tilted_pathR_steps.backTo(&tilted_pathR).withRight(&tilted_pathR_down);
   tilted_pathR_down.backTo(&tilted_pathR);
 
   walk_in_between.backTo(from);
