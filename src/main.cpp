@@ -238,10 +238,6 @@ void loop()
     {
       state_has_changed = state_machine.shortcutPush();
     }
-    else if (push_button_state == ButtonState::DOUBLE)
-    {
-      state_has_changed = state_machine.shortcutDoublePush();
-    }
     else
     {
       switch (rotary_encoder_direction)

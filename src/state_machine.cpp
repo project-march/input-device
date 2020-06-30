@@ -22,7 +22,6 @@ void StateMachine::construct()
   state_iterator list_end = states_.end();
 
   this->constructWalkMenu(list_end, &obstacles);
-  this->constructStepMenu(list_end, &obstacles);
 
   // Menu transitions
   home_sit_start.withLeft(&turn_off_start).withRight(&stand_up);
@@ -35,14 +34,18 @@ void StateMachine::construct()
 
 void StateMachine::constructWalkMenu(state_iterator list_end, State* obstacles)
 {
-  State& walk_escape = this->createEscapeGaitState(WALK_4, WALK_4_SELECTED, WALK_4_ACTIVATED, "gait_walk", nullptr);
-  State& home_stand_walk = this->createEscapeGaitState(HOMESTAND_4_WALKMENU, HOMESTAND_4_WALKMENU_SELECTED,
-                                                       HOMESTAND_4_WALKMENU_ACTIVATED, "home_stand", nullptr);
-  State& sit_walk = this->createEscapeGaitState(SIT_4_WALKMENU, SIT_4_WALKMENU_SELECTED, SIT_4_WALKMENU_ACTIVATED,
-                                                "gait_sit", nullptr);
   State& home = this->createEscapeState(HOME_WALKMENU);
+  State& walk_escape =
+      this->createEscapeGaitState(WALK_4, WALK_4_SELECTED, WALK_4_ACTIVATED, "gait_walk", nullptr);
+  State& single_step = this->createEscapeGaitState(SINGLE_STEP_4, SINGLE_STEP_4_SELECTED, SINGLE_STEP_4_ACTIVATED,
+                                                   "gait_single_step_normal", nullptr);
+  State& home_stand_walk = this->createEscapeGaitState(HOMESTAND_4_WALKMENU, HOMESTAND_4_WALKMENU_SELECTED,
+                                                       HOMESTAND_4_WALKMENU_ACTIVATED, "home_stand", &walk_escape);
+  State& sit_walk =
+      this->createEscapeGaitState(SIT_4_WALKMENU, SIT_4_WALKMENU_SELECTED, SIT_4_WALKMENU_ACTIVATED, "gait_sit", &home);
 
-  walk_escape.withRight(&home_stand_walk);
+  walk_escape.withRight(&single_step);
+  single_step.withRight(&home_stand_walk);
   home_stand_walk.withRight(&sit_walk);
   sit_walk.withRight(&home);
   home.selectTo(obstacles);
@@ -52,32 +55,7 @@ void StateMachine::constructWalkMenu(state_iterator list_end, State* obstacles)
   {
     if (states_iterator->getGaitName().empty())
     {
-      states_iterator->shortcutDoublePushTo(&walk_escape);
-    }
-  }
-}
-
-void StateMachine::constructStepMenu(state_iterator list_end, State* obstacles)
-{
-  State& single_step = this->createEscapeGaitState(SINGLE_STEP_4, SINGLE_STEP_4_SELECTED, SINGLE_STEP_4_ACTIVATED,
-                                                   "gait_single_step_normal", nullptr);
-  State& home_stand_ss = this->createEscapeGaitState(HOMESTAND_4_SSMENU, HOMESTAND_4_SSMENU_SELECTED,
-                                                     HOMESTAND_4_SSMENU_ACTIVATED, "home_stand", nullptr);
-  State& sit_ss =
-      this->createEscapeGaitState(SIT_4_SSMENU, SIT_4_SSMENU_SELECTED, SIT_4_SSMENU_ACTIVATED, "gait_sit", nullptr);
-  State& home = this->createEscapeState(HOME_WALKMENU);
-
-  single_step.withRight(&home_stand_ss);
-  home_stand_ss.withRight(&sit_ss);
-  sit_ss.withRight(&home);
-  home.selectTo(obstacles);
-
-  state_iterator states_iterator;
-  for (states_iterator = states_.begin(); states_iterator != list_end; ++states_iterator)
-  {
-    if (states_iterator->getGaitName().empty())
-    {
-      states_iterator->shortcutPushTo(&single_step);
+      states_iterator->shortcutPushTo(&walk_escape);
     }
   }
 }
@@ -312,10 +290,6 @@ void StateMachine::setEscapeStatesBackTo(const State* previous_state)
     {
       escape_state.backTo(previous_state);
     }
-    else
-    {
-      escape_state.withActivate(previous_state);
-    }
   }
 }
 
@@ -362,17 +336,6 @@ bool StateMachine::shortcutPush()
   }
 
   return this->hasState() && this->setCurrentState(this->current_state_->shortcutPush());
-}
-
-bool StateMachine::shortcutDoublePush()
-{
-  if (!this->in_escape_menu_)
-  {
-    this->previous_state_ = this->current_state_;
-    this->setEscapeStatesBackTo(this->previous_state_);
-    this->in_escape_menu_ = true;
-  }
-  return this->hasState() && this->setCurrentState(this->current_state_->shortcutDoublePush());
 }
 
 bool StateMachine::back()
