@@ -193,35 +193,35 @@ struct SectorAddress
 #define TILTED_PATH_RECHTS2 SectorAddress { 0x0000, 0x4732 }
 #define TILTED_PATH_LINKS2 SectorAddress { 0x0000, 0x46E1 }
 
-#define LEFT_STEPUP_TP SectorAddress { 0x0000, 0x505F }
+#define LEFT_STEPUP_TP SectorAddress { 0x0000, 0x5899 }
 #define LEFT_UP_TP_SELECTED SectorAddress { 0x0000, 0x4C93 }
 #define LEFT_UP_TP_ACTIVATED SectorAddress { 0x0000, 0x4E79 }
 #define LEFT_STEP_TP_SELECTED SectorAddress { 0x0000, 0x4D35 }
 #define LEFT_STEP_TP_ACTIVATED SectorAddress { 0x0000, 0x4F1B }
 #define LEFT_LAST_TP_SELECTED SectorAddress { 0x0000, 0x4E28 }
 #define LEFT_LAST_TP_ACTIVATED SectorAddress { 0x0000, 0x500E }
-#define LEFT_FIRSTSTEP_TP SectorAddress { 0x0000, 0x50B0 }
-#define LEFT_SECONDSTEP_TP SectorAddress { 0x0000, 0x5101 }
-#define LEFT_THIRDSTEP_TP SectorAddress { 0x0000, 0x5152 }
-#define LEFT_FOURTHSTEP_TP SectorAddress { 0x0000, 0x51A3 }
-#define LEFT_FIFTHSTEP_TP SectorAddress { 0x0000, 0x51F4 }
-#define LEFT_SIXTHSTEP_TP SectorAddress { 0x0000, 0x5245 }
-#define LEFT_LASTSTEP_TP SectorAddress { 0x0000, 0x5296 }
+#define LEFT_FIRSTSTEP_TP SectorAddress { 0x0000, 0x58EA }
+#define LEFT_SECONDSTEP_TP SectorAddress { 0x0000, 0x593B }
+#define LEFT_THIRDSTEP_TP SectorAddress { 0x0000, 0x598C }
+#define LEFT_FOURTHSTEP_TP SectorAddress { 0x0000, 0x59DD }
+#define LEFT_FIFTHSTEP_TP SectorAddress { 0x0000, 0x5A2E }
+#define LEFT_SIXTHSTEP_TP SectorAddress { 0x0000, 0x5A7F }
+#define LEFT_LASTSTEP_TP SectorAddress { 0x0000, 0x5AD0 }
 
-#define RIGHT_STEPUP_TP SectorAddress { 0x0000, 0x52E7 }
+#define RIGHT_STEPUP_TP SectorAddress { 0x0000, 0x5B21 }
 #define RIGHT_UP_TP_SELECTED SectorAddress { 0x0000, 0x4CE4 }
 #define RIGHT_UP_TP_ACTIVATED SectorAddress { 0x0000, 0x4ECA }
 #define RIGHT_STEP_TP_SELECTED SectorAddress { 0x0000, 0x4D86 }
 #define RIGHT_STEP_TP_ACTIVATED SectorAddress { 0x0000, 0x4F6C }
 #define RIGHT_LAST_TP_SELECTED SectorAddress { 0x0000, 0x4DD7 }
 #define RIGHT_LAST_TP_ACTIVATED SectorAddress { 0x0000, 0x4FBD }
-#define RIGHT_FIRSTSTEP_TP SectorAddress { 0x0000, 0x5338 }
-#define RIGHT_SECONDSTEP_TP SectorAddress { 0x0000, 0x5389 }
-#define RIGHT_THIRDSTEP_TP SectorAddress { 0x0000, 0x53DA }
-#define RIGHT_FOURTHSTEP_TP SectorAddress { 0x0000, 0x542B }
-#define RIGHT_FIFTHSTEP_TP SectorAddress { 0x0000, 0x547C }
-#define RIGHT_SIXTHSTEP_TP SectorAddress { 0x0000, 0x54CD }
-#define RIGHT_LASTSTEP_TP SectorAddress { 0x0000, 0x551E }
+#define RIGHT_FIRSTSTEP_TP SectorAddress { 0x0000, 0x5B72 }
+#define RIGHT_SECONDSTEP_TP SectorAddress { 0x0000, 0x5BC3 }
+#define RIGHT_THIRDSTEP_TP SectorAddress { 0x0000, 0x5C14 }
+#define RIGHT_FOURTHSTEP_TP SectorAddress { 0x0000, 0x5C65 }
+#define RIGHT_FIFTHSTEP_TP SectorAddress { 0x0000, 0x5CB6 }
+#define RIGHT_SIXTHSTEP_TP SectorAddress { 0x0000, 0x5D07 }
+#define RIGHT_LASTSTEP_TP SectorAddress { 0x0000, 0x5D58 }
 
 #define SLOPE SectorAddress { 0x0000, 0x0EE0 }
 

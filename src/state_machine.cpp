@@ -182,8 +182,8 @@ void StateMachine::constructTiltedPathMenu(State* from, State* next_obstacle)
   State& walk_in_between =
       this->createGaitState(WALK_PLAIN, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", next_obstacle);
 
-  State& tilted_pathL = this->createState(TILTED_PATH_LINKS);
-  State& tilted_pathR = this->createState(TILTED_PATH_RECHTS);
+  State& tilted_pathL = this->createState(TILTED_PATH_LINKS2);
+  State& tilted_pathR = this->createState(TILTED_PATH_RECHTS2);
 
   State& tilted_pathL_down = this->createGaitState(LEFT_LASTSTEP_TP, LEFT_LAST_TP_SELECTED, LEFT_LAST_TP_ACTIVATED,
                                                    "gait_tilted_path_left_straight_end", &walk_in_between);
