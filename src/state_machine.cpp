@@ -152,7 +152,7 @@ void StateMachine::constructStairsMenu(State* from, State* next_obstacle)
   State& stairs_down = this->createState(STAIRS_DOWN);
   State& stairs_down_step =
       this->createGaitState(STAIRS_STEP_DOWN, STAIRS_STEP_DOWN_SELECTED, STAIRS_STEP_DOWN_ACTIVATED,
-                            "gait_stairs_down_single_step", &walk_in_between);
+                            "gait_stairs_down_single_step");
   State& stairs_down_walk = this->createGaitState(STAIRS_DOWN, STAIRS_DOWN_SELECTED, STAIRS_DOWN_ACTIVATED,
                                                   "gait_stairs_down", &walk_in_between);
   State& stairs_walk =
