@@ -117,31 +117,43 @@ void StateMachine::constructRoughTerrainMenu(State* from, State* next_obstacle)
 {
   State& walk_in_between =
       this->createGaitState(WALK_PLAIN, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", next_obstacle);
-  State& small_step_rt_second = this->createGaitState(
-      SMALLSTEP_RT_second, SMALLSTEP_RT_SELECTED, SMALLSTEP_RT_ACTIVATED, "gait_single_step_small", &walk_in_between);
-  State& high_step_rt_second = this->createGaitState(HIGHSTEP_RT_second, HIGHSTEP_RT_SELECTED, HIGHSTEP_RT_ACTIVATED,
-                                                     "gait_rough_terrain_high_step", &small_step_rt_second);
+  State& high_step4_rt = this->createGaitState(HIGHSTEP_RT_second, HIGHSTEP_RT_SELECTED, HIGHSTEP_RT_ACTIVATED,
+                                               "gait_rough_terrain_high_step", &walk_in_between);
+  State& small_step4_rt = this->createGaitState(SMALLSTEP_RT_second, SMALLSTEP_RT_SELECTED, SMALLSTEP_RT_ACTIVATED,
+                                                "gait_single_step_small", &high_step4_rt);
+  State& high_step3_rt = this->createGaitState(HIGHSTEP_RT_second, HIGHSTEP_RT_SELECTED, HIGHSTEP_RT_ACTIVATED,
+                                               "gait_rough_terrain_high_step", &small_step4_rt);
+  State& small_step3_rt = this->createGaitState(SMALLSTEP_RT_second, SMALLSTEP_RT_SELECTED, SMALLSTEP_RT_ACTIVATED,
+                                                "gait_single_step_small", &high_step3_rt);
   State& middle_step3_rt = this->createGaitState(MIDDLESTEP3_RT, MIDDLESTEP3_RT_SELECTED, MIDDLESTEP3_RT_ACTIVATED,
-                                                 "gait_rough_terrain_third_middle_step", &high_step_rt_second);
+                                                 "gait_rough_terrain_third_middle_step", &small_step3_rt);
   State& middle_step2_rt = this->createGaitState(MIDDLESTEP2_RT, MIDDLESTEP2_RT_SELECTED, MIDDLESTEP2_RT_ACTIVATED,
                                                  "gait_rough_terrain_second_middle_step", &middle_step3_rt);
   State& middle_step1_rt = this->createGaitState(MIDDLESTEP1_RT, MIDDLESTEP1_RT_SELECTED, MIDDLESTEP1_RT_ACTIVATED,
                                                  "gait_rough_terrain_first_middle_step", &middle_step2_rt);
-  State& small_step_rt = this->createGaitState(SMALLSTEP_RT, SMALLSTEP_RT_SELECTED, SMALLSTEP_RT_ACTIVATED,
-                                               "gait_single_step_small", &middle_step1_rt);
-  State& high_step_rt = this->createGaitState(HIGHSTEP_RT, HIGHSTEP_RT_SELECTED, HIGHSTEP_RT_ACTIVATED,
-                                              "gait_rough_terrain_high_step", &small_step_rt);
+  State& small_step2_rt = this->createGaitState(SMALLSTEP_RT, SMALLSTEP_RT_SELECTED, SMALLSTEP_RT_ACTIVATED,
+                                                "gait_single_step_small", &middle_step1_rt);
+  State& high_step2_rt = this->createGaitState(HIGHSTEP_RT, HIGHSTEP_RT_SELECTED, HIGHSTEP_RT_ACTIVATED,
+                                               "gait_rough_terrain_high_step", &small_step2_rt);
+  State& small_step1_rt = this->createGaitState(SMALLSTEP_RT, SMALLSTEP_RT_SELECTED, SMALLSTEP_RT_ACTIVATED,
+                                                "gait_single_step_small", &high_step2_rt);
+  State& high_step1_rt = this->createGaitState(HIGHSTEP_RT, HIGHSTEP_RT_SELECTED, HIGHSTEP_RT_ACTIVATED,
+                                               "gait_rough_terrain_high_step", &small_step1_rt);
 
-  high_step_rt.backTo(from).withRight(&small_step_rt);
-  small_step_rt.backTo(from).withRight(&middle_step1_rt);
+  high_step1_rt.backTo(from).withRight(&small_step1_rt);
+  small_step1_rt.backTo(from).withRight(&high_step2_rt);
+  high_step2_rt.backTo(from).withRight(&small_step2_rt);
+  small_step2_rt.backTo(from).withRight(&middle_step1_rt);
   middle_step1_rt.backTo(from).withRight(&middle_step2_rt);
   middle_step2_rt.backTo(from).withRight(&middle_step3_rt);
-  middle_step3_rt.backTo(from).withRight(&high_step_rt_second);
-  high_step_rt_second.backTo(from).withRight(&small_step_rt_second);
-  small_step_rt_second.backTo(from);
+  middle_step3_rt.backTo(from).withRight(&small_step3_rt);
+  small_step3_rt.backTo(from).withRight(&high_step3_rt);
+  high_step3_rt.backTo(from).withRight(&small_step4_rt);
+  small_step4_rt.backTo(from).withRight(&high_step4_rt);
+  high_step4_rt.backTo(from);
   walk_in_between.backTo(from);
 
-  from->withSelect(&high_step_rt);
+  from->withSelect(&high_step1_rt);
 }
 
 void StateMachine::constructStairsMenu(State* from, State* next_obstacle)
