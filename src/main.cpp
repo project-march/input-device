@@ -60,8 +60,8 @@ Adafruit_DRV2605 driver;
 const uint8_t EFFECT = 14;
 
 // Select the alive publisher frequency:  20 (Hz) / _ALIVE_FREQUENCY_PUBLISHER_FLAG
-uint8_t _ALIVE_FREQUENCY_PUBLISHER_FLAG = 4;
-uint8_t _CURRENT_FLAG_VALUE = 0;
+const uint8_t ALIVE_FREQUENCY_PUBLISHER_FLAG = 4;
+uint8_t current_flag_value = 0;
 
 // Create ros nodehandle with publishers
 #ifdef USE_WIRELESS
