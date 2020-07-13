@@ -290,12 +290,12 @@ void loop()
   }
 
   // Average loop frequency is around 20hz / _ALIVE_FREQUENCY_PUBLISHER_FLAG.
-  if (_CURRENT_FLAG_VALUE == _ALIVE_FREQUENCY_PUBLISHER_FLAG)
+  if (current_flag_value == ALIVE_FREQUENCY_PUBLISHER_FLAG)
   {
     sendAliveMessage();
-    _CURRENT_FLAG_VALUE = 0;
+    current_flag_value = 0;
   }
-  _CURRENT_FLAG_VALUE++;
+  current_flag_value++;
 
   nh.spinOnce();
 }
