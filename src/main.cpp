@@ -59,10 +59,6 @@ Adafruit_DRV2605 driver;
 // Select the desired effect, for now test effect "Buzz 100%"
 const uint8_t EFFECT = 14;
 
-// Select the alive publisher frequency:  20 (Hz) / _ALIVE_FREQUENCY_PUBLISHER_FLAG
-const uint8_t ALIVE_FREQUENCY_PUBLISHER_FLAG = 4;
-uint8_t current_flag_value = 0;
-
 // Create ros nodehandle with publishers
 #ifdef USE_WIRELESS
 ros::NodeHandle_<WiFiHardware> nh;
@@ -289,13 +285,7 @@ void loop()
     }
   }
 
-  // Average loop frequency is around 20hz / _ALIVE_FREQUENCY_PUBLISHER_FLAG.
-  if (current_flag_value == ALIVE_FREQUENCY_PUBLISHER_FLAG)
-  {
-    sendAliveMessage();
-    current_flag_value = 0;
-  }
-  current_flag_value++;
+  sendAliveMessage();
 
   nh.spinOnce();
 }
