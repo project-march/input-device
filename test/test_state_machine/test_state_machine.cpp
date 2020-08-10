@@ -28,7 +28,6 @@ void test_state_machine_default_no_transitions()
   TEST_ASSERT_FALSE(state_machine.select());
   TEST_ASSERT_FALSE(state_machine.activate());
   TEST_ASSERT_FALSE(state_machine.shortcutPush());
-  TEST_ASSERT_FALSE(state_machine.shortcutDoublePush());
 }
 
 void test_default_empty()

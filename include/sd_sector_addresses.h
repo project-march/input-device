@@ -46,6 +46,7 @@ struct SectorAddress
 #define WALK_ACTIVATED SectorAddress { 0x0000, 0x10C6 }
 #define SINGLE_STEP_SELECTED SectorAddress { 0x0000, 0x1FA5 }
 #define SINGLE_STEP_ACTIVATED SectorAddress { 0x0000, 0x1FF6 }
+#define WALK_PLAIN SectorAddress { 0x0000, 0x34D8 }
 
 /**********
  * Start menu squares at the top
@@ -74,7 +75,7 @@ struct SectorAddress
 #define WALK_HOME_SELECTED SectorAddress { 0x0000, 0x218B }
 #define WALK_HOME_ACTIVATED SectorAddress { 0x0000, 0x21DC }
 
-#define HOME_WALKMENU SectorAddress { 0x0000, 0x31AE }
+#define HOME_WALKMENU SectorAddress { 0x0000, 0x6CD9 }
 #define HOME_WALKMENU_SELECTED SectorAddress { 0x0000, 0x227E }
 #define HOME_WALKMENU_ACTIVATED SectorAddress { 0x0000, 0x22CF }
 
@@ -90,17 +91,36 @@ struct SectorAddress
 #define HOME_SSMENU_ACTIVATED SectorAddress { 0x0000, 0x20E9 }
 
 /**********
- * Walk menu + home stand + sit + home
+ * Walk menu + single step + side step + home stand + sit + home
  **********/
-#define WALK_4 SectorAddress { 0x0000, 0x31FF }
+#define SINGLE_STEP4_HOME SectorAddress { 0x0000, 0x72DC }
+#define SINGLE_STEP4_HOME_SELECTED SectorAddress { 0x0000, 0x1FA5 }
+#define SINGLE_STEP4_ACTIVATED SectorAddress { 0x0000, 0x1FF6 }
+
+#define OTHER_STEP4_HOME SectorAddress { 0x0000, 0x6AA2 }
+
+#define WALK_4 SectorAddress { 0x0000, 0x6A00 }
 #define WALK_4_SELECTED SectorAddress { 0x0000, 0x171A }
 #define WALK_4_ACTIVATED SectorAddress { 0x0000, 0x176B }
 
-#define HOMESTAND_4_WALKMENU SectorAddress { 0x0000, 0x3250 }
+#define SMALL_STEP4_HOME SectorAddress { 0x0000, 0x6AF3 }
+#define SMALL_STEP4_HOME_SELECTED SectorAddress { 0x0000, 0x649F }
+#define SMALL_STEP4_HOME_ACTIVATED SectorAddress { 0x0000, 0x64F0 }
+
+#define SIDE_STEP4_HOME SectorAddress { 0x0000, 0x6B44 }
+
+#define RIGHT_SIDE_STEP4_HOME SectorAddress { 0x0000, 0x6BE6 }
+#define RIGHT_SIDE_STEP4_HOME_SELECTED SectorAddress { 0x0000, 0x66D6 }
+#define RIGHT_SIDE_STEP4_ACTIVATED SectorAddress { 0x0000, 0x6727 }
+#define LEFT_SIDE_STEP4_HOME SectorAddress { 0x0000, 0x6B95 }
+#define LEFT_SIDE_STEP4_HOME_SELECTED SectorAddress { 0x0000, 0x6634 }
+#define LEFT_SIDE_STEP4_ACTIVATED SectorAddress { 0x0000, 0x6685 }
+
+#define HOMESTAND_4_WALKMENU SectorAddress { 0x0000, 0x6C37 }
 #define HOMESTAND_4_WALKMENU_SELECTED SectorAddress { 0x0000, 0x180D }
 #define HOMESTAND_4_WALKMENU_ACTIVATED SectorAddress { 0x0000, 0x185E }
 
-#define SIT_4_WALKMENU SectorAddress { 0x0000, 0x315D }
+#define SIT_4_WALKMENU SectorAddress { 0x0000, 0x6C88 }
 #define SIT_4_WALKMENU_SELECTED SectorAddress { 0x0000, 0x1900 }
 #define SIT_4_WALKMENU_ACTIVATED SectorAddress { 0x0000, 0x1951 }
 
@@ -124,13 +144,13 @@ struct SectorAddress
  **********/
 #define SOFA SectorAddress { 0x0000, 0x0001 }
 
-#define SOFA_SIT SectorAddress { 0x0000, 0x0052 }
-#define SOFA_SIT_SELECTED SectorAddress { 0x0000, 0x00A3 }
-#define SOFA_SIT_ACTIVATED SectorAddress { 0x0000, 0x00F4 }
+#define SOFA_SIT SectorAddress { 0x0000, 0x732D }
+#define SOFA_SIT_SELECTED SectorAddress { 0x0000, 0x737E }
+#define SOFA_SIT_ACTIVATED SectorAddress { 0x0000, 0x73CF }
 
 #define SOFA_STANDUP SectorAddress { 0x0000, 0x0145 }
 #define SOFA_STANDUP_SELECTED SectorAddress { 0x0000, 0x0196 }
-#define SOFA_STANDUP_ACTIVATED SectorAddress { 0x0000, 0x01EF }
+#define SOFA_STANDUP_ACTIVATED SectorAddress { 0x0000, 0x01E7 }
 
 
 #define SLALOM SectorAddress { 0x0000, 0x3529 }
@@ -166,50 +186,95 @@ struct SectorAddress
 
 
 #define STAIRS SectorAddress { 0x0000, 0x088C }
+#define STAIRS_PLATFORM SectorAddress { 0x0000, 0x6E6E }
+#define STAIRS_UP SectorAddress { 0x0000, 0x6E1D }
+#define STAIRS_DOWN SectorAddress { 0x0000, 0x6EBF }
 
-#define STAIRS_UP SectorAddress { 0x0000, 0x08DD }
-#define STAIRS_UP_SELECTED SectorAddress { 0x0000, 0x092E }
-#define STAIRS_UP_ACTIVATED SectorAddress { 0x0000, 0x097F }
+#define WALK_STAIRS_UP SectorAddress { 0x0000, 0x6F61 }
+#define WALK_STAIRS_UP_SELECTED SectorAddress { 0x0000, 0x7198 }
+#define WALK_STAIRS_UP_ACTIVATED SectorAddress { 0x0000, 0x71E9 }
+#define STEP_STAIRS_UP SectorAddress { 0x0000, 0x7003 }
+#define STEP_STAIRS_UP_SELECTED SectorAddress { 0x0000, 0x70F6 }
+#define STEP_STAIRS_UP_ACTIVATED SectorAddress { 0x0000, 0x7147 }
 
-#define WALK_STAIRS SectorAddress { 0x0000, 0x09D0 }
+#define WALK_STAIRS SectorAddress { 0x0000, 0x6D2A }
 #define WALK_STAIRS_SELECTED SectorAddress { 0x0000, 0x0A21 }
 #define WALK_STAIRS_ACTIVATED SectorAddress { 0x0000, 0x0A72 }
 
-#define STAIRS_DOWN SectorAddress { 0x0000, 0x0AC3 }
-#define STAIRS_DOWN_SELECTED SectorAddress { 0x0000, 0x0B14 }
-#define STAIRS_DOWN_ACTIVATED SectorAddress { 0x0000, 0x0B65 }
+#define SINGLE_STEP_STAIRS SectorAddress { 0x0000, 0x6D7B }
+#define SINGLE_STEP_STAIRS_SELECTED SectorAddress { 0x0000, 0x1FA5 }
+#define SINGLE_STEP_STAIRS_ACTIVATED SectorAddress { 0x0000, 0x1FF6 }
 
+#define SMALL_STEP_STAIRS SectorAddress { 0x0000, 0x6DCC }
+#define SMALL_STEP_STAIRS_SELECTED SectorAddress { 0x0000, 0x649F }
+#define SMALL_STEP_STAIRS_ACTIVATED SectorAddress { 0x0000, 0x64F0 }
+
+#define WALK_STAIRS_DOWN SectorAddress { 0x0000, 0x6F10 }
+#define WALK_STAIRS_DOWN_SELECTED SectorAddress { 0x0000, 0x7054 }
+#define WALK_STAIRS_DOWN_ACTIVATED SectorAddress { 0x0000, 0x70A5 }
+
+#define STEP_STAIRS_DOWN SectorAddress { 0x0000, 0x6FB2 }
+#define STEP_STAIRS_DOWN_SELECTED SectorAddress { 0x0000, 0x723A }
+#define STEP_STAIRS_DOWN_ACTIVATED SectorAddress { 0x0000, 0x728B }
 
 #define TILTED_PATH SectorAddress { 0x0000, 0x0BB6 }
 #define TILTED_PATH_RECHTS SectorAddress { 0x0000, 0x38A4 }
 #define TILTED_PATH_LINKS SectorAddress { 0x0000, 0x38F5 }
+#define TILTED_PATH_LINKS2 SectorAddress { 0x0000, 0x6778 }
+#define TILTED_PATH_RECHTS2 SectorAddress { 0x0000, 0x67C9 }
 
-#define TILTED_PATH_UP SectorAddress { 0x0000, 0x0C07 }
-#define TILTED_PATH_UP_SELECTED SectorAddress { 0x0000, 0x0C58 }
-#define TILTED_PATH_UP_ACTIVATED SectorAddress { 0x0000, 0x0CA9 }
+#define LEFT_STEPUP_TP SectorAddress { 0x0000, 0x5899 }
+#define LEFT_UP_TP_SELECTED SectorAddress { 0x0000, 0x5DA9 }
+#define LEFT_UP_TP_ACTIVATED SectorAddress { 0x0000, 0x5DFA }
+#define LEFT_LAST_TP_SELECTED SectorAddress { 0x0000, 0x6031 }
+#define LEFT_LAST_TP_ACTIVATED SectorAddress { 0x0000, 0x6082 }
+#define LEFT_FIRSTSTEP_TP SectorAddress { 0x0000, 0x58EA }
+#define LEFT_SECONDSTEP_TP SectorAddress { 0x0000, 0x593B }
+#define LEFT_THIRDSTEP_TP SectorAddress { 0x0000, 0x598C }
+#define LEFT_FOURTHSTEP_TP SectorAddress { 0x0000, 0x59DD }
+#define LEFT_FIFTHSTEP_TP SectorAddress { 0x0000, 0x5A2E }
+#define LEFT_SIXTHSTEP_TP SectorAddress { 0x0000, 0x5A7F }
+#define LEFT_LASTSTEP_TP SectorAddress { 0x0000, 0x5AD0 }
 
-#define WALK_TILTED_PATH SectorAddress { 0x0000, 0x0CFA }
-#define WALK_TILTED_PATH_SELECTED SectorAddress { 0x0000, 0x0D4B }
-#define WALK_TILTED_PATH_ACTIVATED SectorAddress { 0x0000, 0x0D9C }
+#define LEFT_STEP_TP SectorAddress { 0x0000, 0x681A }
+#define LEFT_STEP_TP_SELECTED SectorAddress { 0x0000, 0x68BC }
+#define LEFT_STEP_TP_ACTIVATED SectorAddress { 0x0000, 0x690D }
 
-#define TILTED_PATH_DOWN SectorAddress { 0x0000, 0x35CB }
-#define TILTED_PATH_DOWN_SELECTED SectorAddress { 0x0000, 0x361C }
-#define TILTED_PATH_DOWN_ACTIVATED SectorAddress { 0x0000, 0x366D }
+#define RIGHT_STEPUP_TP SectorAddress { 0x0000, 0x5B21 }
+#define RIGHT_UP_TP_SELECTED SectorAddress { 0x0000, 0x5E4B }
+#define RIGHT_UP_TP_ACTIVATED SectorAddress { 0x0000, 0x5E9C }
+#define RIGHT_LAST_TP_SELECTED SectorAddress { 0x0000, 0x60D3 }
+#define RIGHT_LAST_TP_ACTIVATED SectorAddress { 0x0000, 0x6124 }
+#define RIGHT_FIRSTSTEP_TP SectorAddress { 0x0000, 0x5B72 }
+#define RIGHT_SECONDSTEP_TP SectorAddress { 0x0000, 0x5BC3 }
+#define RIGHT_THIRDSTEP_TP SectorAddress { 0x0000, 0x5C14 }
+#define RIGHT_FOURTHSTEP_TP SectorAddress { 0x0000, 0x5C65 }
+#define RIGHT_FIFTHSTEP_TP SectorAddress { 0x0000, 0x5CB6 }
+#define RIGHT_SIXTHSTEP_TP SectorAddress { 0x0000, 0x5D07 }
+#define RIGHT_LASTSTEP_TP SectorAddress { 0x0000, 0x5D58 }
 
+#define RIGHT_STEP_TP SectorAddress { 0x0000, 0x686B }
+#define RIGHT_STEP_TP_SELECTED SectorAddress { 0x0000, 0x695E }
+#define RIGHT_STEP_TP_ACTIVATED SectorAddress { 0x0000, 0x69AF }
 
 #define SLOPE SectorAddress { 0x0000, 0x0EE0 }
 
-#define SLOPE_UP SectorAddress { 0x0000, 0x0F31 }
+#define SLOPE_UP SectorAddress { 0x0000, 0x412F }
 #define SLOPE_UP_SELECTED SectorAddress { 0x0000, 0x0F82 }
 #define SLOPE_UP_ACTIVATED SectorAddress { 0x0000, 0x0FD3 }
 
-#define WALK_SLOPE SectorAddress { 0x0000, 0x1024 }
+#define WALK_SLOPE SectorAddress { 0x0000, 0x4180 }
 #define WALK_SLOPE_SELECTED SectorAddress { 0x0000, 0x1075 }
 #define WALK_SLOPE_ACTIVATED SectorAddress { 0x0000, 0x10C6 }
 
-#define SLOPE_DOWN SectorAddress { 0x0000, 0x1117 }
+#define SLOPE_DOWN SectorAddress { 0x0000, 0x41D1 }
 #define SLOPE_DOWN_SELECTED SectorAddress { 0x0000, 0x1168 }
 #define SLOPE_DOWN_ACTIVATED SectorAddress { 0x0000, 0x11B9 }
+
+#define SLOPE_LAST_STEP SectorAddress { 0x0000, 0x4222 }
+#define SLOPE_LAST_STEP_SELECTED SectorAddress { 0x0000, 0x57F7 }
+#define SLOPE_LAST_STEP_ACTIVATED SectorAddress { 0x0000, 0x5848 }
+
 /***** Obstacle menu *****/
 
 
@@ -246,6 +311,9 @@ struct SectorAddress
 #define SLOPE4 SectorAddress { 0x0000, 0x3853 }
 /***** Obstacle menu - with arrows *****/
 
+/**********
+* Other options
+ **********/
 #define FAST_WALK { 0x0000, 0x2ED5 }
 #define FAST_WALK_SELECTED { 0x0000, 0x2F26 }
 #define FAST_WALK_ACTIVATED { 0x0000, 0x2F77 }
@@ -261,6 +329,13 @@ struct SectorAddress
 #define STEP_SMALL { 0x0000, 0x3487 }
 #define STEP_MEDIUM { 0x0000, 0x33E5 }
 #define STEP_LARGE { 0x0000, 0x3436 }
+
+#define STEP_SIZE_UP { 0x0000, 0x3436 }
+#define STEP_SIZE_DOWN { 0x0000, 0x3436 }
+#define STEP_LARGE { 0x0000, 0x3436 }
+
+#define NOT_POSSIBLE { 0x0000, 0x3436 }
+// clang-format on
 
 // clang-format on
 

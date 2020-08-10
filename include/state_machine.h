@@ -20,7 +20,6 @@ public:
   bool left();
   bool right();
   bool shortcutPush();
-  bool shortcutDoublePush();
 
   bool back();
   bool select();
@@ -31,7 +30,6 @@ private:
 
   void constructObstacleMenu(State* from);
   void constructWalkMenu(state_iterator list_end, State* obstacles);
-  void constructStepMenu(state_iterator list_end, State* obstacles);
   void constructSofaMenu(State* from, State* next_obstacle);
   void constructSlalomMenu(State* from, State* next_obstacle);
   void constructRoughTerrainMenu(State* from, State* next_obstacle);
