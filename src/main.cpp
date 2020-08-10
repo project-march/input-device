@@ -281,7 +281,6 @@ void loop()
     }
   }
 
-  // Average loop frequency is around 20hz.
   sendAliveMessage();
 
   nh.spinOnce();
