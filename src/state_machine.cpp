@@ -44,11 +44,14 @@ void StateMachine::constructWalkMenu(state_iterator list_end, State* obstacles)
   State& sit_walk =
       this->createEscapeGaitState(SIT_4_WALKMENU, SIT_4_WALKMENU_SELECTED, SIT_4_WALKMENU_ACTIVATED, "gait_sit", &home);
 
-  State& small_step = this->createGaitState(SMALL_STEP4_HOME, SMALL_STEP4_HOME_SELECTED, SMALL_STEP_STAIRS_ACTIVATED, "gait_single_step_small", nullptr);
+  State& small_step = this->createGaitState(SMALL_STEP4_HOME, SMALL_STEP4_HOME_SELECTED, SMALL_STEP_STAIRS_ACTIVATED,
+                                            "gait_single_step_small", nullptr);
   State& side_step = this->createState(SIDE_STEP4_HOME);
 
-  State& side_step_left = this->createGaitState(LEFT_SIDE_STEP4_HOME, LEFT_SIDE_STEP4_HOME_SELECTED, LEFT_SIDE_STEP4_ACTIVATED, "gait_side_step_left", nullptr);
-  State& side_step_right = this->createGaitState(RIGHT_SIDE_STEP4_HOME, RIGHT_SIDE_STEP4_HOME_SELECTED, RIGHT_SIDE_STEP4_ACTIVATED, "gait_side_step_right", nullptr);
+  State& side_step_left = this->createGaitState(LEFT_SIDE_STEP4_HOME, LEFT_SIDE_STEP4_HOME_SELECTED,
+                                                LEFT_SIDE_STEP4_ACTIVATED, "gait_side_step_left", nullptr);
+  State& side_step_right = this->createGaitState(RIGHT_SIDE_STEP4_HOME, RIGHT_SIDE_STEP4_HOME_SELECTED,
+                                                 RIGHT_SIDE_STEP4_ACTIVATED, "gait_side_step_right", nullptr);
 
   walk_escape.withRight(&single_step);
   single_step.withRight(&other_steps);
@@ -118,8 +121,7 @@ void StateMachine::constructSlalomMenu(State* from, State* next_obstacle)
 {
   State& walk_in_between =
       this->createGaitState(WALK_PLAIN, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", next_obstacle);
-  State& slalom_walk =
-      this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_slalom_walk", nullptr);
+  State& slalom_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_slalom_walk", nullptr);
 
   slalom_walk.backTo(from);
   walk_in_between.backTo(from);
@@ -178,8 +180,8 @@ void StateMachine::constructStairsMenu(State* from, State* next_obstacle)
   State& stairs_down = this->createState(STAIRS_DOWN);
   State& stairs_down_step = this->createGaitState(STEP_STAIRS_DOWN, STEP_STAIRS_DOWN_SELECTED,
                                                   STEP_STAIRS_DOWN_ACTIVATED, "gait_stairs_down_single_step", nullptr);
-  State& stairs_down_walk = this->createGaitState(WALK_STAIRS_DOWN, WALK_STAIRS_DOWN_SELECTED, WALK_STAIRS_DOWN_ACTIVATED,
-                                                  "gait_stairs_down", &walk_in_between);
+  State& stairs_down_walk = this->createGaitState(WALK_STAIRS_DOWN, WALK_STAIRS_DOWN_SELECTED,
+                                                  WALK_STAIRS_DOWN_ACTIVATED, "gait_stairs_down", &walk_in_between);
 
   State& stairs_platform = this->createState(STAIRS_PLATFORM);
   State& stairs_single_step_small = this->createGaitState(SMALL_STEP_STAIRS, SMALL_STEP_STAIRS_SELECTED,
@@ -192,8 +194,8 @@ void StateMachine::constructStairsMenu(State* from, State* next_obstacle)
   State& stairs_up = this->createState(STAIRS_UP);
   State& stairs_up_step = this->createGaitState(STEP_STAIRS_UP, STEP_STAIRS_UP_SELECTED, STEP_STAIRS_UP_ACTIVATED,
                                                 "gait_stairs_up_single_step");
-  State& stairs_up_walk =
-      this->createGaitState(WALK_STAIRS_UP, WALK_STAIRS_UP_SELECTED, WALK_STAIRS_UP_ACTIVATED, "gait_stairs_up", &stairs_platform);
+  State& stairs_up_walk = this->createGaitState(WALK_STAIRS_UP, WALK_STAIRS_UP_SELECTED, WALK_STAIRS_UP_ACTIVATED,
+                                                "gait_stairs_up", &stairs_platform);
 
   stairs_up.backTo(from).withRight(&stairs_platform).withSelect(&stairs_up_walk);
   stairs_platform.backTo(from).withRight(&stairs_down).withSelect(&stairs_walk);
@@ -202,7 +204,7 @@ void StateMachine::constructStairsMenu(State* from, State* next_obstacle)
 
   stairs_up_walk.withRight(&stairs_up_step).backTo(&stairs_up);
   stairs_up_step.backTo(&stairs_up);
-  
+
   stairs_walk.backTo(&stairs_platform).withRight(&stairs_single_step_normal);
   stairs_single_step_normal.backTo(&stairs_platform).withRight(&stairs_single_step_small);
   stairs_single_step_small.backTo(&stairs_platform);
