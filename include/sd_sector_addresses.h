@@ -212,16 +212,10 @@ struct SectorAddress
 #define WALK_STAIRS_DOWN SectorAddress { 0x0000, 0x6F10 }
 #define WALK_STAIRS_DOWN_SELECTED SectorAddress { 0x0000, 0x7054 }
 #define WALK_STAIRS_DOWN_ACTIVATED SectorAddress { 0x0000, 0x70A5 }
-// #define WALK_STAIRS_UP SectorAddress { 0x0000, 0x6F61 }
-// #define WALK_STAIRS_UP_SELECTED SectorAddress { 0x0000, 0x7198 }
-// #define WALK_STAIRS_UP_ACTIVATED SectorAddress { 0x0000, 0x71E9 }
 
 #define STEP_STAIRS_DOWN SectorAddress { 0x0000, 0x6FB2 }
 #define STEP_STAIRS_DOWN_SELECTED SectorAddress { 0x0000, 0x723A }
 #define STEP_STAIRS_DOWN_ACTIVATED SectorAddress { 0x0000, 0x728B }
-// #define STEP_STAIRS_UP SectorAddress { 0x0000, 0x40DE }
-// #define STEP_STAIRS_UP_SELECTED SectorAddress { 0x0000, 0x70F6 }
-// #define STEP_STAIRS_UP_ACTIVATED SectorAddress { 0x0000, 0x7147 }
 
 #define TILTED_PATH SectorAddress { 0x0000, 0x0BB6 }
 #define TILTED_PATH_RECHTS SectorAddress { 0x0000, 0x38A4 }
@@ -318,7 +312,7 @@ struct SectorAddress
 /***** Obstacle menu - with arrows *****/
 
 /**********
-* Overige opties
+* Other options
  **********/
 #define FAST_WALK { 0x0000, 0x2ED5 }
 #define FAST_WALK_SELECTED { 0x0000, 0x2F26 }
