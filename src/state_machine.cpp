@@ -106,10 +106,9 @@ void StateMachine::constructSofaMenu(State* from, State* next_obstacle)
 {
   State& walk_in_between =
       this->createGaitState(WALK_PLAIN, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "walk", next_obstacle);
-  State& sofa_standup = this->createGaitState(SOFA_STANDUP, SOFA_STANDUP_SELECTED, SOFA_STANDUP_ACTIVATED,
-                                              "sofa_stand", &walk_in_between);
-  State& sofa_sit =
-      this->createGaitState(SOFA_SIT, SOFA_SIT_SELECTED, SOFA_SIT_ACTIVATED, "sofa_sit", &sofa_standup);
+  State& sofa_standup = this->createGaitState(SOFA_STANDUP, SOFA_STANDUP_SELECTED, SOFA_STANDUP_ACTIVATED, "sofa_stand",
+                                              &walk_in_between);
+  State& sofa_sit = this->createGaitState(SOFA_SIT, SOFA_SIT_SELECTED, SOFA_SIT_ACTIVATED, "sofa_sit", &sofa_standup);
 
   sofa_sit.backTo(from).withRight(&sofa_standup);
   sofa_standup.backTo(from);
@@ -192,8 +191,8 @@ void StateMachine::constructStairsMenu(State* from, State* next_obstacle)
       this->createGaitState(WALK_STAIRS, WALK_STAIRS_SELECTED, WALK_STAIRS_ACTIVATED, "walk", &stairs_down);
 
   State& stairs_up = this->createState(STAIRS_UP);
-  State& stairs_up_step = this->createGaitState(STEP_STAIRS_UP, STEP_STAIRS_UP_SELECTED, STEP_STAIRS_UP_ACTIVATED,
-                                                "stairs_up_single_step");
+  State& stairs_up_step =
+      this->createGaitState(STEP_STAIRS_UP, STEP_STAIRS_UP_SELECTED, STEP_STAIRS_UP_ACTIVATED, "stairs_up_single_step");
   State& stairs_up_walk = this->createGaitState(WALK_STAIRS_UP, WALK_STAIRS_UP_SELECTED, WALK_STAIRS_UP_ACTIVATED,
                                                 "stairs_up", &stairs_platform);
 
@@ -262,8 +261,7 @@ void StateMachine::constructSlopeMenu(State* from, State* next_obstacle)
                                                  "ramp_door_last_step", &walk_in_between);
   State& slope_down = this->createGaitState(SLOPE_DOWN, SLOPE_DOWN_SELECTED, SLOPE_DOWN_ACTIVATED,
                                             "ramp_door_slope_down_fixed", &slope_last_step);
-  State& slope_walk =
-      this->createGaitState(WALK_SLOPE, WALK_SLOPE_SELECTED, WALK_SLOPE_ACTIVATED, "walk", &slope_down);
+  State& slope_walk = this->createGaitState(WALK_SLOPE, WALK_SLOPE_SELECTED, WALK_SLOPE_ACTIVATED, "walk", &slope_down);
   State& slope_up =
       this->createGaitState(SLOPE_UP, SLOPE_UP_SELECTED, SLOPE_UP_ACTIVATED, "ramp_door_slope_up", &slope_walk);
 
