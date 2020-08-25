@@ -9,7 +9,7 @@ void StateMachine::construct()
   State& obstacles = this->createState(OBSTACLE2_MENU);
 
   // Start menu
-  State& stand_up = this->createGaitState(STAND2_UP, STAND2_UP_SELECTED, STAND2_UP_ACTIVATED, "gait_stand", &obstacles);
+  State& stand_up = this->createGaitState(STAND2_UP, STAND2_UP_SELECTED, STAND2_UP_ACTIVATED, "stand", &obstacles);
   State& home_sit_start =
       this->createGaitState(HOME_SIT2, HOME_SIT2_SELECTED, HOME_SIT2_ACTIVATED, "home_sit", &stand_up);
   State& turn_off_start = this->createState(TURN2_OFF);
@@ -35,23 +35,23 @@ void StateMachine::construct()
 void StateMachine::constructWalkMenu(state_iterator list_end, State* obstacles)
 {
   State& home = this->createEscapeState(HOME_WALKMENU);
-  State& walk_escape = this->createEscapeGaitState(WALK_4, WALK_4_SELECTED, WALK_4_ACTIVATED, "gait_walk", nullptr);
+  State& walk_escape = this->createEscapeGaitState(WALK_4, WALK_4_SELECTED, WALK_4_ACTIVATED, "walk", nullptr);
   State& single_step = this->createEscapeGaitState(SINGLE_STEP4_HOME, SINGLE_STEP_4_SELECTED, SINGLE_STEP_4_ACTIVATED,
-                                                   "gait_single_step_normal", nullptr);
+                                                   "single_step_normal", nullptr);
   State& other_steps = this->createEscapeState(OTHER_STEP4_HOME);
   State& home_stand_walk = this->createEscapeGaitState(HOMESTAND_4_WALKMENU, HOMESTAND_4_WALKMENU_SELECTED,
                                                        HOMESTAND_4_WALKMENU_ACTIVATED, "home_stand", &walk_escape);
   State& sit_walk =
-      this->createEscapeGaitState(SIT_4_WALKMENU, SIT_4_WALKMENU_SELECTED, SIT_4_WALKMENU_ACTIVATED, "gait_sit", &home);
+      this->createEscapeGaitState(SIT_4_WALKMENU, SIT_4_WALKMENU_SELECTED, SIT_4_WALKMENU_ACTIVATED, "sit", &home);
 
   State& small_step = this->createGaitState(SMALL_STEP4_HOME, SMALL_STEP4_HOME_SELECTED, SMALL_STEP_STAIRS_ACTIVATED,
-                                            "gait_single_step_small", nullptr);
+                                            "single_step_small", nullptr);
   State& side_step = this->createState(SIDE_STEP4_HOME);
 
   State& side_step_left = this->createGaitState(LEFT_SIDE_STEP4_HOME, LEFT_SIDE_STEP4_HOME_SELECTED,
-                                                LEFT_SIDE_STEP4_ACTIVATED, "gait_side_step_left", nullptr);
+                                                LEFT_SIDE_STEP4_ACTIVATED, "side_step_left", nullptr);
   State& side_step_right = this->createGaitState(RIGHT_SIDE_STEP4_HOME, RIGHT_SIDE_STEP4_HOME_SELECTED,
-                                                 RIGHT_SIDE_STEP4_ACTIVATED, "gait_side_step_right", nullptr);
+                                                 RIGHT_SIDE_STEP4_ACTIVATED, "side_step_right", nullptr);
 
   walk_escape.withRight(&single_step);
   single_step.withRight(&other_steps);
@@ -105,11 +105,11 @@ void StateMachine::constructObstacleMenu(State* from)
 void StateMachine::constructSofaMenu(State* from, State* next_obstacle)
 {
   State& walk_in_between =
-      this->createGaitState(WALK_PLAIN, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", next_obstacle);
+      this->createGaitState(WALK_PLAIN, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "walk", next_obstacle);
   State& sofa_standup = this->createGaitState(SOFA_STANDUP, SOFA_STANDUP_SELECTED, SOFA_STANDUP_ACTIVATED,
-                                              "gait_sofa_stand", &walk_in_between);
+                                              "sofa_stand", &walk_in_between);
   State& sofa_sit =
-      this->createGaitState(SOFA_SIT, SOFA_SIT_SELECTED, SOFA_SIT_ACTIVATED, "gait_sofa_sit", &sofa_standup);
+      this->createGaitState(SOFA_SIT, SOFA_SIT_SELECTED, SOFA_SIT_ACTIVATED, "sofa_sit", &sofa_standup);
 
   sofa_sit.backTo(from).withRight(&sofa_standup);
   sofa_standup.backTo(from);
@@ -120,8 +120,8 @@ void StateMachine::constructSofaMenu(State* from, State* next_obstacle)
 void StateMachine::constructSlalomMenu(State* from, State* next_obstacle)
 {
   State& walk_in_between =
-      this->createGaitState(WALK_PLAIN, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", next_obstacle);
-  State& slalom_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_slalom_walk", nullptr);
+      this->createGaitState(WALK_PLAIN, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "walk", next_obstacle);
+  State& slalom_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "slalom_walk", nullptr);
 
   slalom_walk.backTo(from);
   walk_in_between.backTo(from);
@@ -132,29 +132,29 @@ void StateMachine::constructSlalomMenu(State* from, State* next_obstacle)
 void StateMachine::constructRoughTerrainMenu(State* from, State* next_obstacle)
 {
   State& walk_in_between =
-      this->createGaitState(WALK_PLAIN, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", next_obstacle);
+      this->createGaitState(WALK_PLAIN, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "walk", next_obstacle);
   State& high_step4_rt = this->createGaitState(HIGHSTEP_RT_second, HIGHSTEP_RT_SELECTED, HIGHSTEP_RT_ACTIVATED,
-                                               "gait_rough_terrain_high_step", &walk_in_between);
+                                               "rough_terrain_high_step", &walk_in_between);
   State& small_step4_rt = this->createGaitState(SMALLSTEP_RT_second, SMALLSTEP_RT_SELECTED, SMALLSTEP_RT_ACTIVATED,
-                                                "gait_single_step_small", &high_step4_rt);
+                                                "single_step_small", &high_step4_rt);
   State& high_step3_rt = this->createGaitState(HIGHSTEP_RT_second, HIGHSTEP_RT_SELECTED, HIGHSTEP_RT_ACTIVATED,
-                                               "gait_rough_terrain_high_step", &small_step4_rt);
+                                               "rough_terrain_high_step", &small_step4_rt);
   State& small_step3_rt = this->createGaitState(SMALLSTEP_RT_second, SMALLSTEP_RT_SELECTED, SMALLSTEP_RT_ACTIVATED,
-                                                "gait_single_step_small", &high_step3_rt);
+                                                "single_step_small", &high_step3_rt);
   State& middle_step3_rt = this->createGaitState(MIDDLESTEP3_RT, MIDDLESTEP3_RT_SELECTED, MIDDLESTEP3_RT_ACTIVATED,
-                                                 "gait_rough_terrain_third_middle_step", &small_step3_rt);
+                                                 "rough_terrain_third_middle_step", &small_step3_rt);
   State& middle_step2_rt = this->createGaitState(MIDDLESTEP2_RT, MIDDLESTEP2_RT_SELECTED, MIDDLESTEP2_RT_ACTIVATED,
-                                                 "gait_rough_terrain_second_middle_step", &middle_step3_rt);
+                                                 "rough_terrain_second_middle_step", &middle_step3_rt);
   State& middle_step1_rt = this->createGaitState(MIDDLESTEP1_RT, MIDDLESTEP1_RT_SELECTED, MIDDLESTEP1_RT_ACTIVATED,
-                                                 "gait_rough_terrain_first_middle_step", &middle_step2_rt);
+                                                 "rough_terrain_first_middle_step", &middle_step2_rt);
   State& small_step2_rt = this->createGaitState(SMALLSTEP_RT, SMALLSTEP_RT_SELECTED, SMALLSTEP_RT_ACTIVATED,
-                                                "gait_single_step_small", &middle_step1_rt);
+                                                "single_step_small", &middle_step1_rt);
   State& high_step2_rt = this->createGaitState(HIGHSTEP_RT, HIGHSTEP_RT_SELECTED, HIGHSTEP_RT_ACTIVATED,
-                                               "gait_rough_terrain_high_step", &small_step2_rt);
+                                               "rough_terrain_high_step", &small_step2_rt);
   State& small_step1_rt = this->createGaitState(SMALLSTEP_RT, SMALLSTEP_RT_SELECTED, SMALLSTEP_RT_ACTIVATED,
-                                                "gait_single_step_small", &high_step2_rt);
+                                                "single_step_small", &high_step2_rt);
   State& high_step1_rt = this->createGaitState(HIGHSTEP_RT, HIGHSTEP_RT_SELECTED, HIGHSTEP_RT_ACTIVATED,
-                                               "gait_rough_terrain_high_step", &small_step1_rt);
+                                               "rough_terrain_high_step", &small_step1_rt);
 
   high_step1_rt.backTo(from).withRight(&small_step1_rt);
   small_step1_rt.backTo(from).withRight(&high_step2_rt);
@@ -175,27 +175,27 @@ void StateMachine::constructRoughTerrainMenu(State* from, State* next_obstacle)
 void StateMachine::constructStairsMenu(State* from, State* next_obstacle)
 {
   State& walk_in_between =
-      this->createGaitState(WALK_PLAIN, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", next_obstacle);
+      this->createGaitState(WALK_PLAIN, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "walk", next_obstacle);
 
   State& stairs_down = this->createState(STAIRS_DOWN);
   State& stairs_down_step = this->createGaitState(STEP_STAIRS_DOWN, STEP_STAIRS_DOWN_SELECTED,
-                                                  STEP_STAIRS_DOWN_ACTIVATED, "gait_stairs_down_single_step", nullptr);
+                                                  STEP_STAIRS_DOWN_ACTIVATED, "stairs_down_single_step", nullptr);
   State& stairs_down_walk = this->createGaitState(WALK_STAIRS_DOWN, WALK_STAIRS_DOWN_SELECTED,
-                                                  WALK_STAIRS_DOWN_ACTIVATED, "gait_stairs_down", &walk_in_between);
+                                                  WALK_STAIRS_DOWN_ACTIVATED, "stairs_down", &walk_in_between);
 
   State& stairs_platform = this->createState(STAIRS_PLATFORM);
   State& stairs_single_step_small = this->createGaitState(SMALL_STEP_STAIRS, SMALL_STEP_STAIRS_SELECTED,
-                                                          SMALL_STEP_STAIRS_ACTIVATED, "gait_single_step_small");
+                                                          SMALL_STEP_STAIRS_ACTIVATED, "single_step_small");
   State& stairs_single_step_normal = this->createGaitState(SINGLE_STEP_STAIRS, SINGLE_STEP_STAIRS_SELECTED,
-                                                           SINGLE_STEP_STAIRS_ACTIVATED, "gait_single_step_normal");
+                                                           SINGLE_STEP_STAIRS_ACTIVATED, "single_step_normal");
   State& stairs_walk =
-      this->createGaitState(WALK_STAIRS, WALK_STAIRS_SELECTED, WALK_STAIRS_ACTIVATED, "gait_walk", &stairs_down);
+      this->createGaitState(WALK_STAIRS, WALK_STAIRS_SELECTED, WALK_STAIRS_ACTIVATED, "walk", &stairs_down);
 
   State& stairs_up = this->createState(STAIRS_UP);
   State& stairs_up_step = this->createGaitState(STEP_STAIRS_UP, STEP_STAIRS_UP_SELECTED, STEP_STAIRS_UP_ACTIVATED,
-                                                "gait_stairs_up_single_step");
+                                                "stairs_up_single_step");
   State& stairs_up_walk = this->createGaitState(WALK_STAIRS_UP, WALK_STAIRS_UP_SELECTED, WALK_STAIRS_UP_ACTIVATED,
-                                                "gait_stairs_up", &stairs_platform);
+                                                "stairs_up", &stairs_platform);
 
   stairs_up.backTo(from).withRight(&stairs_platform).withSelect(&stairs_up_walk);
   stairs_platform.backTo(from).withRight(&stairs_down).withSelect(&stairs_walk);
@@ -218,25 +218,25 @@ void StateMachine::constructStairsMenu(State* from, State* next_obstacle)
 void StateMachine::constructTiltedPathMenu(State* from, State* next_obstacle)
 {
   State& walk_in_between =
-      this->createGaitState(WALK_PLAIN, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", next_obstacle);
+      this->createGaitState(WALK_PLAIN, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "walk", next_obstacle);
 
   State& tilted_pathL = this->createState(TILTED_PATH_LINKS2);
   State& tilted_pathR = this->createState(TILTED_PATH_RECHTS2);
 
   State& tilted_pathL_down = this->createGaitState(LEFT_LASTSTEP_TP, LEFT_LAST_TP_SELECTED, LEFT_LAST_TP_ACTIVATED,
-                                                   "gait_tilted_path_left_straight_end", &walk_in_between);
+                                                   "tilted_path_left_straight_end", &walk_in_between);
   State& tilted_pathL_steps = this->createGaitState(LEFT_STEP_TP, LEFT_STEP_TP_SELECTED, LEFT_STEP_TP_ACTIVATED,
-                                                    "gait_tilted_path_left_single_step", nullptr);
+                                                    "tilted_path_left_single_step", nullptr);
 
   State& tilted_pathL_up = this->createGaitState(LEFT_STEPUP_TP, LEFT_UP_TP_SELECTED, LEFT_UP_TP_ACTIVATED,
-                                                 "gait_tilted_path_left_straight_start", &tilted_pathL_steps);
+                                                 "tilted_path_left_straight_start", &tilted_pathL_steps);
 
   State& tilted_pathR_down = this->createGaitState(RIGHT_LASTSTEP_TP, RIGHT_LAST_TP_SELECTED, RIGHT_LAST_TP_ACTIVATED,
-                                                   "gait_tilted_path_right_straight_end", &walk_in_between);
+                                                   "tilted_path_right_straight_end", &walk_in_between);
   State& tilted_pathR_steps = this->createGaitState(RIGHT_STEP_TP, RIGHT_STEP_TP_SELECTED, RIGHT_STEP_TP_ACTIVATED,
-                                                    "gait_tilted_path_right_single_step", nullptr);
+                                                    "tilted_path_right_single_step", nullptr);
   State& tilted_pathR_up = this->createGaitState(RIGHT_STEPUP_TP, RIGHT_UP_TP_SELECTED, RIGHT_UP_TP_ACTIVATED,
-                                                 "gait_tilted_path_right_straight_start", &tilted_pathR_steps);
+                                                 "tilted_path_right_straight_start", &tilted_pathR_steps);
 
   tilted_pathL.withSelect(&tilted_pathL_up).backTo(from).withRight(&tilted_pathR);
   tilted_pathR.withSelect(&tilted_pathR_up).backTo(from);
@@ -257,15 +257,15 @@ void StateMachine::constructTiltedPathMenu(State* from, State* next_obstacle)
 void StateMachine::constructSlopeMenu(State* from, State* next_obstacle)
 {
   State& walk_in_between =
-      this->createGaitState(WALK_PLAIN, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", next_obstacle);
+      this->createGaitState(WALK_PLAIN, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "walk", next_obstacle);
   State& slope_last_step = this->createGaitState(SLOPE_LAST_STEP, SLOPE_LAST_STEP_SELECTED, SLOPE_LAST_STEP_ACTIVATED,
-                                                 "gait_ramp_door_last_step", &walk_in_between);
+                                                 "ramp_door_last_step", &walk_in_between);
   State& slope_down = this->createGaitState(SLOPE_DOWN, SLOPE_DOWN_SELECTED, SLOPE_DOWN_ACTIVATED,
-                                            "gait_ramp_door_slope_down_fixed", &slope_last_step);
+                                            "ramp_door_slope_down_fixed", &slope_last_step);
   State& slope_walk =
-      this->createGaitState(WALK_SLOPE, WALK_SLOPE_SELECTED, WALK_SLOPE_ACTIVATED, "gait_walk", &slope_down);
+      this->createGaitState(WALK_SLOPE, WALK_SLOPE_SELECTED, WALK_SLOPE_ACTIVATED, "walk", &slope_down);
   State& slope_up =
-      this->createGaitState(SLOPE_UP, SLOPE_UP_SELECTED, SLOPE_UP_ACTIVATED, "gait_ramp_door_slope_up", &slope_walk);
+      this->createGaitState(SLOPE_UP, SLOPE_UP_SELECTED, SLOPE_UP_ACTIVATED, "ramp_door_slope_up", &slope_walk);
 
   slope_up.backTo(from).withRight(&slope_walk);
   slope_walk.backTo(from).withRight(&slope_down);
