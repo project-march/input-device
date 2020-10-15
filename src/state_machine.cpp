@@ -109,7 +109,7 @@ void StateMachine::constructSofaMenu(State* from, State* next_obstacle)
   State& sofa_standup = this->createGaitState(SOFA_STANDUP, SOFA_STANDUP_SELECTED, SOFA_STANDUP_ACTIVATED,
                                               "gait_sofa_stand", &walk_in_between);
   State& sofa_sit =
-      this->createGaitState(SOFA_SIT, SOFA_SIT_SELECTED, SOFA_SIT_ACTIVATED, "gait_sofa_sit", &sofa_standup);
+      this->createGaitState(SOFA_SIT, SOFA_SIT_SELECTED, SOFA_SIT_ACTIVATED, "gait_sofa_sit", sofa_standup.select());
 
   sofa_sit.backTo(from).withRight(&sofa_standup);
   sofa_standup.backTo(from);
