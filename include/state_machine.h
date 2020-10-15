@@ -47,6 +47,12 @@ private:
                          const SectorAddress addr_activated, const std::string& gait_name,
                          const State* result = nullptr);
 
+  /**
+   * Creates a gait state where activation directly goes to selected again, so shorter.
+   */
+  State& createGaitStateToSelect(const SectorAddress addr, const SectorAddress addr_selected,
+                         const SectorAddress addr_activated, const std::string& gait_name);
+
   State& createEscapeState(const SectorAddress address, const std::string& gait_name = "");
 
   State& createEscapeGaitState(const SectorAddress addr, const SectorAddress addr_selected,
