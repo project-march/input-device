@@ -47,7 +47,7 @@ Button trigger(pins::TRIGGER);
 DoubleClickButton push(pins::PUSH);
 RotaryEncoder rotaryEncoder(pins::RE_A, pins::RE_B);
 DoubleClickButton rotaryEncoderPush(pins::RE_PUSH);
-//RockerSwitch rocker(pins::ROCKER_UP, pins::ROCKER_DOWN);
+RockerSwitch rocker(pins::ROCKER_UP, pins::ROCKER_DOWN);
 
 SoftwareSerial screen_serial(pins::UART_RX, pins::UART_TX);
 Goldelox_Serial_4DLib screen_goldelox(&screen_serial);
