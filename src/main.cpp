@@ -24,8 +24,6 @@ const uint8_t RE_A = 23;
 const uint8_t RE_B = 12;
 const uint8_t RE_PUSH = 19;
 const uint8_t PUSH = 18;
-const uint8_t ROCKER_UP = 2;
-const uint8_t ROCKER_DOWN = 5;
 const uint8_t UART_TX = 32;  // Software serial
 const uint8_t UART_RX = 34;  // Software serial
 const uint8_t RST = 13;      // Reset
@@ -47,7 +45,6 @@ Button trigger(pins::TRIGGER);
 DoubleClickButton push(pins::PUSH);
 RotaryEncoder rotaryEncoder(pins::RE_A, pins::RE_B);
 DoubleClickButton rotaryEncoderPush(pins::RE_PUSH);
-RockerSwitch rocker(pins::ROCKER_UP, pins::ROCKER_DOWN);
 
 SoftwareSerial screen_serial(pins::UART_RX, pins::UART_TX);
 Goldelox_Serial_4DLib screen_goldelox(&screen_serial);
@@ -197,7 +194,6 @@ void setup()
 void loop()
 {
   // Get button states
-  RockerSwitchState rocker_switch_state = rocker.getState();
   RotaryEncoder::Direction rotary_encoder_direction = rotaryEncoder.getDirection();
   ButtonState trigger_state = trigger.getState();
   ButtonState push_button_state = push.getState();
@@ -226,14 +222,6 @@ void loop()
     if (trigger_state == ButtonState::PUSH)
     {
       sendStopMessage();
-    }
-    else if (rocker_switch_state == RockerSwitchState::UP)
-    {
-      sendIncrementStepSizeMessage();
-    }
-    else if (rocker_switch_state == RockerSwitchState::DOWN)
-    {
-      sendDecrementStepSizeMessage();
     }
   }
   else
