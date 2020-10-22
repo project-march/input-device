@@ -33,13 +33,6 @@ const uint8_t RST = 13;      // Reset
 const uint32_t BAUD_SCREEN = 9600;
 const uint64_t BAUD_SERIAL = 57600;
 
-// Necessary, since the 4dsystems defines these
-// and they clash with our encoder definitions
-#undef LEFT
-#undef RIGHT
-#undef UP
-#undef DOWN
-
 //#define USE_WIRELESS  // comment this to use wired connection.
 
 Button trigger(pins::TRIGGER);
