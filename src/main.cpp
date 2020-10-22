@@ -1,6 +1,5 @@
 #include "button.h"
 #include "double_click_button.h"
-#include "rocker_switch.h"
 #include "screen.h"
 #include "state_machine.h"
 #include "wireless_connection.h"
