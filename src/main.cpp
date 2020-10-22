@@ -1,6 +1,5 @@
 #include "button.h"
 #include "double_click_button.h"
-#include "rocker_switch.h"
 #include "screen.h"
 #include "state_machine.h"
 #include "wireless_connection.h"
@@ -47,7 +46,6 @@ Button trigger(pins::TRIGGER);
 DoubleClickButton push(pins::PUSH);
 RotaryEncoder rotaryEncoder(pins::RE_A, pins::RE_B);
 DoubleClickButton rotaryEncoderPush(pins::RE_PUSH);
-RockerSwitch rocker(pins::ROCKER_UP, pins::ROCKER_DOWN);
 
 SoftwareSerial screen_serial(pins::UART_RX, pins::UART_TX);
 Goldelox_Serial_4DLib screen_goldelox(&screen_serial);
@@ -197,7 +195,6 @@ void setup()
 void loop()
 {
   // Get button states
-  RockerSwitchState rocker_switch_state = rocker.getState();
   RotaryEncoder::Direction rotary_encoder_direction = rotaryEncoder.getDirection();
   ButtonState trigger_state = trigger.getState();
   ButtonState push_button_state = push.getState();
@@ -226,14 +223,6 @@ void loop()
     if (trigger_state == ButtonState::PUSH)
     {
       sendStopMessage();
-    }
-    else if (rocker_switch_state == RockerSwitchState::UP)
-    {
-      sendIncrementStepSizeMessage();
-    }
-    else if (rocker_switch_state == RockerSwitchState::DOWN)
-    {
-      sendDecrementStepSizeMessage();
     }
   }
   else
