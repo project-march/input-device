@@ -1,6 +1,5 @@
 #include "button.h"
 #include "double_click_button.h"
-#include "rocker_switch.h"
 #include "screen.h"
 #include "state_machine.h"
 #include "wireless_connection.h"
@@ -34,20 +33,12 @@ const uint8_t RST = 13;      // Reset
 const uint32_t BAUD_SCREEN = 9600;
 const uint64_t BAUD_SERIAL = 57600;
 
-// Necessary, since the 4dsystems defines these
-// and they clash with our encoder definitions
-#undef LEFT
-#undef RIGHT
-#undef UP
-#undef DOWN
-
 //#define USE_WIRELESS  // comment this to use wired connection.
 
 Button trigger(pins::TRIGGER);
 DoubleClickButton push(pins::PUSH);
 RotaryEncoder rotaryEncoder(pins::RE_A, pins::RE_B);
 DoubleClickButton rotaryEncoderPush(pins::RE_PUSH);
-RockerSwitch rocker(pins::ROCKER_UP, pins::ROCKER_DOWN);
 
 SoftwareSerial screen_serial(pins::UART_RX, pins::UART_TX);
 Goldelox_Serial_4DLib screen_goldelox(&screen_serial);
@@ -197,7 +188,6 @@ void setup()
 void loop()
 {
   // Get button states
-  RockerSwitchState rocker_switch_state = rocker.getState();
   RotaryEncoder::Direction rotary_encoder_direction = rotaryEncoder.getDirection();
   ButtonState trigger_state = trigger.getState();
   ButtonState push_button_state = push.getState();
@@ -226,14 +216,6 @@ void loop()
     if (trigger_state == ButtonState::PUSH)
     {
       sendStopMessage();
-    }
-    else if (rocker_switch_state == RockerSwitchState::UP)
-    {
-      sendIncrementStepSizeMessage();
-    }
-    else if (rocker_switch_state == RockerSwitchState::DOWN)
-    {
-      sendDecrementStepSizeMessage();
     }
   }
   else

@@ -41,9 +41,9 @@ void loop()
   // Draw different images from the uSD card in a loop
   screen.draw_image(STAIRS);
   sleep(1);
-  screen.draw_image(SIT);
+  screen.draw_image(HOME_SIT);
   sleep(1);
-  screen.draw_image(HOME_STAND);
+  screen.draw_image(STAND_UP);
   sleep(1);
   screen.draw_image(SOFA);
   sleep(1);
