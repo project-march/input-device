@@ -271,8 +271,7 @@ void StateMachine::constructSlopeMenu(State* from, State* next_obstacle)
                                                          SMALL_STEP_STAIRS_ACTIVATED, "gait_single_step_small");
   State& slope_single_step_normal = this->createGaitState(SINGLE_STEP_STAIRS, SINGLE_STEP_STAIRS_SELECTED,
                                                           SINGLE_STEP_STAIRS_ACTIVATED, "gait_single_step_normal");
-  State& slope_walk =
-      this->createGaitState(WALK_STAIRS, WALK_STAIRS_SELECTED, WALK_STAIRS_ACTIVATED, "gait_walk");
+  State& slope_walk = this->createGaitState(WALK_STAIRS, WALK_STAIRS_SELECTED, WALK_STAIRS_ACTIVATED, "gait_walk");
 
   State& slope_up =
       this->createGaitState(SLOPE_UP, SLOPE_UP_SELECTED, SLOPE_UP_ACTIVATED, "gait_ramp_door_slope_up", &slope_walk);
