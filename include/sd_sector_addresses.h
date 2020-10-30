@@ -93,21 +93,25 @@ struct SectorAddress
 /**********
  * Walk menu + single step + side step + home stand + sit + home
  **********/
-#define SINGLE_STEP4_HOME SectorAddress { 0x0000, 0x72DC }
+#define SINGLE_STEP4_HOME SectorAddress { 0x0000, 0x774A }
 #define SINGLE_STEP4_HOME_SELECTED SectorAddress { 0x0000, 0x1FA5 }
 #define SINGLE_STEP4_ACTIVATED SectorAddress { 0x0000, 0x1FF6 }
 
-#define OTHER_STEP4_HOME SectorAddress { 0x0000, 0x6AA2 }
+#define OTHER_STEP4_HOME SectorAddress { 0x0000, 0x76A8 }
 
 #define WALK_4 SectorAddress { 0x0000, 0x6A00 }
 #define WALK_4_SELECTED SectorAddress { 0x0000, 0x171A }
 #define WALK_4_ACTIVATED SectorAddress { 0x0000, 0x176B }
 
-#define SMALL_STEP4_HOME SectorAddress { 0x0000, 0x6AF3 }
+#define SMALL_WALK4 SectorAddress { 0x0000, 0x779B}
+#define SMALL_WALK4_SELECTED SectorAddress { 0x0000, 0x7513}
+#define SMALL_WALK4_ACTIVATED SectorAddress { 0x0000, 0x7564}
+
+#define SMALL_STEP4_HOME SectorAddress { 0x0000, 0x77EC }
 #define SMALL_STEP4_HOME_SELECTED SectorAddress { 0x0000, 0x649F }
 #define SMALL_STEP4_HOME_ACTIVATED SectorAddress { 0x0000, 0x64F0 }
 
-#define SIDE_STEP4_HOME SectorAddress { 0x0000, 0x6B44 }
+#define SIDE_STEP4_HOME SectorAddress { 0x0000, 0x783D }
 
 #define RIGHT_SIDE_STEP4_HOME SectorAddress { 0x0000, 0x6BE6 }
 #define RIGHT_SIDE_STEP4_HOME_SELECTED SectorAddress { 0x0000, 0x66D6 }
@@ -116,7 +120,7 @@ struct SectorAddress
 #define LEFT_SIDE_STEP4_HOME_SELECTED SectorAddress { 0x0000, 0x6634 }
 #define LEFT_SIDE_STEP4_ACTIVATED SectorAddress { 0x0000, 0x6685 }
 
-#define HOMESTAND_4_WALKMENU SectorAddress { 0x0000, 0x6C37 }
+#define HOMESTAND_4_WALKMENU SectorAddress { 0x0000, 0x76F9 }
 #define HOMESTAND_4_WALKMENU_SELECTED SectorAddress { 0x0000, 0x180D }
 #define HOMESTAND_4_WALKMENU_ACTIVATED SectorAddress { 0x0000, 0x185E }
 
@@ -162,15 +166,15 @@ struct SectorAddress
 
 #define ROUGH_TERRAIN SectorAddress { 0x0000, 0x037C }
 
-#define HIGHSTEP_RT SectorAddress { 0x0000, 0x03CD }
-#define HIGHSTEP_RT_second SectorAddress { 0x0000, 0x06A6 }
+#define HIGHSTEP_RT SectorAddress { 0x0000, 0x7981 }
+#define HIGHSTEP_RT_second SectorAddress { 0x0000, 0x7A23 }
 #define HIGHSTEP_RT_SELECTED SectorAddress { 0x0000, 0x041E }
 #define HIGHSTEP_RT_ACTIVATED SectorAddress { 0x0000, 0x046F }
 
-#define SMALLSTEP_RT SectorAddress { 0x0000, 0x04C0 }
-#define SMALLSTEP_RT_second SectorAddress { 0x0000, 0x0799 }
-#define SMALLSTEP_RT_SELECTED SectorAddress { 0x0000, 0x0511 }
-#define SMALLSTEP_RT_ACTIVATED SectorAddress { 0x0000, 0x0562 }
+#define MINISTEP_RT SectorAddress { 0x0000, 0x78DF }
+#define MINISTEP_RT_second SectorAddress { 0x0000,  0x7930 }
+#define MINISTEP_RT_SELECTED SectorAddress {0x0000, 0x7AC5}
+#define MINISTEP_RT_ACTIVATED SectorAddress {0x0000, 0x7B16}
 
 #define MIDDLESTEP1_RT SectorAddress { 0x0000, 0x3946 }
 #define MIDDLESTEP1_RT_SELECTED SectorAddress { 0x0000, 0x3A39 }
@@ -266,6 +270,8 @@ struct SectorAddress
 #define WALK_SLOPE SectorAddress { 0x0000, 0x4180 }
 #define WALK_SLOPE_SELECTED SectorAddress { 0x0000, 0x1075 }
 #define WALK_SLOPE_ACTIVATED SectorAddress { 0x0000, 0x10C6 }
+
+#define SLOPE_PLATFORM SectorAddress { 0x0000, 0x7657 }
 
 #define SLOPE_DOWN SectorAddress { 0x0000, 0x41D1 }
 #define SLOPE_DOWN_SELECTED SectorAddress { 0x0000, 0x1168 }
