@@ -124,7 +124,7 @@ void StateMachine::constructSlalomMenu(State* from, State* next_obstacle)
 {
   State& walk_in_between =
       this->createGaitState(WALK_PLAIN, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_walk", next_obstacle);
-  State& slalom_walk = this->createGaitState(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_slalom_walk", nullptr);
+  State& slalom_walk = this->createGaitStateToSelect(WALK_2O, WALK_2O_SELECTED, WALK_2O_ACTIVATED, "gait_slalom_walk");
 
   slalom_walk.backTo(from);
   walk_in_between.backTo(from);
