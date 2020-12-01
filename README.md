@@ -1,3 +1,5 @@
+This repository has been archived. A recent version can be found on https://gitlab.com/project-march.
+
 # 🕹️ Input Device
 The input device is embedded in the crutch, it allows the pilot to control the exoskeleton.
 
